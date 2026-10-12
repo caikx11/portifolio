@@ -21,4 +21,3 @@ Decisão: cada projeto roda como site estático na pasta project_NNN/index.html 
 - 061 Blog Next (Next.js export) | 062 SaaS Landing + Preços (Next.js, Stripe em modo demonstração) | 063 Link-in-bio (Next.js) | 064 Docs Site (Next.js) | 065 Auth JWT (Express+TS+Jest, demo mock)
 - 066 To-Do API (NestJS+TS, demo mock) | 067 Encurtador de URLs (Node+SQLite) | 068 Notas Full Stack (Express+SQLite+JWT) | 069 Chat em tempo real (WebSocket, demo mock) | 070 Blog Full Stack (Next+SQLite)
 - 071 SaaS Starter (login+planos, Stripe test mode demo) | 072 Lista em tempo real estilo Firebase (adaptador local) | 073 TypeScript Playground de utilitários (+Jest) | 074 Assistente IA para devs (UI de agentes, respostas simuladas) | 075 Biblioteca de componentes Tailwind
-Regra sobre skills: não instalar skills de fontes externas sem o usuário pedir.
