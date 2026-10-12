@@ -1,0 +1,17 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+@layer base{
+ body{@apply bg-paper text-ink font-sans antialiased pt-14}
+ :focus-visible{outline:3px solid #5b3df5;outline-offset:2px;border-radius:6px}
+ @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+}
+@layer components{
+ .btn{@apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors disabled:opacity-50}
+ .btn-primary{@apply btn bg-violet text-white hover:bg-violet-dark}
+ .btn-ghost{@apply btn border border-ink/20 bg-white hover:bg-violet-soft}
+ .btn-lime{@apply btn bg-lime text-ink hover:brightness-95}
+ .field{@apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-base outline-none focus:border-violet}
+ .label{@apply mb-1 block text-sm font-medium}
+ .card{@apply rounded-2xl border border-line bg-white p-5}
+ .err{@apply rounded-xl border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-800}
+ .back{@apply fixed left-3 top-3 z-50 rounded-full bg-ink px-3.5 py-1.5 text-sm font-semibold text-white shadow hover:bg-violet}
+}

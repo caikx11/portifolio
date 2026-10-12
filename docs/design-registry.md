@@ -52,3 +52,8 @@
 - 008 Weather Dashboard: dark telemetry #070d17 + cyan #22d3ee + amber #fbbf24; Chakra Petch + IBM Plex Sans
 - 009 Gerador de Senhas: terminal black #06090a + lime #b6ff3b; Fira Code + Rajdhani
 - 010 Controle de Finanças: ivory #f5f1e8 + navy #0f2a43 + gold #c9a24b (tema escuro navy); Manrope + Newsreader
+- 056 Notas Markdown: papel #f3eee3 + tinta #1e2a25 + verde #2f6f5e + marca-texto #f2c14e; Literata + Fira Code
+- 057 Kanban Pro: roxo-noite #16141f + âmbar #ffb547 + violeta #8b7cff + rosa #ff6b8b; Bricolage Grotesque + DM Mono
+- 058 Foco Pomodoro: floresta #0f1f1a + pêssego #ffb38a (pausas: menta #8fe3c0 / azul #9cc4ff) + creme #f6efe2; Unbounded + Work Sans
+- 059 Clima React: azul-gelo #eaf2f8 + tinta #12263a + tangerina #ff7a3d (fundo muda por condição); Young Serif + Plus Jakarta Sans
+- 060 Catálogo de Filmes: cinema vinho #1b0a10 + ouro #e8b84a + vermelho #c1272d + creme #f6ead7; Bebas Neue + Libre Franklin

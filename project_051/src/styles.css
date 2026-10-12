@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+body { background: #f6f4ee; color: #14213d; font-family: Inter, system-ui, sans-serif; margin: 0; }
+h1, h2, h3 { font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
+.back-link { position: fixed; top: 10px; left: 10px; z-index: 50; background: #14213d; color: #fff; padding: 6px 12px; border-radius: 999px; font-size: 13px; text-decoration: none; }
+:focus-visible { outline: 3px solid #f59e0b; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+@layer components {
+  .btn { @apply inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm font-semibold transition; }
+  .btn-primary { @apply bg-brand text-white hover:bg-indigo-700; }
+  .btn-ghost { @apply bg-white text-ink border border-slate-300 hover:bg-slate-100; }
+  .field { @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm; }
+}

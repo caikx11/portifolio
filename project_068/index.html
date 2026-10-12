@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Notas Full Stack · Herbário</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,500&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f4ee;--paper:#fffdf8;--forest:#1f4d3a;--forest2:#2f6a50;--rose:#d98a6c;--ink:#22302a;--mut:#6b7a72;--line:#e3dccd;--r:16px}
+*{box-sizing:border-box}
+body{margin:0;font:16px/1.5 Figtree,system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
+:focus-visible{outline:3px solid var(--rose);outline-offset:2px;border-radius:6px}
+[hidden]{display:none!important}
+.back{position:fixed;top:12px;left:12px;z-index:10;background:var(--forest);color:#fff;padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px}
+.back:hover{background:var(--forest2)}
+h1,h2,h3{font-family:Lora,serif}
+.mode{position:fixed;top:12px;right:12px;left:150px;z-index:9;text-align:right;font-size:13px;font-weight:500;pointer-events:none}
+.mode span{display:inline-block;background:#fbe9de;border:1px solid var(--rose);padding:6px 12px;border-radius:12px;pointer-events:auto}
+.mode.real span{background:#dff1e7;border-color:var(--forest2)}
+@media(max-width:560px){.mode{position:static;margin:60px 16px -50px;text-align:left}}
+.auth{max-width:420px;margin:100px auto 40px;padding:0 16px}
+@media(max-width:560px){.auth{margin-top:70px}}
+.auth h1{font-size:44px;margin:0;color:var(--forest);line-height:1.05}
+.auth h1 em{color:var(--rose)}
+.auth p{color:var(--mut)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:0 10px 30px -18px #1f4d3a66}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:12px;padding:4px;margin-bottom:14px}
+.seg button{background:transparent;color:var(--mut);border:0;padding:8px;border-radius:9px;font:600 15px Figtree;cursor:pointer}
+.seg button[aria-selected=true]{background:var(--forest);color:#fff}
+label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--mut);margin-bottom:12px}
+input,textarea{font:inherit;padding:11px 12px;border:1.5px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);width:100%}
+input:focus,textarea:focus{border-color:var(--forest2)}
+.btn{font:600 15px Figtree;border:0;border-radius:11px;padding:11px 18px;background:var(--forest);color:#fff;cursor:pointer}
+.btn:hover{background:var(--forest2)}
+.btn.alt{background:transparent;color:var(--forest);border:1.5px solid var(--forest)}
+.btn.alt:hover{background:#e9f1ec}
+.btn.danger{color:#a3321c;border-color:#a3321c}
+.btn.wide{width:100%}
+.err{color:#a3321c;font-weight:500;min-height:22px;margin:8px 0 0}
+.app{max-width:1000px;margin:0 auto;padding:70px 16px 40px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.top h1{margin:0;font-size:30px;color:var(--forest)}
+.who{color:var(--mut);font-size:14px;display:flex;gap:10px;align-items:center}
+.cols{display:grid;grid-template-columns:300px 1fr;gap:16px}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.side{display:grid;gap:10px;align-content:start}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.note{width:100%;text-align:left;background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--rose);border-radius:12px;padding:10px 12px;cursor:pointer;font:inherit;color:inherit}
+.note:hover,.note[aria-current=true]{border-color:var(--forest2);border-left-color:var(--forest);background:#f1f7f3}
+.note b{display:block;font-family:Lora,serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.note span{font-size:13px;color:var(--mut);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.editor{display:grid;gap:10px}
+.editor textarea{min-height:260px;resize:vertical;font-size:16px;line-height:1.6}
+.editor .title{font:700 22px Lora,serif}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hint{color:var(--mut);font-size:14px;margin-left:auto}
+.empty{color:var(--mut);text-align:center;padding:30px 10px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Portfólio</a>
+<div id="mode" class="mode" role="status"><span id="modeText">Detectando API…</span></div>
+
+<section class="auth" id="authView" hidden>
+  <h1>Herbário<br><em>de notas</em></h1>
+  <p>Notas privadas com login (JWT). Cada conta vê só as suas.</p>
+  <div class="card">
+    <div class="seg" role="tablist" aria-label="Acesso">
+      <button role="tab" id="tabLogin" aria-selected="true">Entrar</button>
+      <button role="tab" id="tabReg" aria-selected="false">Criar conta</button>
+    </div>
+    <form id="authForm" novalidate>
+      <label>E-mail<input id="email" type="email" autocomplete="email" placeholder="voce@exemplo.com"></label>
+      <label>Senha<input id="pass" type="password" autocomplete="current-password" placeholder="mínimo 6 caracteres"></label>
+      <button class="btn wide" id="authBtn" type="submit">Entrar</button>
+      <p class="err" id="authErr" role="alert"></p>
+    </form>
+  </div>
+</section>
+
+<section class="app" id="appView" hidden>
+  <div class="top">
+    <h1>Minhas notas</h1>
+    <div class="who"><span id="who"></span><button class="btn alt" id="logout">Sair</button></div>
+  </div>
+  <div class="cols">
+    <div class="side">
+      <button class="btn" id="newNote">+ Nova nota</button>
+      <label style="margin:0">Buscar<input id="search" type="search" placeholder="título ou texto"></label>
+      <ul id="list" aria-label="Lista de notas"></ul>
+    </div>
+    <form class="card editor" id="editor" novalidate>
+      <label style="margin:0">Título<input class="title" id="nTitle" maxlength="120" placeholder="Título da nota"></label>
+      <label style="margin:0">Texto<textarea id="nBody" placeholder="Escreva aqui…"></textarea></label>
+      <div class="row">
+        <button class="btn" type="submit">Salvar</button>
+        <button class="btn alt danger" type="button" id="del" hidden>Excluir</button>
+        <span class="hint" id="hint" role="status"></span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+(() => {
+  const REAL = 'http://localhost:3068';
+  const $ = (s) => document.querySelector(s);
+  let mode = 'mock', token = null, email = '', current = null, regMode = false;
+  const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} }, del(k) { try { localStorage.removeItem(k); } catch {} } };
+
+  // ---- mock do servidor Express + SQLite + JWT (dados em localStorage) ----
+  const db = () => { try { return JSON.parse(store.get('p068-db')) || { users: [], notes: [], seq: 1 }; } catch { return { users: [], notes: [], seq: 1 }; } };
+  const persist = (d) => store.set('p068-db', JSON.stringify(d));
+  const hash = async (s) => { try { return [...new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode('p068' + s)))].map((b) => b.toString(16).padStart(2, '0')).join(''); } catch { return btoa(s); } };
+  const jwt = (e) => 'demo.' + btoa(JSON.stringify({ email: e, exp: Date.now() + 7200e3 })) + '.sig';
+  const who = (t) => { try { const p = JSON.parse(atob(t.split('.')[1])); return p.exp > Date.now() ? p.email : null; } catch { return null; } };
+  const fail = (m, status = 400) => Object.assign(new Error(m), { status });
+  async function mock(method, path, body = {}) {
+    await new Promise((r) => setTimeout(r, 50));
+    const d = db(); const u = new URL(path, 'http://x'); const p = u.pathname;
+    if (p === '/api/auth/register') {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(body.email || '')) throw fail('E-mail inválido');
+      if (!body.password || body.password.length < 6) throw fail('A senha precisa ter ao menos 6 caracteres');
+      const e = body.email.toLowerCase(); if (d.users.some((x) => x.email === e)) throw fail('E-mail já cadastrado', 409);
+      d.users.push({ email: e, h: await hash(body.password) }); persist(d); return { token: jwt(e), user: { email: e } };
+    }
+    if (p === '/api/auth/login') {
+      const e = (body.email || '').toLowerCase(); const us = d.users.find((x) => x.email === e);
+      if (!us || us.h !== await hash(body.password || '')) throw fail('Credenciais inválidas', 401);
+      return { token: jwt(e), user: { email: e } };
+    }
+    const me = token && who(token); if (!me) throw fail('Não autenticado', 401);
+    if (p === '/api/auth/me') return { email: me };
+    const m = p.match(/^\/api\/notes(?:\/(\d+))?$/); if (!m) throw fail('Not found', 404);
+    const mine = d.notes.filter((n) => n.owner === me); const id = Number(m[1]); const n = id && mine.find((x) => x.id === id);
+    const pub = ({ owner, ...r }) => r;
+    if (!id && method === 'GET') { const q = (u.searchParams.get('q') || '').toLowerCase(); return mine.filter((x) => (x.title + x.body).toLowerCase().includes(q)).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt) || b.id - a.id).map(pub); }
+    if (!id && method === 'POST') {
+      if (!body.title || !body.title.trim() || body.title.length > 120) throw fail('Título obrigatório (até 120 caracteres)');
+      const x = { id: d.seq++, owner: me, title: body.title.trim(), body: body.body || '', updatedAt: new Date().toISOString() }; d.notes.push(x); persist(d); return pub(x);
+    }
+    if (!n) throw fail('Nota não encontrada', 404);
+    if (method === 'GET') return pub(n);
+    if (method === 'DELETE') { d.notes = d.notes.filter((x) => x !== d.notes.find((y) => y.id === id)); persist(d); return null; }
+    if (method === 'PUT') {
+      const real = d.notes.find((y) => y.id === id); const t = body.title ?? real.title;
+      if (!t.trim() || t.length > 120) throw fail('Dados inválidos');
+      Object.assign(real, { title: t.trim(), body: body.body ?? real.body, updatedAt: new Date().toISOString() }); persist(d); return pub(real);
+    }
+  }
+  async function api(method, path, body) {
+    if (mode === 'mock') return mock(method, path, body);
+    const r = await fetch(REAL + path, { method, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}) }, body: body ? JSON.stringify(body) : undefined });
+    const b = r.status === 204 ? null : await r.json();
+    if (!r.ok) throw fail(b.error || 'Erro ' + r.status, r.status);
+    return b;
+  }
+
+  // ---- UI ----
+  function show(v) { $('#authView').hidden = v !== 'auth'; $('#appView').hidden = v !== 'app'; }
+  function setReg(on) { regMode = on; $('#tabLogin').setAttribute('aria-selected', !on); $('#tabReg').setAttribute('aria-selected', on); $('#authBtn').textContent = on ? 'Criar conta' : 'Entrar'; $('#pass').autocomplete = on ? 'new-password' : 'current-password'; $('#authErr').textContent = ''; }
+  $('#tabLogin').onclick = () => setReg(false); $('#tabReg').onclick = () => setReg(true);
+  $('#authForm').onsubmit = async (e) => {
+    e.preventDefault(); $('#authErr').textContent = '';
+    try { const r = await api('POST', regMode ? '/api/auth/register' : '/api/auth/login', { email: $('#email').value.trim(), password: $('#pass').value });
+      token = r.token; email = r.user.email; store.set('p068-token', token); $('#pass').value = ''; enter(); }
+    catch (x) { $('#authErr').textContent = x.message; }
+  };
+  async function enter() {
+    show('app'); $('#who').textContent = email; current = null; fillEditor(null);
+    const seeded = store.get('p068-seeded-' + email);
+    if (mode === 'mock' && !seeded) { store.set('p068-seeded-' + email, '1'); await api('POST', '/api/notes', { title: 'Bem-vindo ao Herbário', body: 'Esta é uma nota de exemplo. Edite, salve ou exclua.' }); }
+    refresh();
+  }
+  $('#logout').onclick = () => { token = null; store.del('p068-token'); show('auth'); setReg(false); $('#email').focus(); };
+  async function refresh() {
+    const notes = await api('GET', '/api/notes?q=' + encodeURIComponent($('#search').value)); const ul = $('#list'); ul.textContent = '';
+    if (!notes.length) { const li = document.createElement('li'); li.className = 'empty'; li.textContent = $('#search').value ? 'Nada encontrado.' : 'Nenhuma nota ainda.'; ul.append(li); }
+    for (const n of notes) {
+      const li = document.createElement('li'); const b = document.createElement('button'); b.className = 'note'; b.type = 'button';
+      b.setAttribute('aria-current', current === n.id);
+      const t = document.createElement('b'); t.textContent = n.title; const s = document.createElement('span'); s.textContent = n.body || '(sem texto)';
+      b.append(t, s); b.onclick = () => { current = n.id; fillEditor(n); refresh(); }; li.append(b); ul.append(li);
+    }
+  }
+  function fillEditor(n) { $('#nTitle').value = n ? n.title : ''; $('#nBody').value = n ? n.body : ''; $('#del').hidden = !n; $('#hint').textContent = ''; }
+  $('#newNote').onclick = () => { current = null; fillEditor(null); refresh(); $('#nTitle').focus(); };
+  $('#search').oninput = refresh;
+  $('#editor').onsubmit = async (e) => {
+    e.preventDefault();
+    try { const data = { title: $('#nTitle').value, body: $('#nBody').value };
+      const n = current ? await api('PUT', '/api/notes/' + current, data) : await api('POST', '/api/notes', data);
+      current = n.id; $('#del').hidden = false; $('#hint').textContent = 'Salva!'; refresh(); }
+    catch (x) { $('#hint').textContent = x.message; }
+  };
+  $('#del').onclick = async () => { if (!current || !confirm('Excluir esta nota?')) return; await api('DELETE', '/api/notes/' + current); current = null; fillEditor(null); refresh(); };
+
+  (async () => {
+    try { const c = new AbortController(); setTimeout(() => c.abort(), 900); if ((await fetch(REAL + '/api/health', { signal: c.signal })).ok) mode = 'real'; } catch {}
+    $('#mode').classList.toggle('real', mode === 'real');
+    $('#modeText').textContent = mode === 'real' ? 'Servidor real conectado: ' + REAL : 'Modo demonstração: contas e notas simuladas no navegador. Rode o servidor em localhost:3068 para usar a API real.';
+    const t = store.get('p068-token');
+    if (t && mode === 'mock' && who(t)) { token = t; email = who(t); enter(); } else { show('auth'); }
+  })();
+})();
+</script>
+</body>
+</html>

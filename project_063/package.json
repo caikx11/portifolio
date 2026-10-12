@@ -1,0 +1,12 @@
+{
+  "name": "project-063",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && node scripts/postbuild.mjs",
+    "test": "jest"
+  },
+  "dependencies": { "next": "14.2.35", "react": "18.3.1", "react-dom": "18.3.1" },
+  "devDependencies": { "jest": "29.7.0" }
+}

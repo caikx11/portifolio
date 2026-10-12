@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chat em Tempo Real · Rádio PX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Sometype+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d0b08;--panel:#17130c;--line:#3a2f17;--amb:#ffb000;--amb2:#ffd36b;--dim:#a07a22;--tx:#ffe6ac;--ok:#9dff6b}
+*{box-sizing:border-box}
+body{margin:0;height:100vh;height:100dvh;display:flex;flex-direction:column;font:15px/1.5 "Sometype Mono",monospace;background:var(--bg);color:var(--tx);
+ background-image:repeating-linear-gradient(0deg,#ffffff06 0 1px,transparent 1px 3px)}
+:focus-visible{outline:2px solid var(--amb2);outline-offset:2px}
+[hidden]{display:none!important}
+.back{position:fixed;top:10px;left:10px;z-index:10;background:var(--amb);color:#1a1100;padding:6px 12px;text-decoration:none;font-weight:700;font-size:13px}
+.back:hover{background:var(--amb2)}
+.mode{padding:8px 16px 8px 150px;font-size:12px;border-bottom:1px solid var(--line);color:var(--amb);background:#1c1505;min-height:38px;display:flex;align-items:center}
+.mode.real{color:var(--ok);background:#0f1a08}
+@media(max-width:560px){.mode{padding:48px 12px 8px;font-size:11px;min-height:0}}
+h1{font:400 clamp(22px,6vw,40px)/1.1 "Major Mono Display",monospace;margin:0 0 10px;color:var(--amb);text-shadow:0 0 14px #ffb00066}
+.join{max-width:440px;margin:6vh auto;padding:0 16px;width:100%}
+.join p{color:var(--dim)}
+.box{border:1px solid var(--amb);padding:18px;background:var(--panel);box-shadow:0 0 30px -10px #ffb00055}
+label{display:grid;gap:4px;font-size:12px;color:var(--dim);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+input{font:inherit;background:#0d0b08;border:1px solid var(--line);color:var(--tx);padding:10px;min-width:0;width:100%}
+input:focus{border-color:var(--amb)}
+button{font:700 14px "Sometype Mono";background:var(--amb);color:#1a1100;border:0;padding:10px 16px;cursor:pointer;text-transform:uppercase;letter-spacing:.06em}
+button:hover{background:var(--amb2)}
+button.ghost{background:transparent;color:var(--amb);border:1px solid var(--line)}
+button.ghost:hover,button.ghost[aria-current=true]{border-color:var(--amb);background:#2a1f07}
+.err{color:#ff7a5c;min-height:20px;margin:8px 0 0}
+.chat{flex:1;min-height:0;display:grid;grid-template-columns:200px 1fr 170px}
+@media(max-width:760px){.chat{grid-template-columns:1fr;grid-template-rows:auto 1fr auto}}
+.col{border-right:1px solid var(--line);padding:12px;overflow:auto;background:var(--panel)}
+.col h2{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--dim);margin:0 0 8px}
+.rooms{display:grid;gap:6px;margin-bottom:10px}
+.rooms.h{display:flex;flex-wrap:wrap}
+.rooms button{text-align:left;text-transform:none;font-weight:500;padding:6px 10px}
+.newroom{display:flex;gap:6px}.newroom input{padding:6px 8px}
+.newroom button{padding:6px 10px}
+.users{list-style:none;margin:0;padding:0;font-size:14px}
+.users li::before{content:"● ";color:var(--ok)}
+@media(max-width:760px){.col{border-right:0;border-bottom:1px solid var(--line)}.users-col{order:3;border-top:1px solid var(--line);border-bottom:0;max-height:70px}}
+.main{display:flex;flex-direction:column;min-height:0}
+.log{flex:1;overflow:auto;padding:12px 16px;display:flex;flex-direction:column;gap:6px}
+.m{max-width:80ch;overflow-wrap:anywhere;animation:in .2s ease}
+@keyframes in{from{opacity:0;transform:translateX(-6px)}}
+.m time{color:var(--dim);font-size:12px;margin-right:8px}
+.m b{color:var(--amb)}.m.me b{color:var(--ok)}
+.m.sys{color:var(--dim);font-style:italic}
+.send{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:var(--panel)}
+.head{padding:10px 16px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;align-items:center}
+.head b{color:var(--amb)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Portfólio</a>
+<div id="mode" class="mode" role="status">Detectando servidor…</div>
+
+<section class="join" id="joinView" hidden>
+  <h1>Rádio PX</h1>
+  <p>Chat em salas, em tempo real via WebSocket.</p>
+  <form class="box" id="joinForm" novalidate>
+    <label>Seu nome<input id="name" maxlength="20" autocomplete="nickname" placeholder="ex.: Ana"></label>
+    <label>Sala inicial<input id="room" maxlength="24" value="geral" autocomplete="off"></label>
+    <button type="submit">Entrar no ar</button>
+    <p class="err" id="joinErr" role="alert"></p>
+  </form>
+</section>
+
+<section class="chat" id="chatView" hidden>
+  <nav class="col" aria-label="Salas">
+    <h2>Salas</h2>
+    <div class="rooms" id="rooms"></div>
+    <form class="newroom" id="newRoom"><input id="newRoomName" aria-label="Nome da nova sala" placeholder="nova-sala" maxlength="24"><button type="submit" aria-label="Criar sala">+</button></form>
+    <p class="err" id="roomErr" role="alert"></p>
+  </nav>
+  <div class="main">
+    <div class="head"><span>Sala <b id="curRoom"></b></span><button class="ghost" id="leave">Sair</button></div>
+    <div class="log" id="log" role="log" aria-live="polite"></div>
+    <form class="send" id="sendForm"><input id="text" aria-label="Mensagem" placeholder="Digite e tecle Enter…" maxlength="500" autocomplete="off"><button type="submit">Enviar</button></form>
+  </div>
+  <aside class="col users-col" aria-label="Online">
+    <h2>Online (<span id="nUsers">0</span>)</h2>
+    <ul class="users" id="users"></ul>
+  </aside>
+</section>
+
+<script>
+(() => {
+  const REAL_HTTP = 'http://localhost:3069', REAL_WS = 'ws://localhost:3069/ws';
+  const $ = (s) => document.querySelector(s);
+  const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+  let mode = 'mock', name = '', room = '', transport = null;
+  const ROOM_RE = /^[a-z0-9-]{1,24}$/;
+  const PRESET = ['geral', 'dev', 'musica'];
+  const known = new Set(PRESET);
+
+  // ---- transporte real: WebSocket (lib ws no servidor) ----
+  function realTransport(on) {
+    const ws = new WebSocket(REAL_WS);
+    const t = { ready: new Promise((ok, no) => { ws.onopen = ok; ws.onerror = () => no(new Error('Falha ao conectar no servidor')); }),
+      join(r, n) { ws.send(JSON.stringify({ type: 'join', room: r, name: n })); },
+      send(text) { ws.send(JSON.stringify({ type: 'msg', text })); },
+      close() { ws.onclose = null; ws.close(); } };
+    ws.onmessage = (e) => on(JSON.parse(e.data));
+    ws.onclose = () => on({ type: 'error', message: 'Conexão encerrada pelo servidor' });
+    return t;
+  }
+
+  // ---- transporte mock: BroadcastChannel entre abas + histórico em localStorage + bot ----
+  function mockTransport(on) {
+    const bc = new BroadcastChannel('p069-chat'); const id = Math.random().toString(36).slice(2);
+    const peers = new Map(); let cur = null, curName = '', timer = null;
+    const hk = (r) => 'p069-hist-' + r;
+    const hist = (r) => { try { return JSON.parse(store.get(hk(r))) || []; } catch { return []; } };
+    const push = (r, m) => store.set(hk(r), JSON.stringify([...hist(r), m].slice(-50)));
+    const users = () => { const now = Date.now(); for (const [k, p] of peers) if (now - p.at > 9000) peers.delete(k); return ['EcoBot (bot)', curName, ...[...peers.values()].filter((p) => p.room === cur).map((p) => p.user)]; };
+    const emitPresence = () => on({ type: 'presence', room: cur, users: users() });
+    const beat = () => bc.postMessage({ t: 'beat', id, room: cur, user: curName });
+    const sys = (text) => ({ type: 'msg', id: Math.random(), system: true, text, at: Date.now() });
+    bc.onmessage = ({ data: d }) => {
+      if (d.id === id) return;
+      if (d.t === 'beat') { const fresh = !peers.has(d.id) || peers.get(d.id).room !== d.room; peers.set(d.id, { room: d.room, user: d.user, at: Date.now() });
+        if (d.room === cur) { if (fresh) bc.postMessage({ t: 'beat', id, room: cur, user: curName }); emitPresence(); } }
+      else if (d.t === 'msg' && d.room === cur) on(d.msg);
+      else if (d.t === 'bye') { peers.delete(d.id); emitPresence(); }
+    };
+    addEventListener('pagehide', () => bc.postMessage({ t: 'bye', id }));
+    return { ready: Promise.resolve(),
+      join(r, n) { if (cur) bc.postMessage({ t: 'bye', id }); cur = r; curName = n; peers.clear();
+        on({ type: 'history', room: r, messages: hist(r) });
+        const s = sys(n + ' entrou'); push(r, s); on(s); bc.postMessage({ t: 'msg', room: r, msg: s });
+        beat(); emitPresence(); clearInterval(timer); timer = setInterval(() => { beat(); emitPresence(); }, 3000); },
+      send(text) { const m = { type: 'msg', id: Math.random(), user: curName, text, at: Date.now() };
+        push(cur, m); on(m); bc.postMessage({ t: 'msg', room: cur, msg: m });
+        const r = cur; setTimeout(() => { if (r !== cur) return; const b = { type: 'msg', id: Math.random(), user: 'EcoBot (bot)', text: /^!ping/.test(text) ? 'pong!' : 'Eco: ' + text, at: Date.now() };
+          push(r, b); on(b); bc.postMessage({ t: 'msg', room: r, msg: b }); }, 600); },
+      close() { clearInterval(timer); bc.postMessage({ t: 'bye', id }); bc.close(); } };
+  }
+
+  // ---- UI ----
+  const fmt = (t) => new Date(t).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  function addMsg(m) {
+    const log = $('#log'); const d = document.createElement('div');
+    d.className = 'm' + (m.system ? ' sys' : '') + (m.user === name ? ' me' : '');
+    const tm = document.createElement('time'); tm.textContent = fmt(m.at); d.append(tm);
+    if (m.system) d.append(m.text); else { const b = document.createElement('b'); b.textContent = m.user + ': '; d.append(b, m.text); }
+    const stick = log.scrollTop + log.clientHeight >= log.scrollHeight - 40; log.append(d); if (stick) log.scrollTop = log.scrollHeight;
+  }
+  function onEvent(e) {
+    if (e.type === 'history') { $('#log').textContent = ''; e.messages.forEach(addMsg); $('#log').scrollTop = 1e9; }
+    else if (e.type === 'msg') addMsg(e);
+    else if (e.type === 'presence') { const ul = $('#users'); ul.textContent = ''; [...new Set(e.users)].forEach((u) => { const li = document.createElement('li'); li.textContent = u; ul.append(li); }); $('#nUsers').textContent = ul.children.length; }
+    else if (e.type === 'error') { const el = $('#chatView').hidden ? $('#joinErr') : $('#roomErr'); el.textContent = e.message; }
+  }
+  function renderRooms() {
+    const box = $('#rooms'); box.textContent = '';
+    [...known].forEach((r) => { const b = document.createElement('button'); b.className = 'ghost'; b.type = 'button'; b.textContent = '# ' + r; b.setAttribute('aria-current', r === room); b.onclick = () => go(r); box.append(b); });
+    $('#curRoom').textContent = '#' + room;
+  }
+  function go(r) { room = r; known.add(r); $('#roomErr').textContent = ''; renderRooms(); transport.join(r, name); $('#text').focus(); }
+
+  $('#joinForm').onsubmit = async (e) => {
+    e.preventDefault(); $('#joinErr').textContent = '';
+    const n = $('#name').value.trim(), r = $('#room').value.trim().toLowerCase();
+    if (!n) return $('#joinErr').textContent = 'Informe um nome';
+    if (!ROOM_RE.test(r)) return $('#joinErr').textContent = 'Nome de sala inválido (a-z, 0-9, -)';
+    name = n;
+    try { transport = mode === 'real' ? realTransport(onEvent) : mockTransport(onEvent); await transport.ready; }
+    catch (x) { return $('#joinErr').textContent = x.message; }
+    $('#joinView').hidden = true; $('#chatView').hidden = false; go(r);
+  };
+  $('#newRoom').onsubmit = (e) => { e.preventDefault(); const r = $('#newRoomName').value.trim().toLowerCase();
+    if (!ROOM_RE.test(r)) return $('#roomErr').textContent = 'Sala inválida (a-z, 0-9, -)'; $('#newRoomName').value = ''; go(r); };
+  $('#sendForm').onsubmit = (e) => { e.preventDefault(); const t = $('#text').value.trim(); if (!t) return; transport.send(t); $('#text').value = ''; };
+  $('#leave').onclick = () => { transport.close(); transport = null; $('#chatView').hidden = true; $('#joinView').hidden = false; };
+
+  (async () => {
+    try { const c = new AbortController(); setTimeout(() => c.abort(), 900); if ((await fetch(REAL_HTTP + '/api/health', { signal: c.signal })).ok) mode = 'real'; } catch {}
+    const m = $('#mode'); m.classList.toggle('real', mode === 'real');
+    m.textContent = mode === 'real' ? 'Servidor WebSocket real conectado: ' + REAL_WS
+      : 'Modo demonstração: salas simuladas entre abas do navegador (BroadcastChannel) com um bot. Abra duas abas para conversar. Servidor real: localhost:3069.';
+    $('#joinView').hidden = false; $('#name').focus();
+  })();
+})();
+</script>
+</body>
+</html>

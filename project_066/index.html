@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>To-Do API · NestJS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;600;800&family=Red+Hat+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#1a0f16;--panel:#26161f;--line:#43283a;--tx:#fbeff2;--mut:#c4a3b1;--ac:#ff3d6e;--ac2:#ffd166;--ok:#5be3a8;--r:14px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font:16px/1.5 "Red Hat Display",system-ui,sans-serif;background:radial-gradient(900px 500px at 85% -10%,#4a1530 0,transparent 60%),var(--bg);color:var(--tx);min-height:100vh}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ac2);outline-offset:2px;border-radius:6px}
+.back{position:fixed;top:12px;left:12px;z-index:10;background:var(--panel);border:1px solid var(--line);padding:8px 14px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px}
+.back:hover{border-color:var(--ac)}
+main{max-width:980px;margin:0 auto;padding:72px 16px 48px}
+h1{font-size:clamp(34px,7vw,60px);line-height:1;margin:0 0 6px;font-weight:800;letter-spacing:-.02em}
+h1 span{color:var(--ac)}
+.sub{color:var(--mut);margin:0 0 20px}
+.mode{display:flex;gap:10px;align-items:center;padding:10px 14px;border-radius:var(--r);border:1px dashed var(--ac2);background:#2e2012;font-size:14px;margin-bottom:22px}
+.mode.real{border-color:var(--ok);background:#12281f;border-style:solid}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--ac2);flex:none;animation:pulse 2s infinite}
+.real .dot{background:var(--ok)}
+@keyframes pulse{50%{opacity:.35}}
+.grid{display:grid;gap:18px;grid-template-columns:1.4fr 1fr}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+h2{font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:0 0 12px}
+form.add{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text],select{background:#170c12;border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:11px 12px;font:inherit;min-width:0}
+input[type=text]{flex:1 1 180px}
+button{font:inherit;font-weight:600;border:0;border-radius:10px;padding:11px 16px;background:var(--ac);color:#25040e;cursor:pointer}
+button:hover{filter:brightness(1.1)}
+button.ghost{background:transparent;color:var(--tx);border:1px solid var(--line)}
+button.ghost:hover{border-color:var(--ac)}
+.err{color:#ff9bb3;font-size:14px;min-height:20px;margin:8px 0 0}
+.tabs{display:flex;gap:6px;margin:14px 0}
+.tabs button{padding:6px 12px;font-size:14px}
+.tabs button[aria-pressed=true]{background:var(--ac2);color:#2a1d00;border-color:transparent}
+ul.list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+li.t{display:flex;align-items:center;gap:10px;background:#1d1017;border:1px solid var(--line);border-radius:12px;padding:10px 12px;animation:in .25s ease}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+li.t input{width:20px;height:20px;accent-color:var(--ac);flex:none}
+li.t .ti{flex:1;min-width:0;overflow-wrap:anywhere}
+li.t.done .ti{text-decoration:line-through;color:var(--mut)}
+.pill{font:600 12px "Red Hat Mono",monospace;padding:2px 8px;border-radius:99px;border:1px solid}
+.p-alta{color:var(--ac);border-color:var(--ac)}.p-media{color:var(--ac2);border-color:var(--ac2)}.p-baixa{color:var(--ok);border-color:var(--ok)}
+li.t .x{padding:6px 10px;background:transparent;color:var(--mut);border:1px solid var(--line)}
+li.t .x:hover{color:var(--ac);border-color:var(--ac)}
+.empty{color:var(--mut);text-align:center;padding:24px 0}
+.log{font:13px/1.6 "Red Hat Mono",monospace;max-height:340px;overflow:auto;margin:0;padding:0;list-style:none}
+.log li{display:flex;gap:8px;white-space:nowrap}
+.m{font-weight:600;width:56px;flex:none}.m.GET{color:var(--ok)}.m.POST{color:var(--ac2)}.m.PATCH{color:#7cc4ff}.m.DELETE{color:var(--ac)}
+.s{color:var(--mut)}
+.log .p{overflow:hidden;text-overflow:ellipsis}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Portfólio</a>
+<main>
+  <h1>To-Do <span>API</span></h1>
+  <p class="sub">Frontend para a API REST em NestJS: CRUD de tarefas com validação.</p>
+  <div id="mode" class="mode" role="status"><span class="dot"></span><span id="modeText">Detectando API…</span></div>
+  <div class="grid">
+    <section class="card" aria-labelledby="h-tasks">
+      <h2 id="h-tasks">Tarefas</h2>
+      <form class="add" id="form" novalidate>
+        <label for="title" class="sr" style="position:absolute;left:-9999px">Título da tarefa</label>
+        <input type="text" id="title" placeholder="Nova tarefa…" maxlength="130" autocomplete="off">
+        <label for="prio" style="position:absolute;left:-9999px">Prioridade</label>
+        <select id="prio"><option value="baixa">baixa</option><option value="media" selected>média</option><option value="alta">alta</option></select>
+        <button type="submit">Adicionar</button>
+      </form>
+      <p class="err" id="err" role="alert"></p>
+      <div class="tabs" role="group" aria-label="Filtro">
+        <button class="ghost" data-f="all" aria-pressed="true">Todas</button>
+        <button class="ghost" data-f="false" aria-pressed="false">Abertas</button>
+        <button class="ghost" data-f="true" aria-pressed="false">Concluídas</button>
+      </div>
+      <ul class="list" id="list" aria-live="polite"></ul>
+    </section>
+    <aside class="card" aria-labelledby="h-log">
+      <h2 id="h-log">Console da API</h2>
+      <ul class="log" id="log"></ul>
+    </aside>
+  </div>
+</main>
+<script>
+(() => {
+  const REAL = 'http://localhost:3066';
+  const $ = (s) => document.querySelector(s);
+  let mode = 'mock', filter = 'all';
+
+  // ---- mock: reproduz o contrato da API Nest (mesmas validações e status) ----
+  const KEY = 'p066-todos';
+  const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || { seq: 1, items: [] }; } catch { return { seq: 1, items: [] }; } };
+  const save = (d) => { try { localStorage.setItem(KEY, JSON.stringify(d)); } catch {} };
+  const PR = ['baixa', 'media', 'alta'];
+  const bad = (m) => ({ status: 400, body: { statusCode: 400, message: m, error: 'Bad Request' } });
+  function mock(method, path, body) {
+    const d = load(); const u = new URL(path, 'http://x'); const m = u.pathname.match(/^\/api\/todos(?:\/(\d+))?$/);
+    if (!m) return { status: 404, body: { statusCode: 404, message: 'Not Found' } };
+    const id = m[1] ? Number(m[1]) : null; const t = id && d.items.find((i) => i.id === id);
+    if (method === 'GET' && !id) { const f = u.searchParams.get('done'); return { status: 200, body: d.items.filter((i) => f === null || i.done === (f === 'true')) }; }
+    if (id && !t) return { status: 404, body: { statusCode: 404, message: `Tarefa ${id} não encontrada`, error: 'Not Found' } };
+    if (method === 'GET') return { status: 200, body: t };
+    if (method === 'DELETE') { d.items = d.items.filter((i) => i !== t); save(d); return { status: 204 }; }
+    const v = (b, need) => {
+      if (need && (typeof b.title !== 'string' || !b.title.trim())) return 'title não pode ser vazio';
+      if (b.title !== undefined && (typeof b.title !== 'string' || !b.title.trim() || b.title.length > 120)) return 'title deve ter de 1 a 120 caracteres';
+      if (b.priority !== undefined && !PR.includes(b.priority)) return 'priority inválida';
+      return null;
+    };
+    if (method === 'POST') { const e = v(body, true); if (e) return bad(e);
+      const n = { id: d.seq++, title: body.title.trim(), priority: body.priority || 'media', done: false, createdAt: new Date().toISOString() };
+      d.items.push(n); save(d); return { status: 201, body: n }; }
+    if (method === 'PATCH') { const e = v(body, false); if (e) return bad(e);
+      if (body.done !== undefined && typeof body.done !== 'boolean') return bad('done deve ser booleano');
+      if (body.title !== undefined) t.title = body.title.trim(); if (body.priority) t.priority = body.priority; if (body.done !== undefined) t.done = body.done;
+      save(d); return { status: 200, body: t }; }
+    return { status: 405, body: {} };
+  }
+
+  const logEl = $('#log');
+  function log(method, path, status) {
+    const li = document.createElement('li');
+    li.innerHTML = `<span class="m ${method}">${method}</span><span class="p"></span><span class="s">${status}</span>`;
+    li.querySelector('.p').textContent = path;
+    logEl.prepend(li); while (logEl.children.length > 40) logEl.lastChild.remove();
+  }
+  async function api(method, path, body) {
+    let r;
+    if (mode === 'real') {
+      const res = await fetch(REAL + path, { method, headers: body ? { 'Content-Type': 'application/json' } : {}, body: body ? JSON.stringify(body) : undefined });
+      r = { status: res.status, body: res.status === 204 ? null : await res.json() };
+    } else { await new Promise((ok) => setTimeout(ok, 60)); r = mock(method, path, body || {}); }
+    log(method, path, r.status);
+    if (r.status >= 400) throw new Error([].concat(r.body.message).join('; '));
+    return r.body;
+  }
+
+  const esc = (s) => s;
+  async function render() {
+    const q = filter === 'all' ? '' : `?done=${filter}`;
+    const items = await api('GET', '/api/todos' + q);
+    const ul = $('#list'); ul.textContent = '';
+    if (!items.length) { const li = document.createElement('li'); li.className = 'empty'; li.textContent = 'Nenhuma tarefa por aqui.'; ul.append(li); return; }
+    for (const t of items) {
+      const li = document.createElement('li'); li.className = 't' + (t.done ? ' done' : '');
+      const cb = Object.assign(document.createElement('input'), { type: 'checkbox', checked: t.done });
+      cb.setAttribute('aria-label', 'Concluir: ' + t.title);
+      cb.onchange = () => act(() => api('PATCH', '/api/todos/' + t.id, { done: cb.checked }));
+      const ti = document.createElement('span'); ti.className = 'ti'; ti.textContent = t.title;
+      const p = document.createElement('span'); p.className = 'pill p-' + t.priority; p.textContent = t.priority;
+      const x = document.createElement('button'); x.className = 'x'; x.textContent = '✕'; x.setAttribute('aria-label', 'Excluir: ' + t.title);
+      x.onclick = () => act(() => api('DELETE', '/api/todos/' + t.id));
+      li.append(cb, ti, p, x); ul.append(li);
+    }
+  }
+  async function act(fn) { $('#err').textContent = ''; try { await fn(); } catch (e) { $('#err').textContent = e.message; } await render(); }
+
+  $('#form').onsubmit = (e) => { e.preventDefault();
+    act(async () => { await api('POST', '/api/todos', { title: $('#title').value, priority: $('#prio').value }); $('#title').value = ''; $('#title').focus(); }); };
+  document.querySelectorAll('.tabs button').forEach((b) => b.onclick = () => {
+    filter = b.dataset.f; document.querySelectorAll('.tabs button').forEach((o) => o.setAttribute('aria-pressed', o === b)); render(); });
+
+  (async () => {
+    try { const c = new AbortController(); setTimeout(() => c.abort(), 900);
+      const r = await fetch(REAL + '/api/health', { signal: c.signal }); if (r.ok) mode = 'real'; } catch {}
+    const m = $('#mode'); m.classList.toggle('real', mode === 'real');
+    $('#modeText').textContent = mode === 'real'
+      ? 'Conectado ao servidor NestJS real em ' + REAL
+      : 'Modo demonstração: a API é simulada no navegador (localStorage). Rode o servidor em localhost:3066 para usar a API real.';
+    if (mode === 'mock' && !load().items.length) { for (const [t, p] of [['Ler a doc do NestJS', 'alta'], ['Escrever testes e2e', 'media']]) mock('POST', '/api/todos', { title: t, priority: p }); }
+    render();
+  })();
+})();
+</script>
+</body>
+</html>
