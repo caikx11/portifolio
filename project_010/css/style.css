@@ -14,7 +14,7 @@ h1::before{content:"";display:inline-block;width:.5em;height:.5em;background:var
 .subtitle{color:#b9c8da;margin-top:.2rem}
 main{max-width:840px;margin:-2.6rem auto 0;padding:0 16px}
 .tabs{display:flex;gap:.25rem;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:.3rem;overflow-x:auto;box-shadow:0 14px 30px -20px rgba(15,42,67,.6)}
-.tab-btn{flex:1 0 auto;border:none;background:none;color:var(--muted);font:700 .85rem var(--font);padding:.65rem 1rem;border-radius:12px;cursor:pointer;white-space:nowrap;transition:.2s}
+.tab-btn{flex:1 0 auto;border:none;background:none;color:var(--muted);font:700 .8rem var(--font);padding:.65rem .75rem;border-radius:12px;cursor:pointer;white-space:nowrap;transition:.2s}
 .tab-btn:hover{color:var(--text)}
 .tab-btn.active{background:var(--navy);color:#fff}
 body.dark-theme .tab-btn.active{background:var(--gold);color:#14283d}

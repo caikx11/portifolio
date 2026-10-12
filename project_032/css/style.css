@@ -814,3 +814,10 @@ body {
 .back-link:hover{opacity:1}
 .section-actions{display:flex;gap:8px;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.secondary-btn{font:600 .95rem 'Plus Jakarta Sans',sans-serif;padding:12px 20px;border-radius:var(--radius-sm);border:1.5px solid var(--border-dark);background:var(--bg-surface);color:var(--text-primary);cursor:pointer;transition:var(--transition-fast)}
+.secondary-btn:hover{border-color:var(--primary-color);color:var(--primary-color)}
+.form-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;margin-top:8px}
+.section-actions .filter-select,.section-actions .search-input{flex:1;min-width:140px}
+.table-wrapper{overflow-x:auto}
+.table-wrapper table{min-width:520px}
+.table-wrapper td,.table-wrapper th{white-space:nowrap}

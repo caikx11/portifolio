@@ -60,3 +60,6 @@ label{color:var(--mut);font-weight:600}
 .lesson-item{cursor:pointer;transition:transform .15s,border-color .2s}.lesson-item:hover{transform:translateX(3px);border-color:#4f46e5}
 .lesson-item.completed{border-color:#22a06b;background:#eefaf3}
 .lesson-item-header{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.course-item,.course-item.active{background:var(--soft)!important;color:var(--ink)!important}
+.course-item *{color:inherit!important}
+.course-item.active{border-color:var(--acc)!important}

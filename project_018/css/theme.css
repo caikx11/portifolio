@@ -35,3 +35,4 @@ footer{text-align:center;color:#8a8a94!important;background:none!important;paddi
 .back-link:hover{background:var(--pink);color:#fff}
 @media(max-width:860px){.meme-generator{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}header h1{transform:none}}
+.meme-generator{padding-right:6px!important}

@@ -43,3 +43,5 @@ footer{text-align:center;color:var(--ink)!important;background:none!important;op
 .back-link:hover{background:var(--olive);color:#fff}
 @media(max-width:900px){.app-container{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.modal-content{padding:44px 20px 20px!important;max-height:90vh;overflow-y:auto}
+.close-btn{position:absolute;top:8px;right:16px}

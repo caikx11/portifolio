@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <span class="habit-name">${esc(habit.name)}</span>
                     <div class="habit-meta">
                         <span class="habit-category">${catInfo.label}</span>
-                        <span class="habit-streak">${habit.streak} ${habit.streak === 1 ? "dia" : "dias"} seguidos</span>
+                        <span class="habit-streak">${habit.streak} ${habit.streak === 1 ? "dia seguido" : "dias seguidos"}</span>
                     </div>
                 </div>
                 <div class="habit-actions">

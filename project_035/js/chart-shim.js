@@ -59,7 +59,8 @@
       var val = max * g / 4; ctx.fillText(val >= 1000 ? Math.round(val / 100) / 10 + 'k' : Math.round(val), L - 6, y);
     }
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-    labels.forEach(function (l, i) { ctx.fillText(String(l), L + pw * (i + .5) / n, T + ph + 6); });
+    var skip = Math.ceil(labels.length / Math.max(1, Math.floor(pw / 56)));
+    labels.forEach(function (l, i) { if (i % skip) return; ctx.fillText(String(l), L + pw * (i + .5) / n, T + ph + 6); });
     ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
     var lx = L;
     ds.forEach(function (d, k) {
