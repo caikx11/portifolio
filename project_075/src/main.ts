@@ -64,7 +64,7 @@ function toast(kind: string) {
   el.className = `toast-in pointer-events-auto flex items-center justify-between gap-3 rounded-xl ${bg} px-4 py-3 text-sm font-bold text-white shadow-lg`;
   el.innerHTML = `<span>${msg}</span><button type="button" aria-label="Fechar aviso" class="rounded px-1.5 hover:bg-white/20">✕</button>`;
   el.querySelector("button")!.addEventListener("click", () => el.remove());
-  document.getElementById("toasts")!.appendChild(el);
+  document.getElementById("toast-host")!.appendChild(el);
   setTimeout(() => el.remove(), 4000);
 }
 
