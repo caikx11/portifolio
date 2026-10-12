@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Quiz Avançada</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="quiz-platform">
+        <header class="platform-header">
+            <h1>Plataforma de Quiz Avançada</h1>
+            <p>Crie, compartilhe e responda quizzes personalizados</p>
+        </header>
+
+        <div class="platform-tabs">
+            <button class="tab-btn active" data-tab="create">Criar Quiz</button>
+            <button class="tab-btn" data-tab="library">Biblioteca</button>
+            <button class="tab-btn" data-tab="play">Jogar</button>
+        </div>
+
+        <div class="tab-content">
+            <!-- Aba de Criação -->
+            <div id="create-tab" class="tab-pane active">
+                <div class="create-quiz-container">
+                    <h2>Criar Novo Quiz</h2>
+
+                    <div class="quiz-form">
+                        <div class="form-group">
+                            <label for="quiz-title">Título do Quiz:</label>
+                            <input type="text" id="quiz-title" placeholder="Digite o título do quiz">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quiz-description">Descrição:</label>
+                            <textarea id="quiz-description" placeholder="Descreva o que este quiz aborda..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quiz-category">Categoria:</label>
+                            <select id="quiz-category">
+                                <option value="">Selecione uma categoria</option>
+                                <option value="history">História</option>
+                                <option value="science">Ciência</option>
+                                <option value="technology">Tecnologia</option>
+                                <option value="culture">Cultura Geral</option>
+                                <option value="sports">Esportes</option>
+                                <option value="entertainment">Entretenimento</option>
+                            </select>
+                        </div>
+
+                        <div class="questions-container">
+                            <h3>Perguntas</h3>
+                            <div id="questions-list">
+                                <!-- Perguntas serão adicionadas dinamicamente -->
+                                <div class="question-item" data-index="0">
+                                    <div class="question-header">
+                                        <h4>Pergunta 1</h4>
+                                        <button class="btn-remove-question" title="Remover pergunta">×</button>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="question-text-0">Texto da pergunta:</label>
+                                        <input type="text" id="question-text-0" placeholder="Digite a pergunta aqui">
+                                    </div>
+
+                                    <div class="options-container">
+                                        <h5>Opções de resposta:</h5>
+                                        <div class="option-item" data-option-index="0">
+                                            <input type="text" id="option-0-0" placeholder="Opção A">
+                                            <input type="radio" name="correct-answer-0" value="0" checked>
+                                            <label>Resposta correta</label>
+                                            <button class="btn-remove-option" title="Remover opção">×</button>
+                                        </div>
+                                        <div class="option-item" data-option-index="1">
+                                            <input type="text" id="option-0-1" placeholder="Opção B">
+                                            <input type="radio" name="correct-answer-0" value="1">
+                                            <label>Resposta correta</label>
+                                            <button class="btn-remove-option" title="Remover opção">×</button>
+                                        </div>
+                                        <div class="option-item" data-option-index="2">
+                                            <input type="text" id="option-0-2" placeholder="Opção C">
+                                            <input type="radio" name="correct-answer-0" value="2">
+                                            <label>Resposta correta</label>
+                                            <button class="btn-remove-option" title="Remover opção">×</button>
+                                        </div>
+                                        <div class="option-item" data-option-index="3">
+                                            <input type="text" id="option-0-3" placeholder="Opção D">
+                                            <input type="radio" name="correct-answer-0" value="3">
+                                            <label>Resposta correta</label>
+                                            <button class="btn-remove-option" title="Remover opção">×</button>
+                                        </div>
+                                    </div>
+
+                                    <button class="btn-add-option" data-question-index="0">+ Adicionar opção</button>
+                                </div>
+                            </div>
+
+                            <button class="btn-add-question">+ Adicionar nova pergunta</button>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn-save-quiz" id="save-quiz-btn">Salvar Quiz</button>
+                            <button class="btn-preview-quiz" id="preview-quiz-btn">Visualizar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba da Biblioteca -->
+            <div id="library-tab" class="tab-pane">
+                <div class="library-container">
+                    <h2>Biblioteca de Quizzes</h2>
+
+                    <div class="library-controls">
+                        <input type="text" id="library-search" placeholder="Buscar quizzes...">
+                        <select id="library-filter">
+                            <option value="">Todas as categorias</option>
+                            <option value="history">História</option>
+                            <option value="science">Ciência</option>
+                            <option value="technology">Tecnologia</option>
+                            <option value="culture">Cultura Geral</option>
+                            <option value="sports">Esportes</option>
+                            <option value="entertainment">Entretenimento</option>
+                        </select>
+                    </div>
+
+                    <div class="quizzes-grid" id="quizzes-grid">
+                        <!-- Quizzes serão carregados dinamicamente -->
+                        <div class="quiz-card">
+                            <h3>Quiz de História</h3>
+                            <p class="quiz-description">Teste seus conhecimentos sobre eventos históricos importantes</p>
+                            <div class="quiz-meta">
+                                <span class="quiz-category">História</span>
+                                <span class="quiz-count">10 perguntas</span>
+                            </div>
+                            <button class="btn-play-quiz">Jogar</button>
+                        </div>
+
+                        <div class="quiz-card">
+                            <h3>Quiz de Ciência</h3>
+                            <p class="quiz-description">Desafie seus conhecimentos científicos</p>
+                            <div class="quiz-meta">
+                                <span class="quiz-category">Ciência</span>
+                                <span class="quiz-count">8 perguntas</span>
+                            </div>
+                            <button class="btn-play-quiz">Jogar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba de Jogar -->
+            <div id="play-tab" class="tab-pane">
+                <div class="play-quiz-container">
+                    <h2>Jogar Quiz</h2>
+
+                    <div class="quiz-selector">
+                        <h3>Escolha um quiz para jogar:</h3>
+                        <div class="quiz-options" id="quiz-options">
+                            <!-- Opções de quiz serão carregadas dinamicamente -->
+                        </div>
+                    </div>
+
+                    <div class="quiz-player" id="quiz-player" style="display: none;">
+                        <!-- Interface do quiz será carregada aqui -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

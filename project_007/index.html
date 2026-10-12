@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker - Projeto 007</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Rastreador de Hábitos com streak, categorias e visualização de progresso">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Habit Tracker</h1>
+            <p class="subtitle">Construa hábitos, mantenha a consistência</p>
+        </header>
+
+        <main>
+            <!-- Add Habit Section -->
+            <div class="add-habit-section">
+                <button class="add-habit-btn" id="add-habit-btn">
+                    <span>+</span> Novo Hábito
+                </button>
+                <div class="habit-form" id="habit-form" style="display: none;">
+                    <input type="text" id="habit-name" placeholder="Nome do hábito (ex: Beber água)">
+                    <select id="habit-category">
+                        <option value="health">🏥 Saúde</option>
+                        <option value="productivity">💼 Produtividade</option>
+                        <option value="learning">📚 Aprendizado</option>
+                        <option value="fitness">💪 Fitness</option>
+                        <option value="mindfulness">🧘 Mindfulness</option>
+                        <option value="other">📦 Outro</option>
+                    </select>
+                    <div class="frequency-options">
+                        <label>
+                            <input type="radio" name="frequency" value="daily" checked> Diário
+                        </label>
+                        <label>
+                            <input type="radio" name="frequency" value="weekly"> Semanal
+                        </label>
+                        <label>
+                            <input type="radio" name="frequency" value="custom"> Personalizado
+                        </label>
+                    </div>
+                    <div class="custom-days" id="custom-days" style="display: none;">
+                        <span>Dias da semana:</span>
+                        <div class="day-buttons">
+                            <button type="button" data-day="0">Dom</button>
+                            <button type="button" data-day="1">Seg</button>
+                            <button type="button" data-day="2">Ter</button>
+                            <button type="button" data-day="3">Qua</button>
+                            <button type="button" data-day="4">Qui</button>
+                            <button type="button" data-day="5">Sex</button>
+                            <button type="button" data-day="6">Sáb</button>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button id="save-habit-btn">Salvar</button>
+                        <button id="cancel-habit-btn">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Habits List -->
+            <div class="habits-section">
+                <div class="section-header">
+                    <h2>Seus Hábitos</h2>
+                    <div class="filter-tabs">
+                        <button class="filter-tab active" data-filter="all">Todos</button>
+                        <button class="filter-tab" data-filter="today">Hoje</button>
+                        <button class="filter-tab" data-filter="pending">Pendentes</button>
+                        <button class="filter-tab" data-filter="completed">Concluídos</button>
+                    </div>
+                </div>
+                <div class="habits-grid" id="habits-grid"></div>
+            </div>
+
+            <!-- Weekly Calendar View -->
+            <div class="calendar-section">
+                <h2>Visão Semanal</h2>
+                <div class="week-calendar" id="week-calendar"></div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-section">
+                <h2>Estatísticas</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-value" id="total-habits">0</span>
+                        <span class="stat-label">Total de Hábitos</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="completed-today">0</span>
+                        <span class="stat-label">Concluídos Hoje</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="longest-streak">0</span>
+                        <span class="stat-label">Maior Streak</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="completion-rate">0%</span>
+                        <span class="stat-label">Taxa de Conclusão</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Caio. Habit Tracker</p>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

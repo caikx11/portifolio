@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Palavras Cruzadas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Jogo de Palavras Cruzadas</h1>
+            <p>Teste seu vocabulário e raciocínio lógico</p>
+        </header>
+
+        <div class="game-controls">
+            <div class="difficulty-selector">
+                <label for="difficulty">Dificuldade:</label>
+                <select id="difficulty">
+                    <option value="fácil">Fácil</option>
+                    <option value="médio" selected>Médio</option>
+                    <option value="difícil">Difícil</option>
+                </select>
+            </div>
+            <button id="new-game-btn">Novo Jogo</button>
+            <button id="check-btn" disabled>Verificar Resposta</button>
+            <button id="reveal-btn" disabled>Mostrar Solução</button>
+            <button id="hint-btn" disabled>Dica</button>
+        </div>
+
+        <div class="game-info">
+            <div id="timer">Tempo: 00:00</div>
+            <div id="score">Pontuação: 0</div>
+            <div id="words-found">Palavras encontradas: 0/0</div>
+        </div>
+
+        <div class="crossword-container">
+            <div id="crossword-grid"></div>
+        </div>
+
+        <div class="clue-panel">
+            <div class="clues-section">
+                <h3>Clues na Horizontal</h3>
+                <ul id="across-clues"></ul>
+            </div>
+            <div class="clues-section">
+                <h3>Clues na Vertical</h3>
+                <ul id="down-clues"></ul>
+            </div>
+        </div>
+
+        <div id="game-overlay" class="hidden">
+            <div id="game-over-message">
+                <h2>Parabéns!</h2>
+                <p id="final-message"></p>
+                <button id="play-again-btn">Jogar Novamente</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

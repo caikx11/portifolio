@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Diagramas de Fluxo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gerador de Diagramas de Fluxo</h1>
+            <p>Crie diagramas de fluxo com formas conectáveis</p>
+        </header>
+
+        <main>
+            <div class="sidebar">
+                <h2>Formas Disponíveis</h2>
+                <div class="shape-panel" id="shape-panel">
+                    <!-- Formas serão carregadas aqui via JavaScript -->
+                </div>
+            </div>
+
+            <div class="canvas-wrapper">
+                <div class="toolbar">
+                    <button id="clear-canvas">Limpar Tela</button>
+                    <button id="export-diagram">Exportar Diagrama</button>
+                    <button id="save-diagram">Salvar Diagrama</button>
+                    <button id="load-diagram">Carregar Diagrama</button>
+                </div>
+                <div id="canvas" class="canvas"></div>
+            </div>
+
+            <div class="properties-panel" id="properties-panel">
+                <h2>Propriedades da Forma</h2>
+                <form id="shape-form">
+                    <!-- Formulário de propriedades será preenchido dinamicamente -->
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

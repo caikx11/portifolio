@@ -1,0 +1,21 @@
+{
+  "id": "wire",
+  "name": "Fio",
+  "type": "connection",
+  "symbol": "─",
+  "color": "#000000",
+  "properties": [],
+  "connections": [
+    {
+      "name": "end1",
+      "label": "Extremidade 1",
+      "type": "bidirectional"
+    },
+    {
+      "name": "end2",
+      "label": "Extremidade 2",
+      "type": "bidirectional"
+    }
+  ],
+  "description": "Condutor elétrico que conecta componentes em um circuito"
+}

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "1",
+    "title": "Bolo de Cenoura com Cobertura de Chocolate",
+    "category": "Sobremesa",
+    "difficulty": "Fácil",
+    "time": 45,
+    "servings": 8,
+    "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&q=80&w=400",
+    "ingredients": [
+        "3 cenouras médias raladas",
+        "4 ovos",
+        "1 xícara de óleo de soja",
+        "2 xícaras de açúcar",
+        "2 xícaras de farinha de trigo",
+        "1 colher de sopa de fermento em pó",
+        "1 lata de leite condensado",
+        "1 colher de sopa de manteiga",
+        "3 colheres de sopa de chocolate em pó"
+    ],
+    "instructions": [
+        "No liquidificador, bata as cenouras, ovos, óleo e açúcar até obter uma mistura homogênea.",
+        "Despeje em uma tigela e misture delicadamente a farinha e o fermento.",
+        "Asse em forno preaquecido a 180°C por cerca de 40 minutos.",
+        "Para a cobertura, leve o leite condensado, manteiga e chocolate ao fogo baixo até engrossar. Cubra o bolo pronto."
+    ]
+  },
+  {
+    "id": "2",
+    "title": "Frango Xadrez Fácil",
+    "category": "Almoço",
+    "difficulty": "Médio",
+    "time": 30,
+    "servings": 4,
+    "image": "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&q=80&w=400",
+    "ingredients": [
+        "500g de peito de frango cortado em cubos",
+        "1 pimentão verde cortado em cubos",
+        "1 pimentão vermelho cortado em cubos",
+        "1 cebola média cortada em cubos",
+        "1/2 xícara de molho de soja (shoyu)",
+        "1 colher de sopa de amido de milho",
+        "1/2 xícara de água",
+        "Amendoim torrado a gosto",
+        "Azeite de oliva para refogar"
+    ],
+    "instructions": [
+        "Refogue o frango no azeite até dourar e reserve.",
+        "Na mesma panela, refogue a cebola e os pimentões até ficarem levemente macios.",
+        "Dissolva o amido de milho na água e misture com o molho de soja.",
+        "Adicione o frango de volta à panela com os vegetais, despeje o molho e mexa até engrossar.",
+        "Finalize com o amendoim torrado por cima e sirva quente."
+    ]
+  },
+  {
+    "id": "3",
+    "title": "Panqueca de Banana Funcional",
+    "category": "Café da Manhã",
+    "difficulty": "Fácil",
+    "time": 15,
+    "servings": 1,
+    "image": "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&q=80&w=400",
+    "ingredients": [
+        "1 banana madura",
+        "1 ovo",
+        "2 colheres de sopa de aveia em flocos finos",
+        "1 colher de chá de canela em pó",
+        "Mel para servir"
+    ],
+    "instructions": [
+        "Em um prato, amasse bem a banana com um garfo.",
+        "Adicione o ovo e bata levemente até incorporar.",
+        "Misture a aveia e a canela até formar uma massa homogênea.",
+        "Aqueça uma frigideira antiaderente (pode untar com um fio de óleo de coco).",
+        "Despeje a massa e cozinhe em fogo baixo até dourar os dois lados. Sirva com mel."
+    ]
+  },
+  {
+    "id": "4",
+    "title": "Salmão Grelhado com Ervas",
+    "category": "Jantar",
+    "difficulty": "Difícil",
+    "time": 25,
+    "servings": 2,
+    "image": "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=400",
+    "ingredients": [
+        "2 postas de salmão fresco",
+        "Suco de 1 limão",
+        "2 dentes de alho picados",
+        "Ervas finas picadas (alecrim, tomilho, salsa)",
+        "Sal e pimenta-do-reino a gosto",
+        "Azeite de oliva"
+    ],
+    "instructions": [
+        "Tempere o salmão com limão, alho, sal, pimenta e as ervas finas.",
+        "Deixe marinar na geladeira por 15 minutos.",
+        "Aqueça uma grelha ou frigideira pesada com um fio de azeite.",
+        "Grelhe o salmão por cerca de 3 a 4 minutos de cada lado, começando com a pele para baixo.",
+        "Sirva com legumes grelhados ou salada fresca."
+    ]
+  }
+]

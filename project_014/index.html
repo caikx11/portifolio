@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loja Virtual - Carrinho de Compras</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Minha Loja Virtual</h1>
+        <nav>
+            <ul>
+                <li><a href="#" id="cart-link">Carrinho (<span id="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="products">
+            <h2>Produtos em Destaque</h2>
+            <div class="products-grid" id="products-container">
+                <!-- Produtos serão inseridos aqui via JavaScript -->
+            </div>
+        </section>
+
+        <section id="cart-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" id="close-cart">&times;</span>
+                <h2>Seu Carrinho</h2>
+                <div id="cart-items">
+                    <!-- Itens do carrinho serão inseridos aqui -->
+                </div>
+                <div class="cart-summary">
+                    <p>Total: <span id="cart-total">R$ 0,00</span></p>
+                    <button id="checkout-btn">Finalizar Compra</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Minha Loja Virtual. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

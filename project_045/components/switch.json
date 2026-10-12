@@ -1,0 +1,29 @@
+{
+  "id": "switch",
+  "name": "Chave SPST",
+  "type": "mechanical",
+  "symbol": "S",
+  "color": "#654321",
+  "properties": [
+    {
+      "name": "state",
+      "label": "Estado",
+      "type": "select",
+      "options": ["Aberto", "Fechado"],
+      "default": "Fechado"
+    }
+  ],
+  "connections": [
+    {
+      "name": "terminal1",
+      "label": "Terminal 1",
+      "type": "bidirectional"
+    },
+    {
+      "name": "terminal2",
+      "label": "Terminal 2",
+      "type": "bidirectional"
+    }
+  ],
+  "description": "Chave unipolar unijetado para abrir ou fechar circuitos"
+}

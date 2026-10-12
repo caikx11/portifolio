@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EstoquePro - Controle de Estoque Profissional</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar de Navegação -->
+        <aside class="sidebar">
+            <div class="brand">
+                <h2>EstoquePro</h2>
+                <span class="badge">Professional</span>
+            </div>
+
+            <div class="category-selector">
+                <label for="category-select">Categoria:</label>
+                <select id="category-select">
+                    <option value="all">Todas as Categorias</option>
+                    <option value="electronics">Eletrônicos</option>
+                    <option value="office">Escritório</option>
+                    <option value="industrial">Industrial</option>
+                    <option value="consumables">Consumíveis</option>
+                </select>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-view="dashboard">Visão Geral</button>
+                <button class="nav-item" data-view="products">Produtos</button>
+                <button class="nav-item" data-view="movements">Movimentações</button>
+                <button class="nav-item" data-view="reports">Relatórios</button>
+                <button class="nav-item" data-view="suppliers">Fornecedores</button>
+            </nav>
+
+            <div class="user-profile">
+                <div class="avatar">ES</div>
+                <div class="user-info">
+                    <strong>Eng. Silvia Oliveira</strong>
+                    <small id="user-role">Gerente de Logística</small>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1 id="current-view-title">Visão Geral</h1>
+                    <p id="category-indicator">Todas as Categorias</p>
+                </div>
+                <div class="actions">
+                    <button id="btn-new-product" class="btn-primary">+ Novo Produto</button>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- Painel de Métricas -->
+                <section class="metrics-row">
+                    <div class="metric-card">
+                        <span class="metric-title" id="m1-title">Produtos em Estoque</span>
+                        <h2 class="metric-value" id="m1-value">156</h2>
+                        <small class="trend positive">+12 este mês</small>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-title" id="m2-title">Produtos Críticos (< 5 unidades)</span>
+                        <h2 class="metric-value alert" id="m2-value">8</h2>
+                        <small class="trend negative">Requer reposição</small>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-title" id="m3-title">Valor Total em Estoque</span>
+                        <h2 class="metric-value" id="m3-value">R$ 89.450,00</h2>
+                        <small class="trend positive">Atualizado hoje</small>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-title" id="m4-title">Taxa de Giro</span>
+                        <h2 class="metric-value" id="m4-value">4,2x</h2>
+                        <small class="trend positive">Ao ano</small>
+                    </div>
+                </section>
+
+                <!-- Área de Listagem e Gestão -->
+                <section class="data-section">
+                    <div class="table-header-controls">
+                        <input type="text" id="search-input" placeholder="Buscar por código, descrição ou categoria...">
+                        <div class="filters">
+                            <select id="status-filter">
+                                <option value="all">Todos os Status</option>
+                                <option value="in-stock">Em Estoque</option>
+                                <option value="low-stock">Estoque Baixo</option>
+                                <option value="out-of-stock">Fora de Estoque</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr id="table-headers">
+                                    <th>Código</th>
+                                    <th>Descrição</th>
+                                    <th>Categoria</th>
+                                    <th>Estoque Atual</th>
+                                    <th>Estoque Mínimo</th>
+                                    <th>Localização</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- Preenchido dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para Novo Produto -->
+    <div id="modal-form" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Novo Produto</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="product-form">
+                <div class="form-group">
+                    <label id="lbl-code">Código:</label>
+                    <input type="text" id="product-code" required>
+                </div>
+                <div class="form-group">
+                    <label>Descrição:</label>
+                    <input type="text" id="product-description" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Categoria:</label>
+                        <select id="product-category" required>
+                            <option value="electronics">Eletrônicos</option>
+                            <option value="office">Escritório</option>
+                            <option value="industrial">Industrial</option>
+                            <option value="consumables">Consumíveis</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fornecedor:</label>
+                        <input type="text" id="product-supplier" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Estoque Atual:</label>
+                        <input type="number" id="product-stock" min="0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Estoque Mínimo:</label>
+                        <input type="number" id="product-min-stock" min="0" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Localização:</label>
+                    <input type="text" id="product-location" required>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary close-modal">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar Produto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

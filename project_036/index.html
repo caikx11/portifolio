@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicativo de Receitas com Modo Offline</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Receitas com Modo Offline</h1>
+        <div class="app-header">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Buscar receitas...">
+                <button id="search-btn">Buscar</button>
+            </div>
+            <div class="status-indicator">
+                <span id="status-text">Online</span>
+                <span id="status-dot" class="online"></span>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="all">Todas</button>
+            <button class="tab-btn" data-tab="favorites">Favoritas</button>
+            <button class="tab-btn" data-tab="offline">Offline</button>
+        </div>
+
+        <div class="recipes-container" id="recipes-container">
+            <!-- Receitas serão carregadas aqui -->
+            <div class="loading">Carregando receitas...</div>
+        </div>
+
+        <div class="recipe-detail" id="recipe-detail" style="display: none;">
+            <button id="close-detail-btn">&times;</button>
+            <div class="recipe-content">
+                <!-- Detalhes da receita serão exibidos aqui -->
+            </div>
+            <div class="recipe-actions">
+                <button id="toggle-favorite-btn">Adicionar aos Favoritos</button>
+                <button id="save-offline-btn">Salvar para Offline</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

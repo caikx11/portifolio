@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leitor de Notícias</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Leitor de Notícias</h1>
+            <p>Mantenha-se atualizado com as últimas notícias</p>
+        </header>
+
+        <div class="toolbar">
+            <input type="text" id="search-input" placeholder="Buscar notícias...">
+            <select id="category-filter">
+                <option value="all">Todas as Categorias</option>
+                <option value="tecnologia">Tecnologia</option>
+                <option value="esportes">Esportes</option>
+                <option value="politica">Política</option>
+                <option value="entretenimento">Entretenimento</option>
+                <option value="saude">Saúde</option>
+            </select>
+            <button id="refresh-btn">Atualizar Notícias</button>
+        </div>
+
+        <div class="news-container">
+            <div class="news-sidebar">
+                <h3>Categorias</h3>
+                <ul id="category-list">
+                    <li class="active" data-category="all">Todas</li>
+                    <li data-category="tecnologia">Tecnologia</li>
+                    <li data-category="esportes">Esportes</li>
+                    <li data-category="politica">Política</li>
+                    <li data-category="entretenimento">Entretenimento</li>
+                    <li data-category="saude">Saúde</li>
+                </ul>
+            </div>
+
+            <div class="news-main">
+                <div class="news-grid" id="news-grid">
+                    <!-- News cards will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="news-detail" id="news-detail">
+            <div class="news-detail-header">
+                <button id="close-detail">&times;</button>
+                <h2 id="detail-title"></h2>
+                <div class="detail-meta">
+                    <span id="detail-category"></span>
+                    <span id="detail-date"></span>
+                </div>
+            </div>
+            <div id="detail-content"></div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

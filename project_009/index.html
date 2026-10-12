@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Senhas - Projeto 009</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Gerador de senhas seguras com medidor de força, opções personalizáveis e histórico">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gerador de Senhas</h1>
+            <p class="subtitle">Crie senhas seguras e únicas instantaneamente</p>
+        </header>
+
+        <main>
+            <!-- Generated Password Display -->
+            <div class="password-display">
+                <input type="text" id="generated-password" readonly placeholder="Clique em Gerar para criar uma senha">
+                <button class="copy-btn" id="copy-btn" title="Copiar senha">
+                    <span class="copy-icon">📋</span>
+                    <span class="copied-text" style="display: none;">Copiado!</span>
+                </button>
+            </div>
+
+            <!-- Strength Meter -->
+            <div class="strength-section">
+                <div class="strength-header">
+                    <span>Força da senha</span>
+                    <span id="strength-label">Muito Fraca</span>
+                </div>
+                <div class="strength-bar">
+                    <div class="strength-fill" id="strength-fill"></div>
+                </div>
+                <div class="strength-criteria">
+                    <div class="criterion" id="crit-length">
+                        <span class="criterion-icon">✗</span> 8+ caracteres
+                    </div>
+                    <div class="criterion" id="crit-lower">
+                        <span class="criterion-icon">✗</span> Minúsculas
+                    </div>
+                    <div class="criterion" id="crit-upper">
+                        <span class="criterion-icon">✗</span> Maiúsculas
+                    </div>
+                    <div class="criterion" id="crit-number">
+                        <span class="criterion-icon">✗</span> Números
+                    </div>
+                    <div class="criterion" id="crit-symbol">
+                        <span class="criterion-icon">✗</span> Símbolos
+                    </div>
+                </div>
+            </div>
+
+            <!-- Options -->
+            <div class="options-section">
+                <h2>Opções</h2>
+                <div class="option-group">
+                    <label class="slider-label">
+                        Comprimento: <span id="length-value">16</span>
+                    </label>
+                    <input type="range" id="length-slider" min="4" max="64" value="16">
+                </div>
+                <div class="option-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="opt-lower" checked>
+                        <span>Minúsculas (a-z)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="opt-upper" checked>
+                        <span>Maiúsculas (A-Z)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="opt-number" checked>
+                        <span>Números (0-9)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="opt-symbol" checked>
+                        <span>Símbolos (!@#$%...)</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="opt-exclude">
+                        <span>Excluir similares (i, l, 1, o, 0, O)</span>
+                    </label>
+                </div>
+                <button class="generate-btn" id="generate-btn">Gerar Nova Senha</button>
+            </div>
+
+            <!-- History -->
+            <div class="history-section">
+                <div class="history-header">
+                    <h2>Histórico</h2>
+                    <button class="clear-history" id="clear-history">Limpar</button>
+                </div>
+                <div class="history-list" id="history-list">
+                    <p class="empty-history">Nenhuma senha gerada ainda</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Caio. Gerador de Senhas Seguras</p>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

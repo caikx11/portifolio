@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Física Interativo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="simulator-container">
+        <header class="simulator-header">
+            <h1>Simulador de Física Interativo</h1>
+            <p>Explore sistemas físicos clássicos com parâmetros ajustáveis em tempo real</p>
+        </header>
+
+        <div class="simulator-tabs">
+            <button class="tab-btn active" data-tab="spring">Mola</button>
+            <button class="tab-btn" data-tab="pendulum">Pêndulo</button>
+            <button class="tab-btn" data-tab="projectile">Projétil</button>
+        </div>
+
+        <div class="tab-content">
+            <!-- Aba da Mola -->
+            <div id="spring-tab" class="tab-pane active">
+                <div class="simulation-layout">
+                    <div class="canvas-container">
+                        <canvas id="spring-canvas" width="600" height="400"></canvas>
+                        <div class="simulation-controls">
+                            <div class="control-btns">
+                                <button id="spring-start" class="btn-play">▶ Iniciar</button>
+                                <button id="spring-pause" class="btn-pause">⏸ Pausar</button>
+                                <button id="spring-reset" class="btn-reset">↻ Resetar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="parameters-panel">
+                        <h3>Parâmetros da Mola</h3>
+                        <div class="param-group">
+                            <label for="spring-mass">Massa (kg): <span id="spring-mass-value">1.0</span></label>
+                            <input type="range" id="spring-mass" min="0.1" max="5.0" step="0.1" value="1.0">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="spring-k">Constante da Mola k (N/m): <span id="spring-k-value">10</span></label>
+                            <input type="range" id="spring-k" min="1" max="50" step="1" value="10">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="spring-damping">Amortecimento b (Ns/m): <span id="spring-damping-value">0.5</span></label>
+                            <input type="range" id="spring-damping" min="0" max="5" step="0.1" value="0.5">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="spring-initial">Deslocamento Inicial (m): <span id="spring-initial-value">1.0</span></label>
+                            <input type="range" id="spring-initial" min="0.1" max="3.0" step="0.1" value="1.0">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="spring-gravity">Gravidade (m/s²): <span id="spring-gravity-value">9.8</span></label>
+                            <input type="range" id="spring-gravity" min="1" max="20" step="0.1" value="9.8">
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Equação: m·x'' + b·x' + k·x = 0</h4>
+                            <p>Frequência angular: ω = √(k/m)</p>
+                            <p>Período: T = 2π/ω</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba do Pêndulo -->
+            <div id="pendulum-tab" class="tab-pane">
+                <div class="simulation-layout">
+                    <div class="canvas-container">
+                        <canvas id="pendulum-canvas" width="600" height="400"></canvas>
+                        <div class="simulation-controls">
+                            <div class="control-btns">
+                                <button id="pendulum-start" class="btn-play">▶ Iniciar</button>
+                                <button id="pendulum-pause" class="btn-pause">⏸ Pausar</button>
+                                <button id="pendulum-reset" class="btn-reset">↻ Resetar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="parameters-panel">
+                        <h3>Parâmetros do Pêndulo</h3>
+                        <div class="param-group">
+                            <label for="pendulum-length">Comprimento (m): <span id="pendulum-length-value">2.0</span></label>
+                            <input type="range" id="pendulum-length" min="0.5" max="5.0" step="0.1" value="2.0">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="pendulum-mass">Massa (kg): <span id="pendulum-mass-value">1.0</span></label>
+                            <input type="range" id="pendulum-mass" min="0.1" max="5.0" step="0.1" value="1.0">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="pendulum-angle">Ângulo Inicial (graus): <span id="pendulum-angle-value">30</span></label>
+                            <input type="range" id="pendulum-angle" min="5" max="120" step="5" value="30">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="pendulum-damping">Amortecimento do Ar: <span id="pendulum-damping-value">0.02</span></label>
+                            <input type="range" id="pendulum-damping" min="0" max="0.2" step="0.01" value="0.02">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="pendulum-gravity">Gravidade (m/s²): <span id="pendulum-gravity-value">9.8</span></label>
+                            <input type="range" id="pendulum-gravity" min="1" max="20" step="0.1" value="9.8">
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Equação: θ'' + (b/m)·θ' + (g/L)·sin(θ) = 0</h4>
+                            <p>Para ângulos pequenos: T ≈ 2π√(L/g)</p>
+                            <p>Período exato depende da amplitude</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba do Projétil -->
+            <div id="projectile-tab" class="tab-pane">
+                <div class="simulation-layout">
+                    <div class="canvas-container">
+                        <canvas id="projectile-canvas" width="600" height="400"></canvas>
+                        <div class="simulation-controls">
+                            <div class="control-btns">
+                                <button id="projectile-start" class="btn-play">▶ Lançar</button>
+                                <button id="projectile-pause" class="btn-pause">⏸ Pausar</button>
+                                <button id="projectile-reset" class="btn-reset">↻ Resetar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="parameters-panel">
+                        <h3>Parâmetros do Lançamento</h3>
+                        <div class="param-group">
+                            <label for="projectile-velocity">Velocidade Inicial (m/s): <span id="projectile-velocity-value">25</span></label>
+                            <input type="range" id="projectile-velocity" min="5" max="100" step="1" value="25">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="projectile-angle">Ângulo de Lançamento (graus): <span id="projectile-angle-value">45</span></label>
+                            <input type="range" id="projectile-angle" min="0" max="90" step="1" value="45">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="projectile-height">Altura Inicial (m): <span id="projectile-height-value">0</span></label>
+                            <input type="range" id="projectile-height" min="0" max="50" step="1" value="0">
+                        </div>
+
+                        <div class="param-group">
+                            <label for="projectile-gravity">Gravidade (m/s²): <span id="projectile-gravity-value">9.8</span></label>
+                            <input type="range" id="projectile-gravity" min="1" max="20" step="0.1" value="9.8">
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Equações do Movimento:</h4>
+                            <p>x(t) = v₀·cos(θ)·t</p>
+                            <p>y(t) = h + v₀·sin(θ)·t - ½gt²</p>
+                            <p>Alcance: R = (v₀²·sin(2θ))/g</p>
+                            <p>Altura máxima: H = (v₀²·sin²θ)/(2g)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="physics-info">
+            <h3>Informações em Tempo Real</h3>
+            <div id="spring-info" class="info-panel">
+                <h4>Mola</h4>
+                <div class="info-grid">
+                    <div><span>Posição:</span> <span id="spring-pos">0.00 m</span></div>
+                    <div><span>Velocidade:</span> <span id="spring-vel">0.00 m/s</span></div>
+                    <div><span>Aceleração:</span> <span id="spring-acc">0.00 m/s²</span></div>
+                    <div><span>Energia Total:</span> <span id="spring-energy">0.00 J</span></div>
+                    <div><span>Período Teórico:</span> <span id="spring-period">0.00 s</span></div>
+                    <div><span>Frequência:</span> <span id="spring-freq">0.00 Hz</span></div>
+                </div>
+            </div>
+
+            <div id="pendulum-info" class="info-panel" style="display: none;">
+                <h4>Pêndulo</h4>
+                <div class="info-grid">
+                    <div><span>Ângulo:</span> <span id="pendulum-ang">0.00°</span></div>
+                    <div><span>Vel. Angular:</span> <span id="pendulum-omega">0.00 rad/s</span></div>
+                    <div><span>Acel. Angular:</span> <span id="pendulum-alpha">0.00 rad/s²</span></div>
+                    <div><span>Energia Total:</span> <span id="pendulum-energy">0.00 J</span></div>
+                    <div><span>Período Teórico:</span> <span id="pendulum-period">0.00 s</span></div>
+                    <div><span>Tensão:</span> <span id="pendulum-tension">0.00 N</span></div>
+                </div>
+            </div>
+
+            <div id="projectile-info" class="info-panel" style="display: none;">
+                <h4>Projétil</h4>
+                <div class="info-grid">
+                    <div><span>Posição X:</span> <span id="projectile-x">0.00 m</span></div>
+                    <div><span>Posição Y:</span> <span id="projectile-y">0.00 m</span></div>
+                    <div><span>Velocidade X:</span> <span id="projectile-vx">0.00 m/s</span></div>
+                    <div><span>Velocidade Y:</span> <span id="projectile-vy">0.00 m/s</span></div>
+                    <div><span>Altura Máx:</span> <span id="projectile-max-h">0.00 m</span></div>
+                    <div><span>Alcance:</span> <span id="projectile-range">0.00 m</span></div>
+                    <div><span>Tempo de Voo:</span> <span id="projectile-time">0.00 s</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+[
+  {
+    "id": 1,
+    "title": "Quiz de História do Brasil",
+    "description": "Teste seus conhecimentos sobre o período imperial e republicano do Brasil.",
+    "category": "history",
+    "questions": [
+      {
+        "text": "Quem proclamou a independência do Brasil?",
+        "options": ["Dom Pedro I", "Dom Pedro II", "Marechal Deodoro da Fonseca", "Tiradentes"],
+        "correct": 0
+      },
+      {
+        "text": "Em que ano foi assinada a Lei Áurea?",
+        "options": ["1822", "1888", "1889", "1930"],
+        "correct": 1
+      },
+      {
+        "text": "Qual foi o primeiro imperador do Brasil?",
+        "options": ["Dom Pedro I", "Dom Pedro II", "Marechal Deodoro da Fonseca", "Tiradentes"],
+        "correct": 0
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Desafio de JavaScript",
+    "description": "Demonstre seu domínio em conceitos básicos e avançados da linguagem.",
+    "category": "technology",
+    "questions": [
+      {
+        "text": "Qual palavra-chave é usada para declarar uma constante em ES6?",
+        "options": ["var", "let", "const", "def"],
+        "correct": 2
+      },
+      {
+        "text": "Qual é o resultado de typeof []?",
+        "options": ["array", "object", "null", "undefined"],
+        "correct": 1
+      },
+      {
+        "text": "Qual método remove o último elemento de um array?",
+        "options": ["pop()", "shift()", "splice()", "slice()"],
+        "correct": 0
+      }
+    ]
+  }
+]

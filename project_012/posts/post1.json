@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "title": "Bem-vindo ao nosso blog",
+    "excerpt": "Este é o primeiro post do nosso blog simples. Aqui vamos compartilhar dicas, tutoriais e novidades sobre desenvolvimento web.",
+    "content": "<p>Este é o conteúdo completo do primeiro post. Neste artigo introdutório, apresentamos o propósito do blog e o que os leitores podem esperar encontrar em nossas publicações futuras.</p><p>Agradecemos pela visita e convidamos todos a participar ativamente deixando comentários e sugestões para melhorar nossa comunidade.</p>",
+    "date": "2026-10-09",
+    "author": "Equipe do Blog",
+    "category": "Introdução",
+    "tags": ["bem-vindo", "primeiro-post", "anúncio"]
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "id": "led",
+  "name": "LED",
+  "type": "output",
+  "symbol": "⬤",
+  "color": "#ff0000",
+  "properties": [
+    {
+      "name": "voltage",
+      "label": "Tensão (V)",
+      "type": "number",
+      "default": 2.0,
+      "min": 1.8,
+      "max": 3.3,
+      "step": 0.1
+    },
+    {
+      "name": "current",
+      "label": "Corrente (mA)",
+      "type": "number",
+      "default": 20,
+      "min": 5,
+      "max": 50,
+      "step": 1
+    }
+  ],
+  "connections": [
+    {
+      "name": "anode",
+      "label": "Ânodo (+)",
+      "type": "input"
+    },
+    {
+      "name": "cathode",
+      "label": "Cátodo (-)",
+      "type": "output"
+    }
+  ],
+  "description": "Diodo emissor de luz que emite luz quando polarizado diretamente"
+}

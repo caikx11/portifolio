@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Finanças - Projeto 010</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Controle de finanças pessoais com registro de receitas/despesas, relatórios e gráficos">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Controle de Finanças</h1>
+            <p class="subtitle">Gerencie suas receitas e despesas com facilidade</p>
+        </header>
+
+        <main>
+            <!-- Navigation Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="overview">Visão Geral</button>
+                <button class="tab-btn" data-tab="transactions">Transações</button>
+                <button class="tab-btn" data-tab="reports">Relatórios</button>
+                <button class="tab-btn" data-tab="settings">Configurações</button>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Overview Tab -->
+                <section id="overview" class="tab-panel active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Saldo Total</h3>
+                            <p class="stat-value" id="total-balance">R$ 0,00</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Receitas</h3>
+                            <p class="stat-value income" id="total-income">R$ 0,00</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Despesas</h3>
+                            <p class="stat-value expense" id="total-expenses">R$ 0,00</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Este Mês</h3>
+                            <p class="stat-value" id="monthly-balance">R$ 0,00</p>
+                        </div>
+                    </div>
+
+                    <div class="recent-transactions">
+                        <h2>Transações Recentes</h2>
+                        <div class="transactions-list" id="recent-transactions-list">
+                            <p class="empty-state">Nenhuma transação registrada ainda</p>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h2>Ações Rápidas</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" id="add-transaction-btn">+ Nova Transação</button>
+                            <button class="btn btn-secondary" id="view-all-transactions-btn">Ver Todas</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Transactions Tab -->
+                <section id="transactions" class="tab-panel">
+                    <div class="transactions-header">
+                        <h2>Todas as Transações</h2>
+                        <div class="filters">
+                            <select id="filter-type">
+                                <option value="all">Todos</option>
+                                <option value="income">Receitas</option>
+                                <option value="expense">Despesas</option>
+                            </select>
+                            <select id="filter-period">
+                                <option value="monthly">Este Mês</option>
+                                <option value="quarterly">Últimos 3 Meses</option>
+                                <option value="yearly">Este Ano</option>
+                                <option value="all">Tudo</option>
+                            </select>
+                            <button class="btn btn-secondary" id="clear-filters">Limpar Filtros</button>
+                        </div>
+                    </div>
+
+                    <div class="transactions-list" id="transactions-list">
+                        <p class="empty-state">Nenhuma transação registrada ainda</p>
+                    </div>
+
+                    <div class="transaction-form-container">
+                        <button class="btn btn-primary" id="show-add-form">+ Adicionar Transação</button>
+                        <form id="transaction-form" class="transaction-form">
+                            <div class="form-group">
+                                <label for="transaction-description">Descrição</label>
+                                <input type="text" id="transaction-description" placeholder="Ex: Salário, Supermercado, Aluguel" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="transaction-amount">Valor (R$)</label>
+                                <input type="number" id="transaction-amount" step="0.01" min="0.01" placeholder="0,00" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo</label>
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="transaction-type" value="income" checked>
+                                        Receita
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="transaction-type" value="expense">
+                                        Despesa
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="transaction-category">Categoria</label>
+                                <select id="transaction-category" required>
+                                    <option value="">Selecione uma categoria</option>
+                                    <option value="salary">Salário</option>
+                                    <option value="freelance">Freelance</option>
+                                    <option value="investment">Investimento</option>
+                                    <option value="other-income">Outra Receita</option>
+                                    <option value="food">Alimentação</option>
+                                    <option value="transport">Transporte</option>
+                                    <option value="housing">Moradia</option>
+                                    <option value="health">Saúde</option>
+                                    <option value="entertainment">Lazer</option>
+                                    <option value="education">Educação</option>
+                                    <option value="shopping">Compras</option>
+                                    <option value="bills">Contas</option>
+                                    <option value="other-expense">Outra Despesa</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="transaction-date">Data</label>
+                                <input type="date" id="transaction-date" required>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Salvar Transação</button>
+                                <button type="button" class="btn btn-secondary" id="cancel-transaction">Cancelar</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Reports Tab -->
+                <section id="reports" class="tab-panel">
+                    <div class="reports-header">
+                        <h2>Relatórios e Gráficos</h2>
+                        <div class="report-filters">
+                            <select id="report-period">
+                                <option value="monthly">Este Mês</option>
+                                <option value="quarterly">Últimos 3 Meses</option>
+                                <option value="yearly">Este Ano</option>
+                                <option value="all-time">Todo o Tempo</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3>Receitas vs Despesas</h3>
+                            <div class="chart-placeholder" id="income-expense-chart">
+                                <p>Gráfico será exibido aqui</p>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Despesas por Categoria</h3>
+                            <div class="chart-placeholder" id="expenses-by-category-chart">
+                                <p>Gráfico será exibido aqui</p>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Evolução Mensal</h3>
+                            <div class="chart-placeholder" id="monthly-trend-chart">
+                                <p>Gráfico será exibido aqui</p>
+                            </div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Distribuição de Receitas</h3>
+                            <div class="chart-placeholder" id="income-distribution-chart">
+                                <p>Gráfico será exibido aqui</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="export-section">
+                        <h2>Exportar Dados</h2>
+                        <p>Exporte suas transações para análise em planilhas</p>
+                        <button class="btn btn-success" id="export-csv">Exportar para CSV</button>
+                    </div>
+                </section>
+
+                <!-- Settings Tab -->
+                <section id="settings" class="tab-panel">
+                    <div class="settings-grid">
+                        <div class="settings-card">
+                            <h3>Moeda Padrão</h3>
+                            <select id="currency-select">
+                                <option value="BRL">Real Brasileiro (R$)</option>
+                                <option value="USD">Dólar Americano ($)</option>
+                                <option value="EUR">Euro (€)</option>
+                            </select>
+                        </div>
+                        <div class="settings-card">
+                            <h3>Tema</h3>
+                            <select id="theme-select">
+                                <option value="light">Claro</option>
+                                <option value="dark">Escuro</option>
+                            </select>
+                        </div>
+                        <div class="settings-card">
+                            <h3>Visualização Padrão</h3>
+                            <select id="default-view-select">
+                                <option value="monthly">Mensal</option>
+                                <option value="weekly">Semanal</option>
+                                <option value="yearly">Anual</option>
+                            </select>
+                        </div>
+                        <div class="settings-card">
+                            <h3>Categorias Personalizadas</h3>
+                            <div id="custom-categories-list">
+                                <p>Nenhuma categoria personalizada adicionada</p>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="new-category-input" placeholder="Nova categoria">
+                                <button class="btn btn-sm" id="add-category-btn">Adicionar</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="danger-section">
+                        <h2>Dados e Privacidade</h2>
+                        <p>Seus dados são armazenados localmente no seu navegador</p>
+                        <button class="btn btn-danger" id="clear-all-data">Limpar Todos os Dados</button>
+                        <p class="warning-text">Esta ação não pode ser desfeita e removerá todas as suas transações e configurações</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Caio. Controle de Finanças Pessoais</p>
+        </footer>
+    </div>
+
+    <div id="notification-container"></div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+[
+  {
+    "question": "Qual é o maior oceano do planeta Terra?",
+    "options": ["Atlântico", "Índico", "Ártico", "Pacífico"],
+    "correctAnswer": 3
+  },
+  {
+    "question": "Quem escreveu 'Dom Casmurro'?",
+    "options": ["José de Alencar", "Machado de Assis", "Graciliano Ramos", "Jorge Amado"],
+    "correctAnswer": 1
+  },
+  {
+    "question": "Qual é o país que sedia as Olimpíadas de 2024?",
+    "options": ["Japão", "França", "Estados Unidos", "Austrália"],
+    "correctAnswer": 1
+  },
+  {
+    "question": "Qual é o instrumento musical que possui 88 teclas?",
+    "options": ["Guitarra", "Violino", "Piano", "Flauta"],
+    "correctAnswer": 2
+  },
+  {
+    "question": "Em que continente fica o Egito?",
+    "options": ["Ásia", "África", "Europa", "América do Sul"],
+    "correctAnswer": 1
+  }
+]

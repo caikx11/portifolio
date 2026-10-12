@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "title": "Brasil aprova nova lei de proteção de dados pessoais",
+    "category": "tecnologia",
+    "source": "BBC Brasil",
+    "date": "2026-10-08",
+    "summary": "O Congresso Nacional aprovou nesta quarta-feira uma nova legislação que estabelece regras mais rigorosas para o tratamento de dados pessoais por empresas e órgãos governamentais.",
+    "content": "A nova lei, que entra em efeito em 180 dias, estabelece multas de até 4% do faturamento global para empresas que violarem as normas de proteção de dados. A legislação também cria uma autoridade nacional de proteção de dados para fiscalizar o cumprimento das regras e aplicar sanções. Especialistas celebram o avanço, mas alertam que a implementação eficaz dependerá de recursos adequados e capacitação de agentes fiscais.",
+    "imageUrl": "https://picsum.photos/seed/news1/800/400"
+  },
+  {
+    "id": 2,
+    "title": "Seleção Brasileira conquista vitória sobre a Argentina nas Eliminatórias",
+    "category": "esportes",
+    "source": "ESPN Brasil",
+    "date": "2026-10-07",
+    "summary": "Em jogo emocionante no Maracanã, a seleção brasileira venceu a Argentina por 2 a 1, mantendo viva a esperança de classificação direta para a Copa do Mundo de 2026.",
+    "content": "O gol da vitória foi marcado nos acréscimos do segundo tempo pelo atacante jovem do Palmeiras, após assistência de Neymar. A Argentina abriu o placar no primeiro tempo, mas o Brasil conseguiu a virada com gols de Richarlison e do próprio atacante mencionado. Com o resultado, o Brasil sobe para a terceira posição nas Eliminatórias Sul-Americanas, a apenas dois pontos do líder Uruguai.",
+    "imageUrl": "https://picsum.photos/seed/news2/800/400"
+  },
+  {
+    "id": 3,
+    "title": "Governo anuncia reajuste do salário mínimo para 2027",
+    "category": "politica",
+    "source": "Agência Brasil",
+    "date": "2026-10-06",
+    "summary": "O presidente sancionou nesta terça-feira o reajuste do salário mínimo para R$ 1.500,00 a partir de janeiro de 2027, representando um aumento real de 5,2% sobre o valor atual.",
+    "content": "O anúncio foi feito em coletiva de imprensa no Palácio do Planalto, acompanhado pelos ministros da Economia e do Trabalho. O governo argumenta que o reajuste leva em consideração a inflação acumulada e o crescimento do PIB nos últimos 12 meses. Sindicatos trabalhistas consideraram o valor insuficiente, enquanto empresários expressaram preocupação com o impacto nos custos de folha de pagamento, especialmente para pequenas empresas.",
+    "imageUrl": "https://picsum.photos/seed/news3/800/400"
+  },
+  {
+    "id": 4,
+    "title": "Festival de Cinema de São Paulo premiará filme brasileiro sobre mudanças climáticas",
+    "category": "entretenimento",
+    "source": "Folha de S.Paulo",
+    "date": "2026-10-05",
+    "summary": "O longa-metragem 'Terra em Transe' recebeu o prêmio de melhor filme no 48º Festival de Cinema de São Paulo, reconhecendo sua abordagem sensível sobre as consequências das mudanças climáticas na vida de comunidades ribeirinhas amazônicas.",
+    "content": "Dirigido pela cineasta Ana Santos, o filme acompanha a vida de uma família de pescadores no Rio Amazonas que vê seu modo de vida tradicional ameaçado pela elevação dos níveis dos rios e pela alteração nos padrões de chuvas. O júri destacou a fotografia impressionante, realizada inteiramente em locações na região amazônica, e a atuação sincera do elenco principalmente composto por atores locais. O filme já tem garantida distribuição internacional através de acordo com plataforma de streaming europeia.",
+    "imageUrl": "https://picsum.photos/seed/news4/800/400"
+  },
+  {
+    "id": 5,
+    "title": "Estudo comprova eficácia de nova terapia contra diabetes tipo 2",
+    "category": "saude",
+    "source": "Ministério da Saúde",
+    "date": "2026-10-04",
+    "summary": "Pesquisa realizada por universidades federais demonstra que uma combinação de medicamento inovador e mudança de estilo de vida pode colocar em remissão até 40% dos casos de diabetes tipo 2 diagnosticados recentemente.",
+    "content": "O estudo, publicado na edição desta semana da prestigiosa revista médica The Lancet, acompanhou 800 pacientes com diagnóstico recente de diabetes tipo 2 durante 18 meses. O grupo que recebeu o novo medicamento juntamente com orientação nutricional e programa de exercícios personalizado mostrou taxas significativamente melhores de controle glicêmico em comparação ao grupo controle. O Ministério da Saúde anunciou que o tratamento estará disponível na rede pública a partir de março de 2027, inicialmente para pacientes com até 5 anos de diagnóstico da doença.",
+    "imageUrl": "https://picsum.photos/seed/news5/800/400"
+  }
+]

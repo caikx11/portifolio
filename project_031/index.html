@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App de Meditação</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mente Serena</h1>
+            <p>Meditações guiadas e temporizadores personalizáveis</p>
+        </header>
+
+        <div class="meditation-modes">
+            <button class="mode-btn active" data-mode="timer">
+                <span class="mode-icon">⏱️</span>
+                Temporizador
+            </button>
+            <button class="mode-btn" data-mode="guided">
+                <span class="mode-icon">🎧</span>
+                Guiada
+            </button>
+            <button class="mode-btn" data-mode="breathing">
+                <span class="mode-icon">🫁</span>
+                Respiração
+            </button>
+        </div>
+
+        <!-- Timer Mode -->
+        <div class="mode-content active" id="timer-mode">
+            <div class="timer-display">
+                <div class="time-circle" id="time-circle">
+                    <span class="time-text" id="timer-text">05:00</span>
+                </div>
+            </div>
+
+            <div class="timer-controls">
+                <div class="preset-buttons">
+                    <button class="preset-btn active" data-time="300">5 min</button>
+                    <button class="preset-btn" data-time="600">10 min</button>
+                    <button class="preset-btn" data-time="900">15 min</button>
+                    <button class="preset-btn" data-time="1200">20 min</button>
+                    <button class="preset-btn" data-time="1800">30 min</button>
+                </div>
+
+                <div class="custom-time">
+                    <label for="custom-minutes">Minutos:</label>
+                    <input type="number" id="custom-minutes" min="1" max="120" value="5">
+                    <label for="custom-seconds">Segundos:</label>
+                    <input type="number" id="custom-seconds" min="0" max="59" value="0">
+                    <button id="set-custom-time">Definir</button>
+                </div>
+
+                <div class="main-controls">
+                    <button id="start-btn" class="primary-btn">Iniciar</button>
+                    <button id="pause-btn" class="secondary-btn" disabled>Pausar</button>
+                    <button id="reset-btn" class="secondary-btn">Resetar</button>
+                </div>
+            </div>
+
+            <div class="sound-options">
+                <h3>Sons de Fundo</h3>
+                <div class="sound-buttons">
+                    <button class="sound-btn" data-sound="none">Sem Som</button>
+                    <button class="sound-btn" data-sound="rain">Chuva</button>
+                    <button class="sound-btn" data-sound="forest">Floresta</button>
+                    <button class="sound-btn" data-sound="ocean">Oceano</button>
+                    <button class="sound-btn" data-sound="fire">Lareira</button>
+                    <button class="sound-btn" data-sound="white-noise">Ruído Branco</button>
+                    <button class="sound-btn" data-sound="birds">Pássaros</button>
+                    <button class="sound-btn" data-sound="night">Noite</button>
+                    <button class="sound-btn" data-sound="stream">Riacho</button>
+                    <button class="sound-btn" data-sound="wind">Vento</button>
+                </div>
+                <div class="volume-control">
+                    <label for="volume">Volume: <span id="volume-value">50%</span></label>
+                    <input type="range" id="volume" min="0" max="100" value="50">
+                </div>
+
+                <div class="settings-controls">
+                    <button id="save-settings-btn" class="secondary-btn">Salvar Configurações</button>
+                    <button id="load-settings-btn" class="secondary-btn">Carregar Configurações</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guided Mode -->
+        <div class="mode-content" id="guided-mode">
+            <div class="guided-list" id="guided-list">
+                <!-- Guided meditations will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Breathing Mode -->
+        <div class="mode-content" id="breathing-mode">
+            <div class="breathing-circle" id="breathing-circle">
+                <div class="breathing-text" id="breathing-text">Pronto para começar?</div>
+            </div>
+
+            <div class="breathing-controls">
+                <div class="breathing-presets">
+                    <button class="breathing-preset active" data-pattern="4-7-8">
+                        <span class="preset-name">4-7-8</span>
+                        <span class="preset-desc">Relaxante</span>
+                    </button>
+                    <button class="breathing-preset" data-pattern="box">
+                        <span class="preset-name">Box</span>
+                        <span class="preset-desc">Equilíbrio</span>
+                    </button>
+                    <button class="breathing-preset" data-pattern="4-4-6-2">
+                        <span class="preset-name">4-4-6-2</span>
+                        <span class="preset-desc">Calmante</span>
+                    </button>
+                    <button class="breathing-preset" data-pattern="custom">
+                        <span class="preset-name">Personalizado</span>
+                        <span class="preset-desc">Seu ritmo</span>
+                    </button>
+                </div>
+
+                <div class="custom-breathing" id="custom-breathing" style="display: none;">
+                    <div class="breathing-input">
+                        <label>Inspirar (s): <input type="number" id="inhale-time" min="1" max="20" value="4"></label>
+                        <label>Segurar (s): <input type="number" id="hold-time" min="0" max="20" value="7"></label>
+                        <label>Expirar (s): <input type="number" id="exhale-time" min="1" max="20" value="8"></label>
+                        <label>Pausa (s): <input type="number" id="pause-time" min="0" max="10" value="0"></label>
+                    </div>
+                </div>
+
+                <div class="breathing-main-controls">
+                    <button id="breathing-start-btn" class="primary-btn">Iniciar</button>
+                    <button id="breathing-stop-btn" class="secondary-btn" disabled>Parar</button>
+                </div>
+            </div>
+
+            <div class="breathing-stats">
+                <div class="stat">
+                    <span class="stat-value" id="cycles-count">0</span>
+                    <span class="stat-label">Ciclos</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value" id="breathing-time">0:00</span>
+                    <span class="stat-label">Tempo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-stats">
+            <h3>Estatísticas da Sessão</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" id="total-sessions">0</span>
+                    <span class="stat-title">Sessões</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="total-minutes">0</span>
+                    <span class="stat-title">Minutos</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="streak">0</span>
+                    <span class="stat-title">Dias Seguidos</span>
+                </div>
+            </div>
+            <!-- Enhanced Stats Container (will be populated by JavaScript) -->
+            <div id="enhanced-stats"></div>
+        </div>
+    </div>
+
+    <audio id="background-sound" loop></audio>
+    <audio id="bell-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-meditation-bowl-hit-2495.mp3"></audio>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

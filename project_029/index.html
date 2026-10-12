@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Notícias 360</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Portal de Notícias 360</h1>
+            <p>Acompanhe notícias, métricas e tendências em tempo real</p>
+        </header>
+
+        <div class="toolbar">
+            <input type="text" id="search-input" placeholder="Buscar por título ou conteúdo...">
+            <select id="category-filter">
+                <option value="all">Todas as Categorias</option>
+                <option value="tecnologia">Tecnologia</option>
+                <option value="esportes">Esportes</option>
+                <option value="politica">Política</option>
+                <option value="entretenimento">Entretenimento</option>
+                <option value="saude">Saúde</option>
+            </select>
+            <select id="sort-order">
+                <option value="date-desc">Mais Recentes</option>
+                <option value="date-asc">Mais Antigos</option>
+                <option value="views-desc">Mais Lidas</option>
+            </select>
+        </div>
+
+        <div class="controls-bar">
+            <div class="view-mode">
+                <button id="view-grid" class="active"><i class="fas fa-th"></i> Grade</button>
+                <button id="view-list"><i class="fas fa-list"></i> Lista</button>
+                <button id="view-analytics"><i class="fas fa-chart-bar"></i> Métricas & Dashboard</button>
+            </div>
+            <div class="page-size-selector">
+                <label>Itens por página:</label>
+                <select id="page-size">
+                    <option value="6">6</option>
+                    <option value="12" selected>12</option>
+                    <option value="24">24</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="date-range">
+                <label>De:</label>
+                <input type="date" id="start-date">
+                <label>Até:</label>
+                <input type="date" id="end-date">
+            </div>
+        </div>
+
+        <main id="app-content">
+            <!-- Conteúdo dinâmico será injetado via JS -->
+        </main>
+
+        <div class="pagination" id="pagination"></div>
+    </div>
+
+    <!-- Painel de Estatísticas (Analytics) -->
+    <div class="stats-panel" id="stats-panel"></div>
+
+    <!-- Modal de Notícia em Detalhes -->
+    <div class="modal" id="news-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

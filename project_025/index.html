@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProManager - Gestão de Projetos e Processos Profissionais</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar de Navegação -->
+        <aside class="sidebar">
+            <div class="brand">
+                <h2>ProManager</h2>
+                <span class="badge">Enterprise</span>
+            </div>
+
+            <div class="sector-selector">
+                <label for="sector-select">Área Profissional:</label>
+                <select id="sector-select">
+                    <option value="legal">Jurídico / Advocacia</option>
+                    <option value="accounting">Contabilidade / Finanças</option>
+                    <option value="engineering">Engenharia / Obras</option>
+                </select>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-view="dashboard">Visão Geral</button>
+                <button class="nav-item" data-view="cases">Processos & Casos</button>
+                <button class="nav-item" data-view="deadlines">Prazos & Agenda</button>
+                <button class="nav-item" data-view="clients">Clientes & Partes</button>
+                <button class="nav-item" data-view="financial">Honorários & Custos</button>
+            </nav>
+
+            <div class="user-profile">
+                <div class="avatar">DR</div>
+                <div class="user-info">
+                    <strong>Dr. Carlos Mendes</strong>
+                    <small id="user-role">Sócio Diretor</small>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="page-title">
+                    <h1 id="current-view-title">Visão Geral</h1>
+                    <p id="sector-indicator">Setor Jurídico</p>
+                </div>
+                <div class="actions">
+                    <button id="btn-new-item" class="btn-primary">+ Novo Processo</button>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- Painel de Métricas -->
+                <section class="metrics-row">
+                    <div class="metric-card">
+                        <span class="metric-title" id="m1-title">Processos Ativos</span>
+                        <h2 class="metric-value" id="m1-value">48</h2>
+                        <small class="trend positive">+4 este mês</small>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-title" id="m2-title">Prazos Fatais (7 dias)</span>
+                        <h2 class="metric-value alert" id="m2-value">7</h2>
+                        <small class="trend negative">Requer atenção</small>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-title" id="m3-title">Honorários a Faturar</span>
+                        <h2 class="metric-value" id="m3-value">R$ 142.500</h2>
+                        <small class="trend positive">Previsto</small>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-title" id="m4-title">Taxa de Sucesso</span>
+                        <h2 class="metric-value" id="m4-value">86%</h2>
+                        <small class="trend positive">Últimos 12 meses</small>
+                    </div>
+                </section>
+
+                <!-- Área de Listagem e Gestão -->
+                <section class="data-section">
+                    <div class="table-header-controls">
+                        <input type="text" id="search-input" placeholder="Buscar por número, cliente ou assunto...">
+                        <div class="filters">
+                            <select id="status-filter">
+                                <option value="all">Todos os Status</option>
+                                <option value="active">Em Andamento</option>
+                                <option value="pending">Aguardando Documentos</option>
+                                <option value="critical">Prazo Crítico</option>
+                                <option value="finished">Concluído</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr id="table-headers">
+                                    <th>Cód / Processo</th>
+                                    <th>Cliente</th>
+                                    <th>Responsável</th>
+                                    <th>Próximo Prazo</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- Preenchido dinamicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para Novo Registro -->
+    <div id="modal-form" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Novo Registro</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="record-form">
+                <div class="form-group">
+                    <label id="lbl-title">Título / Descrição:</label>
+                    <input type="text" id="item-title" required>
+                </div>
+                <div class="form-group">
+                    <label>Cliente / Interessado:</label>
+                    <input type="text" id="item-client" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Responsável:</label>
+                        <input type="text" id="item-assignee" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Data Limite / Prazo:</label>
+                        <input type="date" id="item-date" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Status:</label>
+                    <select id="item-status">
+                        <option value="active">Em Andamento</option>
+                        <option value="pending">Aguardando Documentos</option>
+                        <option value="critical">Prazo Crítico</option>
+                        <option value="finished">Concluído</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary close-modal">Cancelar</button>
+                    <button type="submit" class="btn-primary">Salvar Registro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Chat Simulado</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <h1>Chat Simulado</h1>
+            <div class="user-status">
+                <span class="status-indicator online"></span>
+                <span>Online</span>
+            </div>
+        </header>
+
+        <div class="chat-sidebar">
+            <div class="search-room">
+                <input type="text" placeholder="Buscar salas..." id="room-search">
+            </div>
+            <div class="room-list">
+                <h2>Salas</h2>
+                <ul id="rooms-list">
+                    <!-- Salas serão carregadas dinamicamente -->
+                </ul>
+                <button id="create-room-btn">+ Nova Sala</button>
+            </div>
+        </div>
+
+        <div class="chat-main">
+            <div class="chat-header-room">
+                <h2 id="current-room-name">Selecione uma sala</h2>
+                <div class="room-controls">
+                    <button id="room-info-btn">i</button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- Mensagens serão carregadas dinamicamente -->
+            </div>
+
+            <div class="chat-input">
+                <form id="message-form">
+                    <input type="text" id="message-input" placeholder="Digite uma mensagem..." autocomplete="off">
+                    <button type="submit">Enviar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

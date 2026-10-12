@@ -1,0 +1,21 @@
+{
+    "name": "Círculo",
+    "type": "circle",
+    "description": "Forma circular para pontos de início/fim ou entidade",
+    "svg": '<circle cx="50" cy="30" r="30"/>',
+    "connectionPoints": [
+        {"x": 50, "y": 0, "label": "Topo"},
+        {"x": 100, "y": 30, "label": "Direita"},
+        {"x": 50, "y": 60, "label": "Baixo"},
+        {"x": 0, "y": 30, "label": "Esquerda"}
+    ],
+    "properties": {
+        "label": "Entidade",
+        "width": 60,
+        "height": 60,
+        "fillColor": "#ffffff",
+        "borderColor": "#667eea",
+        "textColor": "#333333",
+        "fontSize": 12
+    }
+}

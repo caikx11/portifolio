@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <titulo>Etch-a-Sketch - Desenho Interativo</titulo>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Aplicativo interativo de desenho onde você pode criar arte passando o mouse sobre os pixels">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Etch-a-Sketch</h1>
+            <p>Crie desenhos movendo o mouse sobre a grade</p>
+        </header>
+
+        <main>
+            <div class="controls">
+                <button id="clearBtn">Limpar Desenho</button>
+                <button id="rainbowBtn">Modo Arco-íris</button>
+                <button id="shadeBtn">Modo Sombra</button>
+                <label for="sizeSlider">Tamanho da Grade: <span id="sizeValue">16</span>x<span id="sizeValue">16</span></label>
+                <input type="range" id="sizeSlider" min="1" max="100" value="16">
+            </div>
+
+            <div id="sketchpad" class="sketchpad">
+                <!-- Grid será gerado aqui -->
+            </div>
+
+            <div class="info">
+                <p>Instruções: Movimente o mouse sobre os quadrados para desenhar. Clique nos botões para mudar o modo de desenho.</p>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Caio. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+[
+  {
+    "question": "Em que ano o Brasil descobriu?",
+    "options": ["1492", "1500", "1530", "1549"],
+    "correctAnswer": 1
+  },
+  {
+    "question": "Quem foi o primeiro imperador do Brasil?",
+    "options": ["Dom Pedro I", "Dom Pedro II", "Getúlio Vargas", "Juscelino Kubitschek"],
+    "correctAnswer": 0
+  },
+  {
+    "question": "Qual foi o último imperador do Brasil?",
+    "options": ["Dom Pedro I", "Dom Pedro II", "Princesa Isabel", "Deodoro da Fonseca"],
+    "correctAnswer": 1
+  },
+  {
+    "question": "Em que ano ocorreu a Proclamação da República?",
+    "options": ["1888", "1889", "1890", "1891"],
+    "correctAnswer": 1
+  },
+  {
+    "question": "Qual foi o primeiro presidente do Brasil?",
+    "options": ["Deodoro da Fonseca", "Floriano Peixoto", "Prudente de Morais", "Campos Sales"],
+    "correctAnswer": 0
+  }
+]

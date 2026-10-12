@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer - Projeto 006</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Timer Pomodoro com gerenciamento de tarefas e estatísticas de produtividade">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pomodoro Timer</h1>
+            <p class="subtitle">Foco e produtividade com a técnica Pomodoro</p>
+        </header>
+
+        <main>
+            <!-- Timer Display -->
+            <div class="timer-section">
+                <div class="timer-display" id="timer-display">25:00</div>
+                <div class="timer-modes">
+                    <button class="mode-btn active" data-mode="pomodoro">Pomodoro</button>
+                    <button class="mode-btn" data-mode="short-break">Pausa Curta</button>
+                    <button class="mode-btn" data-mode="long-break">Pausa Longa</button>
+                </div>
+                <div class="timer-controls">
+                    <button class="btn-control" id="start-btn">Iniciar</button>
+                    <button class="btn-control" id="pause-btn">Pausar</button>
+                    <button class="btn-control" id="reset-btn">Resetar</button>
+                </div>
+            </div>
+
+            <!-- Task Section -->
+            <div class="task-section">
+                <div class="section-header">
+                    <h2>Tarefas</h2>
+                    <button class="add-task-btn" id="add-task-btn">+ Nova Tarefa</button>
+                </div>
+                <div class="task-input-area" id="task-input-area" style="display: none;">
+                    <input type="text" id="task-input" placeholder="Nome da tarefa...">
+                    <input type="number" id="task-pomodoros" placeholder="Pomodoros estimados" min="1" max="10" value="1">
+                    <button id="save-task-btn">Salvar</button>
+                </div>
+                <ul class="task-list" id="task-list"></ul>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="stats-section">
+                <h2>Estatísticas de Hoje</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-value" id="completed-pomodoros">0</span>
+                        <span class="stat-label">Pomodoros Completos</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="focus-time">0 min</span>
+                        <span class="stat-label">Tempo de Foco</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="completed-tasks">0</span>
+                        <span class="stat-label">Tarefas Concluídas</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="current-streak">0</span>
+                        <span class="stat-label">Dias Consecutivos</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Caio. Pomodoro Timer</p>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

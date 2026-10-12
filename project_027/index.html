@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Diagramas de Fluxo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gerador de Diagramas de Fluxo</h1>
+            <p>Crie diagramas de fluxo com formas conectáveis</p>
+        </header>
+
+        <div class="toolbar">
+            <button id="add-rectangle">Adicionar Retângulo</button>
+            <button id="add-diamond">Adicionar Losango</button>
+            <button id="add-oval">Adicionar Oval</button>
+            <button id="add-triangle">Adicionar Triângulo</button>
+            <button id="add-parallelogram">Adicionar Paralelogramo</button>
+            <button id="add-arrow">Adicionar Seta</button>
+            <button id="delete-shape">Excluir Forma</button>
+            <button id="clear-all">Limpar Tudo</button>
+            <button id="save-diagram">Salvar Diagrama</button>
+            <button id="load-diagram">Carregar Diagrama</button>
+            <button id="export-diagram">Exportar como PNG</button>
+        </div>
+
+        <div class="canvas" id="canvas"></div>
+
+        <div class="properties-panel" id="properties-panel">
+            <h3>Propriedades da Forma</h3>
+            <form id="shape-form">
+                <div class="form-group">
+                    <label for="shape-text">Texto:</label>
+                    <input type="text" id="shape-text" placeholder="Digite o texto da forma">
+                </div>
+                <div class="form-group">
+                    <label for="shape-color">Cor:</label>
+                    <input type="color" id="shape-color" value="#3498db">
+                </div>
+                <button type="submit" id="update-shape">Atualizar Forma</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

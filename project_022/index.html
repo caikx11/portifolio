@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Texto Rich</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="editor-container">
+        <header class="editor-header">
+            <h1>Editor de Texto Rich</h1>
+        </header>
+
+        <div class="toolbar">
+            <div class="toolbar-group">
+                <button class="toolbar-btn" data-command="bold" title="Negrito (Ctrl+B)">
+                    <strong>B</strong>
+                </button>
+                <button class="toolbar-btn" data-command="italic" title="Itálico (Ctrl+I)">
+                    <em>I</em>
+                </button>
+                <button class="toolbar-btn" data-command="underline" title="Sublinhado (Ctrl+U)">
+                    <u>U</u>
+                </button>
+                <button class="toolbar-btn" data-command="strikeThrough" title="Tachado">
+                    <s>S</s>
+                </button>
+            </div>
+
+            <div class="toolbar-group">
+                <button class="toolbar-btn" data-command="justifyLeft" title="Alinhar à Esquerda">
+                    ◢◣
+                </button>
+                <button class="toolbar-btn" data-command="justifyCenter" title="Centralizar">
+                    ◤◥
+                </button>
+                <button class="toolbar-btn" data-command="justifyRight" title="Alinhar à Direita">
+                    ◥◤
+                </button>
+                <button class="toolbar-btn" data-command="justifyFull" title="Justificado">
+                    ◢◤
+                </button>
+            </div>
+
+            <div class="toolbar-group">
+                <button class="toolbar-btn" data-command="insertUnorderedList" title="Lista com Marcadores">
+                    <ul>
+                        <li>•</li>
+                        <li>•</li>
+                        <li>•</li>
+                    </ul>
+                </button>
+                <button class="toolbar-btn" data-command="insertOrderedList" title="Lista Numerada">
+                    <ol>
+                        <li>1.</li>
+                        <li>2.</li>
+                        <li>3.</li>
+                    </ol>
+                </button>
+                <button class="toolbar-btn" data-command="outdent" title="Diminuir Recuo">
+                    ⇨
+                </button>
+                <button class="toolbar-btn" data-command="indent" title="Aumentar Recuo">
+                    ⇦
+                </button>
+            </div>
+
+            <div class="toolbar-group">
+                <button class="toolbar-btn" data-command="foreColor" title="Cor do Texto">
+                    <input type="color" class="color-picker" value="#000000">
+                </button>
+                <button class="toolbar-btn" data-command="backColor" title="Cor de Fundo">
+                    <input type="color" class="color-picker" value="#ffffff">
+                </button>
+            </div>
+
+            <div class="toolbar-group">
+                <select class="toolbar-select" data-command="fontName">
+                    <option value="Arial">Arial</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Verdana">Verdana</option>
+                </select>
+                <select class="toolbar-select" data-command="fontSize">
+                    <option value="1">Tamanho 1</option>
+                    <option value="2">Tamanho 2</option>
+                    <option value="3">Tamanho 3</option>
+                    <option value="4" selected>Tamanho 4</option>
+                    <option value="5">Tamanho 5</option>
+                    <option value="6">Tamanho 6</option>
+                    <option value="7">Tamanho 7</option>
+                </select>
+            </div>
+
+            <div class="toolbar-group">
+                <button class="toolbar-btn" data-command="removeFormat" title="Limpar Formatação">
+                    Tx
+                </button>
+                <button class="toolbar-btn" id="html-view-btn" title="Ver Código HTML">
+                    &lt;&gt;
+                </button>
+            </div>
+        </div>
+
+        <div class="editor-wrapper">
+            <div id="editor" contenteditable="true" spellcheck="true">
+                <p>Comece a digitar aqui... Use a barra de ferramentas acima para formatar seu texto.</p>
+                <p><br></p>
+            </div>
+            <textarea id="html-view" readonly style="display: none;"></textarea>
+        </div>
+
+        <div class="editor-footer">
+            <div class="editor-status">
+                <span id="word-count">0 palavras</span>
+                <span id="char-count">0 caracteres</span>
+            </div>
+            <button id="clear-btn" class="btn-secondary">Limpar Tudo</button>
+            <button id="save-btn" class="btn-primary">Salvar como HTML</button>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

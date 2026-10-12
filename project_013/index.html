@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Reservas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="reservation-container">
+        <header class="reservation-header">
+            <h1>Sistema de Reservas</h1>
+            <p>Reserve horários disponíveis com facilidade</p>
+        </header>
+
+        <main class="reservation-main">
+            <aside class="reservation-sidebar">
+                <section class="sidebar-section">
+                    <h2>Serviços Disponíveis</h2>
+                    <div id="service-list" class="service-list">
+                        <!-- Serviços serão inseridos aqui via JavaScript -->
+                    </div>
+                </section>
+
+                <section class="sidebar-section">
+                    <h2>Minhas Reservas</h2>
+                    <div id="my-reservations" class="my-reservations">
+                        <!-- Reservas serão inseridas aqui via JavaScript -->
+                    </div>
+                </section>
+            </aside>
+
+            <section class="reservation-content">
+                <div id="calendar-section" class="calendar-section">
+                    <h2>Selecionar Data</h2>
+                    <div class="calendar-header">
+                        <button id="prev-month">&#9664;</button>
+                        <div id="current-month"></div>
+                        <button id="next-month">&#9654;</button>
+                    </div>
+                    <div id="calendar" class="calendar"></div>
+                </div>
+
+                <div id="time-section" class="time-section" style="display: none;">
+                    <h2>Escolher Horário</h2>
+                    <div id="time-slots" class="time-slots"></div>
+                </div>
+
+                <div id="confirmation-section" class="confirmation-section" style="display: none;">
+                    <h2>Confirmação da Reserva</h2>
+                    <div id="reservation-details" class="reservation-details"></div>
+                    <button id="confirm-btn" class="confirm-btn">Confirmar Reserva</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

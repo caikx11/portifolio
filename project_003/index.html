@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List - Caio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Aplicativo de Gerenciamento de Tarefas com localStorage">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gerenciador de Tarefas</h1>
+            <p class="subtitle">Organize suas tarefas diárias com facilidade</p>
+        </header>
+
+        <main>
+            <div class="input-section">
+                <input type="text" id="task-input" placeholder="Adicione uma nova tarefa...">
+                <button id="add-task-btn">Adicionar</button>
+            </div>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Todas</button>
+                <button class="filter-btn" data-filter="active">Ativas</button>
+                <button class="filter-btn" data-filter="completed">Concluídas</button>
+            </div>
+
+            <ul id="task-list"></ul>
+
+            <div class="stats">
+                <span id="task-count">0 tarefas pendentes</span>
+                <button id="clear-completed">Limpar concluídas</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Caio. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Imagens Básico</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Editor de Imagens Básico</h1>
+        <div class="upload-section">
+            <input type="file" id="image-upload" accept="image/*">
+            <button id="reset-btn">Redefinir Imagem</button>
+        </div>
+
+        <div class="editor-section">
+            <div class="image-preview">
+                <img id="original-image" src="#" alt="Imagem original">
+                <img id="edited-image" src="#" alt="Imagem editada">
+            </div>
+
+            <div class="filters-section">
+                <h2>Filtros</h2>
+                <div class="filter-group">
+                    <label for="brightness">Brilho:</label>
+                    <input type="range" id="brightness" min="-100" max="100" value="0">
+                    <span id="brightness-value">0</span>%
+                </div>
+                <div class="filter-group">
+                    <label for="contrast">Contraste:</label>
+                    <input type="range" id="contrast" min="-100" max="100" value="0">
+                    <span id="contrast-value">0</span>%
+                </div>
+                <div class="filter-group">
+                    <label for="saturation">Saturação:</label>
+                    <input type="range" id="saturation" min="-100" max="100" value="0">
+                    <span id="saturation-value">0</span>%
+                </div>
+                <div class="filter-group">
+                    <label for="blur">Desfoque:</label>
+                    <input type="range" id="blur" min="0" max="20" value="0">
+                    <span id="blur-value">0</span>px
+                </div>
+                <div class="filter-group">
+                    <label for="grayscale">Escala de Cinza:</label>
+                    <input type="range" id="grayscale" min="0" max="100" value="0">
+                    <span id="grayscale-value">0</span>%
+                </div>
+                <div class="filter-group">
+                    <label for="sepia">Sépia:</label>
+                    <input type="range" id="sepia" min="0" max="100" value="0">
+                    <span id="sepia-value">0</span>%
+                </div>
+            </div>
+        </div>
+
+        <div class="actions-section">
+            <button id="download-btn">Baixar Imagem</button>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

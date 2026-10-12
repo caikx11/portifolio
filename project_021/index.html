@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Analytics</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Chart.js para gráficos interativos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <h1>Dashboard de Analytics</h1>
+            <div class="date-range">
+                <span>Últimos 30 dias</span>
+                <select id="date-select">
+                    <option value="7">Últimos 7 dias</option>
+                    <option value="30" selected>Últimos 30 dias</option>
+                    <option value="90">Últimos 90 dias</option>
+                    <option value="365">Último ano</option>
+                </select>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Card de Métricas Principais -->
+            <section class="metrics-card">
+                <h2>Visão Geral</h2>
+                <div class="metrics-grid">
+                    <div class="metric-item">
+                        <h3>Visitantes</h3>
+                        <p class="metric-value" id="visitors-count">12.450</p>
+                        <p class="metric-change positive">+12.3% vs mês anterior</p>
+                    </div>
+                    <div class="metric-item">
+                        <h3>Taxa de Conversão</h3>
+                        <p class="metric-value" id="conversion-rate">3.8%</p>
+                        <p class="metric-change positive">+0.8% vs mês anterior</p>
+                    </div>
+                    <div class="metric-item">
+                        <h3>Receita</h3>
+                        <p class="metric-value" id="revenue">R$ 84.200</p>
+                        <p class="metric-change positive">+18.7% vs mês anterior</p>
+                    </div>
+                    <div class="metric-item">
+                        <h3>Tempo Médio na Página</h3>
+                        <p class="metric-value" id="avg-time">4m 23s</p>
+                        <p class="metric-change negative">-0.5m vs mês anterior</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gráfico de Tendência -->
+            <section class="chart-card">
+                <h2>Tendência de Visitantes</h2>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+                <div class="chart-controls">
+                    <button class="chart-btn active" data-type="line">Linha</button>
+                    <button class="chart-btn" data-type="bar">Barra</button>
+                </div>
+            </section>
+
+            <!-- Gráfico de Distribuição -->
+            <section class="chart-card">
+                <h2>Fontes de Tráfego</h2>
+                <div class="chart-container">
+                    <canvas id="sourcesChart"></canvas>
+                </div>
+            </section>
+
+            <!-- Gráfico de Conversão por Dispositivo -->
+            <section class="chart-card">
+                <h2>Conversão por Dispositivo</h2>
+                <div class="chart-container">
+                    <canvas id="deviceChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

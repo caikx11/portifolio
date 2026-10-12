@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Avaliação de Produtos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Avaliação de Produtos</h1>
+            <p>Avalie produtos com estrelas, deixe comentários e veja o feedback de outros usuários</p>
+        </header>
+
+        <main>
+            <div class="sidebar">
+                <h2>Produtos</h2>
+                <div class="products-panel" id="products-panel">
+                    <!-- Lista de produtos será carregada aqui via JavaScript -->
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="toolbar">
+                    <button id="add-product">Adicionar Produto</button>
+                    <button id="refresh-products">Atualizar Lista</button>
+                    <button id="export-data">Exportar Dados</button>
+                    <button id="import-data">Importar Dados</button>
+                    <button id="clear-all">Limpar Tudo</button>
+                </div>
+
+                <div id="main-content" class="main-content">
+                    <div class="welcome-screen">
+                        <h2>Bem-vindo ao Sistema de Avaliação</h2>
+                        <p>Selecione um produto na barra lateral para ver suas avaliações ou adicionar um novo produto.</p>
+                        <div class="empty-state">
+                            <p>Nenhum produto cadastrado ainda.</p>
+                            <button id="add-first-product" class="btn-primary">Adicionar Primeiro Produto</button>
+                        </div>
+                    </div>
+
+                    <!-- Conteúdo dinâmico será inserido aqui -->
+                    <div id="dynamic-content"></div>
+                </div>
+            </div>
+
+            <div class="properties-panel" id="properties-panel">
+                <h2>Detalhes do Produto</h2>
+                <form id="product-form">
+                    <!-- Formulário será preenchido dinamicamente -->
+                </form>
+            </div>
+
+            <div class="review-panel" id="review-panel">
+                <h2>Adicionar Avaliação</h2>
+                <form id="review-form">
+                    <!-- Formulário de avaliação será preenchido dinamicamente -->
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

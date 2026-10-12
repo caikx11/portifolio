@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Ensino</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Plataforma de Ensino</h1>
+            <p>Cursos online com vídeo, quiz e certificado de conclusão</p>
+        </header>
+
+        <main>
+            <div class="sidebar">
+                <h2>Cursos</h2>
+                <div class="courses-panel" id="courses-panel">
+                    <!-- Lista de cursos será carregada aqui via JavaScript -->
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="toolbar">
+                    <button id="add-course">Adicionar Curso</button>
+                    <button id="refresh-courses">Atualizar Lista</button>
+                    <button id="export-data">Exportar Dados</button>
+                    <button id="import-data">Importar Dados</button>
+                    <button id="clear-all">Limpar Tudo</button>
+                </div>
+
+                <div id="main-content" class="main-content">
+                    <div class="welcome-screen">
+                        <h2>Bem-vindo à Plataforma de Ensino</h2>
+                        <p>Selecione um curso na barra lateral para começar a estudar ou adicionar um novo curso.</p>
+                        <div class="empty-state">
+                            <p>Nenhum curso cadastrado ainda.</p>
+                            <button id="add-first-course" class="btn-primary">Adicionar Primeiro Curso</button>
+                        </div>
+                    </div>
+
+                    <!-- Conteúdo dinâmico será inserido aqui -->
+                    <div id="dynamic-content"></div>
+                </div>
+            </div>
+
+            <div class="properties-panel" id="properties-panel">
+                <h2>Detalhes do Curso</h2>
+                <form id="course-form">
+                    <!-- Formulário será preenchido dinamicamente -->
+                </form>
+            </div>
+
+            <div class="lesson-panel" id="lesson-panel">
+                <h2>Aula</h2>
+                <div id="lesson-content">
+                    <!-- Conteúdo da aula será carregado aqui -->
+                </div>
+            </div>
+
+            <div class="quiz-panel" id="quiz-panel">
+                <h2>Quiz</h2>
+                <form id="quiz-form">
+                    <!-- Formulário do quiz será preenchido dinamicamente -->
+                </form>
+            </div>
+
+            <div class="certificate-panel" id="certificate-panel">
+                <h2>Certificado de Conclusão</h2>
+                <div id="certificate-content">
+                    <!-- Conteúdo do certificado será carregado aqui -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

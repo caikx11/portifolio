@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Jogo da Memória</h1>
+        <div class="game-stats">
+            <div>Tempo: <span id="timer">00:00</span></div>
+            <div>Movimentos: <span id="moves">0</span></div>
+            <div>Pares: <span id="matches">0</span> / <span id="total-pairs">8</span></div>
+        </div>
+    </header>
+
+    <main>
+        <div id="game-board">
+            <!-- Cards will be generated here -->
+        </div>
+
+        <div id="game-overlay" class="hidden">
+            <div class="game-overlay-content">
+                <h2>Parabéns!</h2>
+                <p>Você completou o jogo em <span id="final-time"></span> com <span id="final-moves"></span> movimentos.</p>
+                <button id="play-again-btn">Jogar Novamente</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Jogo da Memória. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

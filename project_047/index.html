@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Contratos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gerador de Contratos Personalizáveis</h1>
+            <p>Crie contratos simples com cláusulas personalizáveis para diferentes necessidades</p>
+        </header>
+
+        <main>
+            <div class="sidebar">
+                <h2>Tipos de Contrato</h2>
+                <div class="contract-types-panel" id="contract-types-panel">
+                    <!-- Tipos de contrato serão carregados aqui via JavaScript -->
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="toolbar">
+                    <button id="new-contract">Novo Contrato</button>
+                    <button id="save-contract">Salvar Contrato</button>
+                    <button id="load-contract">Carregar Contrato</button>
+                    <button id="export-pdf">Exportar PDF</button>
+                    <button id="clear-form">Limpar Formulário</button>
+                </div>
+
+                <div id="main-content" class="main-content">
+                    <div class="welcome-screen">
+                        <h2>Bem-vindo ao Gerador de Contratos</h2>
+                        <p>Selecione um tipo de contrato na barra lateral para começar a criar seu documento personalizado.</p>
+                        <div class="contract-types">
+                            <div class="contract-card" data-contract-type="prestacao-servicos">
+                                <h3>Prestação de Serviços</h3>
+                                <p>Contrato para contratação de profissionais autônomos ou empresas para execução de serviços específicos</p>
+                            </div>
+                            <div class="contract-card" data-contract-type="locacao-imovel">
+                                <h3>Locação de Imóvel</h3>
+                                <p>Contrato de aluguel para residências, salas comerciais ou espaços</p>
+                            </div>
+                            <div class="contract-card" data-contract-type="parceria-empresarial">
+                                <h3>Parceria Empresarial</h3>
+                                <p>Acordo entre duas ou mais partes para desenvolvimento de projetos em conjunto</p>
+                            </div>
+                            <div class="contract-card" data-contract-type="confidencialidade">
+                                <h3>Acordo de Confidencialidade (NDA)</h3>
+                                <p>Contrato para proteção de informações confidenciais e proprietárias</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conteúdo dinâmico será inserido aqui -->
+                    <div id="dynamic-content"></div>
+                </div>
+            </div>
+
+            <div class="properties-panel" id="properties-panel">
+                <h2>Detalhes do Contrato</h2>
+                <form id="contract-form">
+                    <!-- Formulário será preenchido dinamicamente -->
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

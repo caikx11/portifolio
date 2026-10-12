@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicativo de Receitas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>🍳 Meu Livro de Receitas</h1>
+        <p>Encontre, filtre e prepare deliciosas receitas</p>
+        <button id="add-recipe-btn" class="btn-primary">+ Adicionar Receita</button>
+    </header>
+
+    <main>
+        <div class="app-container">
+            <aside class="sidebar">
+                <div class="filters">
+                    <h3>Filtros</h3>
+
+                    <div class="filter-group">
+                        <label for="search-input">Buscar</label>
+                        <input type="text" id="search-input" placeholder="Buscar receitas...">
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="category-filter">Categoria</label>
+                        <select id="category-filter">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="difficulty-filter">Dificuldade</label>
+                        <select id="difficulty-filter">
+                            <option value="">Todas</option>
+                            <option value="Fácil">Fácil</option>
+                            <option value="Médio">Médio</option>
+                            <option value="Difícil">Difícil</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="time-filter">Tempo Máximo</label>
+                        <select id="time-filter">
+                            <option value="">Qualquer</option>
+                            <option value="15">Até 15 min</option>
+                            <option value="30">Até 30 min</option>
+                            <option value="60">Até 1 hora</option>
+                            <option value="120">Até 2 horas</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="ingredients-filter">Ingredientes (separados por vírgula)</label>
+                        <input type="text" id="ingredients-filter" placeholder="ex: frango, arroz, tomate">
+                    </div>
+
+                    <button id="clear-filters" class="btn-secondary">Limpar Filtros</button>
+                </div>
+
+                <div class="favorites-section">
+                    <h3>⭐ Favoritas</h3>
+                    <div id="favorites-list"></div>
+                </div>
+            </aside>
+
+            <section class="main-content">
+                <div class="recipes-header">
+                    <h2 id="recipes-count">Carregando receitas...</h2>
+                    <div class="view-toggle">
+                        <button id="grid-view" class="active" title="Visualização em Grade">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                            </svg>
+                        </button>
+                        <button id="list-view" title="Visualização em Lista">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="3" y1="12" x2="21" y2="12"></line>
+                                <line x1="3" y1="6" x2="21" y2="6"></line>
+                                <line x1="3" y1="18" x2="21" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="recipes-container" class="recipes-grid">
+                    <!-- Recipes will be rendered here -->
+                </div>
+
+                <div id="empty-state" class="empty-state hidden">
+                    <p>Nenhuma receita encontrada com os filtros atuais</p>
+                    <button id="reset-filters-btn" class="btn-primary">Resetar Filtros</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Recipe Detail Modal -->
+    <div id="recipe-modal" class="modal hidden">
+        <div class="modal-content recipe-modal-content">
+            <span class="close-btn" id="close-recipe-modal">&times;</span>
+            <div id="recipe-detail"></div>
+        </div>
+    </div>
+
+    <!-- Add Recipe Modal -->
+    <div id="add-recipe-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" id="close-add-recipe-modal">&times;</span>
+            <h2>Nova Receita</h2>
+            <form id="add-recipe-form">
+                <div class="form-group">
+                    <label for="recipe-title">Título</label>
+                    <input type="text" id="recipe-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipe-category">Categoria</label>
+                    <select id="recipe-category" required>
+                        <option value="">Selecione</option>
+                        <option value="Café da Manhã">Café da Manhã</option>
+                        <option value="Almoço">Almoço</option>
+                        <option value="Jantar">Jantar</option>
+                        <option value="Sobremesa">Sobremesa</option>
+                        <option value="Lanche">Lanche</option>
+                        <option value="Bebida">Bebida</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="recipe-difficulty">Dificuldade</label>
+                    <select id="recipe-difficulty" required>
+                        <option value="">Selecione</option>
+                        <option value="Fácil">Fácil</option>
+                        <option value="Médio">Médio</option>
+                        <option value="Difícil">Difícil</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="recipe-time">Tempo de Preparo (minutos)</label>
+                    <input type="number" id="recipe-time" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipe-servings">Porções</label>
+                    <input type="number" id="recipe-servings" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="recipe-image">URL da Imagem</label>
+                    <input type="url" id="recipe-image" placeholder="https://exemplo.com/imagem.jpg">
+                </div>
+                <div class="form-group">
+                    <label for="recipe-ingredients">Ingredientes (um por linha)</label>
+                    <textarea id="recipe-ingredients" rows="5" required placeholder="1 xícara de arroz&#10;2 xícaras de água&#10;Sal a gosto"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="recipe-instructions">Modo de Preparo (um passo por linha)</label>
+                    <textarea id="recipe-instructions" rows="6" required placeholder="1. Lave o arroz&#10;2. Ferva a água&#10;3. Adicione o arroz e cozinhe por 15 min"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">Salvar Receita</button>
+                    <button type="button" id="cancel-add-recipe" class="btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Meu Livro de Receitas. Cozinhe com amor! 🍳</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

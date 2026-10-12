@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicativo de Controle de Biblioteca</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Controle de Biblioteca Pessoal</h1>
+            <p>Gerencie seus livros, empréstimos e devoluções</p>
+        </header>
+
+        <main>
+            <div class="sidebar">
+                <h2>Livros</h2>
+                <div class="books-panel" id="books-panel">
+                    <!-- Lista de livros será carregada aqui via JavaScript -->
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="toolbar">
+                    <button id="add-book">Adicionar Livro</button>
+                    <button id="refresh-books">Atualizar Lista</button>
+                    <button id="export-data">Exportar Dados</button>
+                    <button id="import-data">Importar Dados</button>
+                    <button id="clear-all">Limpar Tudo</button>
+                </div>
+
+                <div id="main-content" class="main-content">
+                    <div class="welcome-screen">
+                        <h2>Bem-vindo ao Controle de Biblioteca</h2>
+                        <p>Selecione um livro na barra lateral para ver detalhes ou adicionar um novo livro.</p>
+                        <div class="empty-state">
+                            <p>Nenhum livro cadastrado ainda.</p>
+                            <button id="add-first-book" class="btn-primary">Adicionar Primeiro Livro</button>
+                        </div>
+                    </div>
+
+                    <!-- Conteúdo dinâmico será inserido aqui -->
+                    <div id="dynamic-content"></div>
+                </div>
+            </div>
+
+            <div class="properties-panel" id="properties-panel">
+                <h2>Detalhes do Livro</h2>
+                <form id="book-form">
+                    <!-- Formulário será preenchido dinamicamente -->
+                </form>
+            </div>
+
+            <div class="loan-panel" id="loan-panel">
+                <h2>Registrar Empréstimo</h2>
+                <form id="loan-form">
+                    <!-- Formulário de empréstimo será preenchido dinamicamente -->
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

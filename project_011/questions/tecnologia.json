@@ -1,0 +1,27 @@
+[
+  {
+    "question": "Qual linguagem de programação é conhecida por ser usada no desenvolvimento web frontend?",
+    "options": ["Python", "Java", "JavaScript", "C#"],
+    "correctAnswer": 2
+  },
+  {
+    "question": "O que significa a sigla HTML?",
+    "options": ["HyperText Markup Language", "HyperTool Multi Language", "Home Tool Markup Language", "Hyperlink Text Markup Language"],
+    "correctAnswer": 0
+  },
+  {
+    "question": "Qual empresa criou o sistema operacional Android?",
+    "options": ["Apple", "Microsoft", "Google", "Samsung"],
+    "correctAnswer": 2
+  },
+  {
+    "question": "Qual é a função de uma CPU em um computador?",
+    "options": ["Armazenar dados permanentemente", "Exibir imagens na tela", "Processar instruções e realizar cálculos", "Conectar à internet"],
+    "correctAnswer": 2
+  },
+  {
+    "question": "Qual protocolo é usado para enviar e-mails?",
+    "options": ["HTTP", "FTP", "SMTP", "DNS"],
+    "correctAnswer": 2
+  }
+]

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo - Teste seus Conhecimentos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <header class="quiz-header">
+            <h1>Quiz Interativo</h1>
+            <p>Teste seus conhecimentos em diferentes categorias</p>
+        </header>
+
+        <main class="quiz-main">
+            <div id="category-selection" class="category-selection">
+                <h2>Escolha uma categoria</h2>
+                <div class="category-buttons">
+                    <button class="category-btn" data-category="historia">História</button>
+                    <button class="category-btn" data-category="ciencia">Ciência</button>
+                    <button class="category-btn" data-category="tecnologia">Tecnologia</button>
+                    <button class="category-btn" data-category="cultura-geral">Cultura Geral</button>
+                </div>
+            </div>
+
+            <div id="quiz-area" class="quiz-area" style="display: none;">
+                <div id="question-counter"></div>
+                <div id="question-text" class="question-text"></div>
+                <div id="options-container" class="options-container"></div>
+                <div id="feedback" class="feedback"></div>
+                <div id="quiz-controls" class="quiz-controls">
+                    <button id="next-btn" class="next-btn">Próxima Pergunta</button>
+                </div>
+            </div>
+
+            <div id="result-area" class="result-area" style="display: none;">
+                <h2>Resultado Final</h2>
+                <p id="final-score"></p>
+                <button id="restart-btn" class="restart-btn">Jogar Novamente</button>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

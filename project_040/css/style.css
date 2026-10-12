@@ -1,0 +1,1173 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Crossword Puzzle - Classic Pencil & Paper Theme */
+:root {
+    /* Primary Colors - Pencil & Ink */
+    --primary-color: #2c3e50;         /* Dark slate - Pencil lead */
+    --primary-dark: #1a252f;          /* Almost black */
+    --primary-light: #34495e;         /* Slate gray */
+    --primary-accent: #5d6d7e;        /* Light slate */
+
+    /* Secondary Colors - Paper & Highlight */
+    --paper-color: #fdf6e3;           /* Parchment/cream */
+    --paper-dark: #f0e3d2;            /* Aged paper */
+    --highlight-color: #fff9c4;       /* Yellow highlighter */
+    --highlight-dark: #fdd835;        /* Amber highlighter */
+
+    /* Accent Colors - Crossword Elements */
+    --accent-grid: #bdc3c7;           /* Grid lines - light gray */
+    --accent-clue: #34495e;           /* Clue text - slate */
+    --accent-correct: #27ae60;        /* Correct answer - green */
+    --accent-error: #e74c3c;          /* Error/wrong - red */
+    --accent-blank: #ecf0f1;          /* Empty cells - very light gray */
+
+    /* Status Colors */
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --info-color: #3498db;
+    --error-color: #e74c3c;
+
+    /* Neutrals - Clean & Readable */
+    --bg-main: #fafafa;               /* Page background */
+    --bg-card: #ffffff;               /* White - Cards/Panels */
+    --bg-card-hover: #f5f5f5;         /* Hover state */
+    --bg-sidebar: #f8f9fa;            /* Light gray - Sidebars */
+    --bg-input: #ffffff;              /* White - Inputs */
+    --bg-muted: #ecf0f1;              /* Light gray - Muted */
+
+    --text-primary: #2c3e50;          /* Dark slate - Primary */
+    --text-secondary: #7f8c8d;        /* Gray - Secondary */
+    --text-muted: #95a5a6;            /* Light gray - Muted */
+    --text-light: #f8f9fa;            /* Almost white - Light on dark */
+
+    --border-color: #d5d8dc;          /* Light gray border */
+    --border-focus: #3498db;          /* Blue focus */
+    --border-grid: #bdc3c7;           /* Grid border */
+    --border-success: #27ae60;
+    --border-error: #e74c3c;
+
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --shadow-xl: 0 20px 25px rgba(0,0,0,0.1);
+    --shadow-inner: inset 0 2px 4px rgba(0,0,0,0.06);
+    --shadow-paper: 0 5px 15px rgba(0,0,0,0.1);
+
+    --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    --transition-fast: all 0.2s ease;
+    --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-write: cubic-bezier(0.2, 0.8, 0.2, 1.2); /* Writing effect */
+
+    --radius: 8px;
+    --radius-sm: 4px;
+    --radius-lg: 12px;
+    --radius-circle: 50%;
+
+    /* Fonts */
+    --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    --font-serif: 'Cormorant Garamond', 'Georgia', serif;
+    --font-mono: 'Courier New', 'Lucida Console', monospace;
+    --font-handwriting: 'Patrick Hand', 'Caveat', cursive;
+
+    --font-light: 300;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-semibold: 600;
+    --font-bold: 700;
+    --font-extrabold: 800;
+
+    --font-xs: 0.75rem;
+    --font-sm: 0.875rem;
+    --font-base: 1rem;
+    --font-lg: 1.125rem;
+    --font-xl: 1.25rem;
+    --font-2xl: 1.5rem;
+    --font-3xl: 1.875rem;
+    --font-4xl: 2.25rem;
+}
+
+/* Animated Background with Paper Texture */
+body {
+    font-family: var(--font-sans);
+    background:
+        linear-gradient(135deg, #fafafa 0%, #f0f0f0 100%)
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%232c3e50' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3Cg fill='%237f8c8d' fill-opacity='0.015'%3E%3Ccircle cx='20' cy='20' r='1'/%3E%3Ccircle cx='40' cy='40' r='1'/%3E%3C/g%3E%3Cg fill='%2395a5a6' fill-opacity='0.01'%3E%3Ccircle cx='10' cy='10' r='0.5'/%3E%3Ccircle cx='50' cy='50' r='0.5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    min-height: 100vh;
+    color: var(--text-primary);
+    line-height: 1.7;
+    position: relative;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 30% 40%, rgba(44, 62, 80, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(127, 140, 141, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+    animation: paperFloat 28s ease-in-out infinite;
+}
+
+@keyframes paperFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(15px, -15px) scale(1.02); }
+    66% { transform: translate(-15px, 15px) scale(0.99); }
+}
+
+/* Container - Writing Pad */
+.container {
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-paper);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(2px);
+    transition: var(--transition);
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
+    opacity: 0;
+    transition: var(--transition-fast);
+}
+
+.container:hover::before {
+    opacity: 1;
+}
+
+.container:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Header - Classic & Scholarly */
+header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    background: var(--paper-color);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--primary-color),
+        var(--primary-color) 2px,
+        transparent 2px,
+        transparent 6px
+    );
+    opacity: 0;
+    transition: var(--transition-fast);
+}
+
+header:hover::before {
+    opacity: 0.1;
+}
+
+header h1 {
+    font-family: var(--font-serif);
+    font-size: var(--font-3xl);
+    font-weight: var(--font-bold);
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    letter-spacing: -0.5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(44, 62, 80, 0.3);
+}
+
+header p {
+    font-family: var(--font-handwriting);
+    font-size: var(--font-lg);
+    color: var(--text-secondary);
+    font-style: italic;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Game Controls - Pencil Holder Style */
+.game-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-sidebar);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+}
+
+.game-controls::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
+    opacity: 0;
+    transition: var(--transition-fast);
+}
+
+.game-controls:hover::before {
+    opacity: 1;
+}
+
+.game-controls:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.difficulty-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.difficulty-selector label {
+    font-family: var(--font-serif);
+    font-weight: var(--font-semibold);
+    color: var(--text-primary);
+    font-size: var(--font-lg);
+}
+
+.difficulty-selector select {
+    padding: 0.75rem 1.25rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--font-base);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.difficulty-selector select:focus {
+    outline: none;
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+    background: var(--bg-input);
+}
+
+.difficulty-selector select::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.game-controls button {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--font-base);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.game-controls button:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    background: var(--bg-card-hover);
+}
+
+.game-controls button:active {
+    transform: translateY(0);
+}
+
+.game-controls button:disabled {
+    background: var(--bg-muted);
+    color: var(--text-muted);
+    cursor: not-allowed;
+    transform: none;
+}
+
+.game-controls button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: slideShine 2s infinite;
+}
+
+@keyframes slideShine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* Game Info - Score Cards */
+.game-info {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.game-info div {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 1rem 1.5rem;
+    min-width: 140px;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.game-info div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    opacity: 0;
+    transition: var(--transition-fast);
+}
+
+.game-info div.timer::before { background: var(--primary-color); }
+.game-info div.score::before { background: var(--accent-correct); }
+.game-info div.words-found::before { background: var(--highlight-color); }
+
+.game-info div:hover::before {
+    opacity: 1;
+}
+
+.game-info div:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.game-info div h3 {
+    font-family: var(--font-serif);
+    font-size: var(--font-sm);
+    font-weight: var(--font-semibold);
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.game-info div h3::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.game-info div.timer h3::before { background: var(--primary-color); }
+.game-info div.score h3::before { background: var(--accent-correct); }
+.game-info div.words-found h3::before { background: var(--highlight-color); }
+
+.game-info div p {
+    font-family: var(--font-mono);
+    font-size: var(--font-xl);
+    font-weight: var(--font-bold);
+    color: var(--text-primary);
+    letter-spacing: 0.5px;
+}
+
+/* Crossword Grid - Classic Puzzle Board */
+.crossword-container {
+    background: var(--paper-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 2rem;
+    border: 2px solid var(--border-color);
+    box-shadow: var(--shadow-paper);
+    position: relative;
+}
+
+.crossword-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        repeating-linear-gradient(
+            0deg,
+            var(--border-grid),
+            var(--border-grid) 1px,
+            transparent 1px,
+            transparent 29px
+        ),
+        repeating-linear-gradient(
+            90deg,
+            var(--border-grid),
+            var(--border-grid) 1px,
+            transparent 1px,
+            transparent 29px
+        );
+    pointer-events: none;
+    opacity: 0.3;
+}
+
+#crossword-grid {
+    display: grid;
+    gap: 1px;
+    background: var(--border-grid);
+    padding: 1px;
+}
+
+.cell {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-weight: var(--font-bold);
+    font-size: 1.4rem;
+    user-select: none;
+    transition: var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    background: var(--bg-input);
+}
+
+.cell.filled {
+    background: var(--bg-input);
+    color: var(--text-primary);
+}
+
+.cell.selected {
+    background: var(--highlight-color);
+    border: 2px solid var(--highlight-dark);
+    box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+    transform: scale(1.05);
+    z-index: 2;
+}
+
+.cell.clue-number {
+    position: relative;
+}
+
+.cell.clue-number::before {
+    content: attr(data-clue-number);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 0.75rem;
+    font-weight: var(--font-normal);
+    color: var(--text-muted);
+}
+
+.cell input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    text-align: center;
+    font-family: var(--font-mono);
+    font-weight: var(--font-bold);
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    pointer-events: none;
+    text-transform: uppercase;
+}
+
+.cell input:focus {
+    outline: none;
+}
+
+/* Cell States */
+.cell.correct {
+    background: var(--accent-correct);
+    color: white;
+    box-shadow: inset 0 0 10px rgba(255,255,255,0.3);
+}
+
+.cell.error {
+    background: var(--accent-error);
+    color: white;
+    animation: errorShake 0.6s;
+}
+
+@keyframes errorShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-5px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+}
+
+.cell.blank {
+    background: var(--accent-blank);
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Clue Panel - Notebook Style */
+.clue-panel {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.clues-section {
+    flex: 1;
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    transition: var(--transition);
+}
+
+.clues-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary-color), var(--primary-dark));
+    opacity: 0;
+    transition: var(--transition-fast);
+}
+
+.clues-section:hover::before {
+    opacity: 1;
+}
+
+.clues-section:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.clues-section h3 {
+    margin: 0;
+    padding: 1.25rem 1.75rem;
+    background: var(--paper-color);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--primary-dark);
+    font-family: var(--font-serif);
+    font-size: var(--font-lg);
+    font-weight: var(--font-semibold);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.clues-section h3::before {
+    content: '';
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: var(--font-base);
+    font-weight: var(--font-bold);
+}
+
+.clues-section ul {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 1.5rem 2rem;
+}
+
+.clues-section li {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-serif);
+    font-size: var(--font-base);
+    color: var(--text-secondary);
+    line-height: 1.5;
+    transition: var(--transition-fast);
+}
+
+.clues-section li:last-child {
+    border-bottom: none;
+}
+
+.clues-section li:hover {
+    background: var(--bg-card-hover);
+    transform: translateX(4px);
+}
+
+.clue-number-display {
+    background: var(--primary-color);
+    color: white;
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: var(--font-semibold);
+    min-width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.clue-text {
+    flex: 1;
+    margin-left: 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-serif);
+}
+
+.clue-status {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+    transition: var(--transition-fast);
+}
+
+.clue-status.correct {
+    background: var(--accent-correct);
+    box-shadow: 0 0 0 2px rgba(39, 174, 96, 0.3);
+}
+
+.clue-status.incorrect {
+    background: var(--accent-error);
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.3);
+}
+
+.clue-status.unsolved {
+    background: var(--border-color);
+}
+
+/* Game Overlay - Victory Parchment */
+#game-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+#game-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+#game-over-message {
+    background: var(--paper-color);
+    border-radius: var(--radius-lg);
+    padding: 3rem;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: var(--shadow-xl);
+    border: 2px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    animation: victoryPulse 0.8s ease-out;
+}
+
+#game-over-message::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 2px,
+            rgba(44, 62, 80, 0.1) 2px,
+            rgba(44, 62, 80, 0.1) 4px
+        );
+    pointer-events: none;
+    opacity: 0;
+    animation: borderMove 4s linear infinite;
+}
+
+@keyframes borderMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 100% 100%; }
+}
+
+@keyframes victoryPulse {
+    0% { transform: scale(0.9); opacity: 0; }
+    50% { transform: scale(1.03); opacity: 0.9; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+#game-over-message h2 {
+    font-family: var(--font-serif);
+    font-size: var(--font-2xl);
+    font-weight: var(--font-bold);
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+    letter-spacing: -0.5px;
+}
+
+#game-over-message h2::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(44, 62, 80, 0.3);
+}
+
+#final-message {
+    font-family: var(--font-handwriting);
+    font-size: var(--font-lg);
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-style: italic;
+    line-height: 1.6;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#play-again-btn {
+    padding: 1rem 2.25rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius);
+    background: var(--primary-color);
+    color: white;
+    font-family: var(--font-sans);
+    font-size: var(--font-lg);
+    font-weight: var(--font-semibold);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+#play-again-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+    background: var(--primary-dark);
+}
+
+#play-again-btn:active {
+    transform: translateY(0);
+}
+
+#play-again-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: slideShine 2.5s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+
+    header {
+        padding: 1.5rem;
+    }
+
+    header h1 {
+        font-size: var(--font-2xl);
+    }
+
+    .game-controls {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        padding: 1rem;
+    }
+
+    .difficulty-selector {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+
+    .game-info {
+        gap: 0.75rem;
+    }
+
+    .game-info div {
+        min-width: 120px;
+        padding: 0.75rem 1rem;
+    }
+
+    .crossword-container {
+        margin: 1.5rem 0;
+    }
+
+    .cell {
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+    }
+
+    .clue-panel {
+        flex-direction: column;
+    }
+
+    .clues-section {
+        margin-bottom: 1rem;
+    }
+
+    #game-over-message {
+        padding: 2rem;
+        margin: 0 1rem;
+    }
+
+    #play-again-btn {
+        padding: 0.875rem 1.75rem;
+        font-size: var(--font-base);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: var(--font-xl);
+        text-align: center;
+    }
+
+    header p {
+        font-size: var(--font-base);
+    }
+
+    .game-controls button {
+        padding: 0.625rem 1.25rem;
+        font-size: var(--font-sm);
+    }
+
+    .difficulty-selector select {
+        padding: 0.5rem 1rem;
+        font-size: var(--font-sm);
+    }
+
+    .game-info div {
+        min-width: 100px;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .game-info div p {
+        font-size: var(--font-lg);
+    }
+
+    .cell {
+        width: 30px;
+        height: 30px;
+        font-size: 0.9rem;
+    }
+
+    .clues-section h3 {
+        font-size: var(--font-base);
+        padding: 1rem 1.25rem;
+    }
+
+    .clues-section li {
+        font-size: var(--font-sm);
+        padding: 0.5rem 0;
+    }
+
+    #game-over-message h2 {
+        font-size: var(--font-lg);
+    }
+
+    #final-message {
+        font-size: var(--font-base);
+    }
+
+    #play-again-btn {
+        padding: 0.625rem 1.25rem;
+        font-size: var(--font-sm);
+    }
+}
+
+/* Focus Ring for Accessibility */
+*:focus-visible {
+    outline: 2px solid var(--border-focus);
+    outline-offset: 2px;
+}
+
+/* Micro-interactions & Special Effects */
+.hover-lift {
+    transition: var(--transition);
+}
+
+.hover-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Writing Effect for Inputs */
+.cell input {
+    animation: writeIn 0.3s ease-out forwards;
+    opacity: 0;
+}
+
+.cell input.write-in {
+    animation: writeIn 0.3s ease-out forwards;
+    opacity: 1;
+}
+
+@keyframes writeIn {
+    0% {
+        width: 0;
+        opacity: 0;
+    }
+    100% {
+        width: 100%;
+        opacity: 1;
+    }
+}
+
+/* Pencil Animation for Active Cell */
+.cell.selected::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 4px;
+    background: var(--primary-color);
+    border-radius: 2px 2px 0 0;
+    animation: pencilBounce 1.5s ease-in-out infinite;
+}
+
+@keyframes pencilBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-3px); }
+}
+
+/* Highlight Animation for Correct Words */
+.cell.correct {
+    animation: correctFill 0.6s ease-out;
+}
+
+@keyframes correctFill {
+    0% { transform: scale(0.8); opacity: 0; }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Error Pulse */
+.cell.error {
+    animation: errorPulse 0.8s ease-in-out;
+}
+
+@keyframes errorPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(231, 76, 60, 0.2); }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+    }
+
+    .container {
+        box-shadow: none;
+        border: none;
+        margin: 0;
+    }
+
+    header {
+        background: white;
+        border: none;
+    }
+
+    header h1 {
+        color: #000;
+        -webkit-text-fill-color: #000;
+    }
+
+    .game-controls,
+    .game-info,
+    .clue-panel {
+        background: white;
+        border: none;
+        box-shadow: none;
+    }
+
+    .crossword-container {
+        background: white;
+        border: 1px solid #ddd;
+        box-shadow: none;
+    }
+
+    .cell {
+        border: 1px solid #ddd;
+        background: #fafafa;
+    }
+
+    .cell.filled {
+        background: #e0e0e0;
+    }
+
+    .cell.selected {
+        background: #ffffcc;
+    }
+
+    .cell.correct {
+        background: #c8e6c9;
+    }
+
+    .cell.error {
+        background: #ffcdd2;
+    }
+}
+
+/* Dark Mode Support - Night Crossword */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-main: #0f172a;
+        --bg-card: #1e293b;
+        --bg-card-hover: #334155;
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --border-color: #334155;
+        --paper-color: #1e293b;
+        --highlight-color: #fbbf24;
+        --highlight-dark: #f59e0b;
+        --accent-grid: #475569;
+    }
+
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    }
+
+    .container::before {
+        background: linear-gradient(180deg, var(--primary-light), var(--primary-color));
+    }
+
+    header,
+    .game-controls,
+    .clues-section,
+    .game-info div {
+        background: var(--bg-card);
+        border-color: var(--border-color);
+    }
+
+    .crossword-container {
+        background: var(--bg-card);
+    }
+
+    .cell {
+        background: var(--bg-input);
+    }
+
+    .cell.selected {
+        background: var(--highlight-color);
+    }
+
+    .cell.correct {
+        background: var(--accent-correct);
+    }
+
+    .cell.error {
+        background: var(--accent-error);
+    }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Geral",
+    "description": "Sala principal para conversas gerais",
+    "userCount": 5
+  },
+  {
+    "id": 2,
+    "name": "Tecnologia",
+    "description": "Discussões sobre programação e tecnologia",
+    "userCount": 3
+  },
+  {
+    "id": 3,
+    "name": "Games",
+    "description": "Sobre jogos e entretenimento",
+    "userCount": 2
+  },
+  {
+    "id": 4,
+    "name": "Música",
+    "description": "Compartilhando playlists e descobertas musicais",
+    "userCount": 4
+  }
+]

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceFlow - Dashboard Financeiro Profissional</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-root">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <div class="brand">
+                    <div class="brand-icon" aria-hidden="true">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 20V10M12 20V4M6 20v-6"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1>FinanceFlow</h1>
+                        <p class="subtitle">Dashboard de Investimentos & Finanças</p>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="period-selector">
+                    <label for="period-select" class="visually-hidden">Período</label>
+                    <select id="period-select" class="filter-select">
+                        <option value="this-month">Este Mês</option>
+                        <option value="this-week">Esta Semana</option>
+                        <option value="today">Hoje</option>
+                        <option value="this-year">Este Ano</option>
+                    </select>
+                </div>
+                <button id="theme-toggle-btn" class="theme-toggle" aria-label="Alternar tema" role="button">
+                    <span id="theme-icon" class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- KPI Summary Cards -->
+        <section class="kpi-row" role="region" aria-label="Resumo financeiro">
+            <article class="stat-tile income" data-series="total-income">
+                <div class="stat-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V15"></path>
+                        <path d="M17 9l-5-5-5 5"></path>
+                    </svg>
+                </div>
+                <div class="stat-label">Receita Total</div>
+                <div class="stat-value" id="total-income">R$ 0,00</div>
+            </article>
+            <article class="stat-tile expense" data-series="total-expense">
+                <div class="stat-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10"></path>
+                        <path d="M7 9l5 5 5-5"></path>
+                    </svg>
+                </div>
+                <div class="stat-label">Despesa Total</div>
+                <div class="stat-value" id="total-expense">R$ 0,00</div>
+            </article>
+            <article class="stat-tile balance" data-series="balance">
+                <div class="stat-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                    </svg>
+                </div>
+                <div class="stat-label">Saldo</div>
+                <div class="stat-value" id="balance">R$ 0,00</div>
+            </article>
+        </section>
+
+        <!-- Add Transaction Button -->
+        <div class="action-bar">
+            <button id="add-transaction-btn" class="primary-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                Nova Transação
+            </button>
+        </div>
+
+        <!-- Charts Section -->
+        <section class="charts-grid" role="region" aria-label="Visualizações">
+            <article class="chart-card">
+                <div class="chart-header">
+                    <h2>Distribuição por Categoria</h2>
+                    <div class="chart-actions">
+                        <button class="chart-btn" aria-label="Atualizar gráfico" title="Atualizar">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 4v6h-6"></path>
+                                <path d="M1 20v-6h6"></path>
+                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                            </svg>
+                        </button>
+                        <button class="chart-btn" aria-label="Exportar gráfico" title="Exportar">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="financial-distribution-chart" aria-label="Gráfico de distribuição de despesas por categoria"></canvas>
+                </div>
+            </article>
+            <article class="chart-card wide">
+                <div class="chart-header">
+                    <h2>Tendência Mensal</h2>
+                    <div class="chart-actions">
+                        <button class="chart-btn" aria-label="Atualizar gráfico" title="Atualizar">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 4v6h-6"></path>
+                                <path d="M1 20v-6h6"></path>
+                                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+                            </svg>
+                        </button>
+                        <button class="chart-btn" aria-label="Exportar gráfico" title="Exportar">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="monthly-trend-chart" aria-label="Gráfico de linha mostrando tendência de receitas e despesas nos últimos 6 meses"></canvas>
+                </div>
+            </article>
+        </section>
+
+        <!-- Transactions Table -->
+        <section class="holdings-section" role="region" aria-label="Transações">
+            <div class="section-header">
+                <h2>Transações Recentes</h2>
+                <div class="section-actions">
+                    <input type="search" id="search-transactions" class="search-input" placeholder="Buscar transações..." aria-label="Buscar transações">
+                </div>
+            </div>
+            <div class="table-wrapper">
+                <table id="holdings-table" class="chart-table">
+                    <thead>
+                        <tr>
+                            <th data-sort="descricao">Descrição <span class="sort-icon">⇅</span></th>
+                            <th data-sort="categoria">Categoria <span class="sort-icon">⇅</span></th>
+                            <th data-sort="valor">Valor <span class="sort-icon">⇅</span></th>
+                            <th data-sort="data">Data <span class="sort-icon">⇅</span></th>
+                            <th data-sort="tipo">Tipo <span class="sort-icon">⇅</span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-body">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Current Date Display -->
+        <div class="footer-info">
+            <span id="current-date" class="current-date"></span>
+        </div>
+
+        <!-- Transaction Modal -->
+        <div id="transaction-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Nova Transação</h3>
+                    <button class="close-btn" aria-label="Fechar modal">&times;</button>
+                </div>
+                <form id="transaction-form" class="modal-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="descricao">Descrição <span class="required">*</span></label>
+                            <input type="text" id="descricao" name="descricao" placeholder="Ex: Salário Mensal" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo <span class="required">*</span></label>
+                            <select id="tipo" name="tipo" required>
+                                <option value="">Selecione</option>
+                                <option value="receita">🟢 Receita</option>
+                                <option value="despesa">🔴 Despesa</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="categoria">Categoria <span class="required">*</span></label>
+                            <select id="categoria" name="categoria" required>
+                                <option value="">Selecione</option>
+                                <optgroup label="Receitas">
+                                    <option value="salario">Salário</option>
+                                    <option value="freelance">Freelance</option>
+                                    <option value="investimento">Investimentos</option>
+                                    <option value="outros-r">Outros</option>
+                                </optgroup>
+                                <optgroup label="Despesas">
+                                    <option value="comida">Alimentação</option>
+                                    <option value="transporte">Transporte</option>
+                                    <option value="lazer">Lazer</option>
+                                    <option value="saude">Saúde</option>
+                                    <option value="educacao">Educação</option>
+                                    <option value="outros">Outros</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="valor">Valor (R$) <span class="required">*</span></label>
+                            <input type="number" id="valor" name="valor" step="0.01" min="0.01" placeholder="0,00" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="data">Data <span class="required">*</span></label>
+                        <input type="date" id="data" name="data" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="secondary-btn" id="cancel-btn">Cancelar</button>
+                        <button type="submit" class="primary-btn">Salvar Transação</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

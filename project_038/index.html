@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Perguntas e Respostas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Comunidade de Perguntas e Respostas</h1>
+        <div class="header-actions">
+            <button id="ask-question-btn">Fazer uma Pergunta</button>
+            <div class="sort-options">
+                <label for="sort-by">Ordenar por:</label>
+                <select id="sort-by">
+                    <option value="newest">Mais Recentes</option>
+                    <option value="votes">Mais Votadas</option>
+                    <option value="unanswered">Sem Resposta</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="questions-list" id="questions-list">
+            <!-- Perguntas serão carregadas aqui -->
+        </div>
+
+        <!-- Modal para fazer pergunta -->
+        <div class="modal" id="question-modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2>Nova Pergunta</h2>
+                <form id="question-form">
+                    <div class="form-group">
+                        <label for="question-title">Título:</label>
+                        <input type="text" id="question-title" required placeholder="Ex: Como resolver erro 404 no React?">
+                    </div>
+                    <div class="form-group">
+                        <label for="question-body">Descrição:</label>
+                        <textarea id="question-body" required rows="6" placeholder="Descreva seu problema detalhadamente..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="question-tags">Tags (separadas por vírgula):</label>
+                        <input type="text" id="question-tags" placeholder="Ex: react, javascript, erro-404">
+                    </div>
+                    <button type="submit">Publicar Pergunta</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal para ver pergunta e respostas -->
+        <div class="modal" id="detail-modal" style="display: none;">
+            <div class="modal-content large">
+                <span class="close-modal">&times;</span>
+                <div id="question-detail">
+                    <!-- Detalhes da pergunta serão carregados aqui -->
+                </div>
+                <div id="answers-section">
+                    <h3>Respostas</h3>
+                    <div id="answers-list">
+                        <!-- Respostas serão carregadas aqui -->
+                    </div>
+                    <div class="add-answer">
+                        <h4>Sua Resposta</h4>
+                        <textarea id="answer-body" rows="4" placeholder="Escreva sua resposta..."></textarea>
+                        <button id="submit-answer-btn">Enviar Resposta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

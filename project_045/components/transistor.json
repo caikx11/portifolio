@@ -1,0 +1,45 @@
+{
+  "id": "transistor",
+  "name": "Transistor NPN",
+  "type": "semiconductor",
+  "symbol": "Q",
+  "color": "#800080",
+  "properties": [
+    {
+      "name": "beta",
+      "label": "Ganho de Corrente (β)",
+      "type": "number",
+      "default": 100,
+      "min": 10,
+      "max": 500,
+      "step": 1
+    },
+    {
+      "name": "vbe",
+      "label": "Tensão Base-Emissor (V)",
+      "type": "number",
+      "default": 0.7,
+      "min": 0.5,
+      "max": 1.2,
+      "step": 0.05
+    }
+  ],
+  "connections": [
+    {
+      "name": "collector",
+      "label": "Coletor (C)",
+      "type": "output"
+    },
+    {
+      "name": "base",
+      "label": "Base (B)",
+      "type": "input"
+    },
+    {
+      "name": "emitter",
+      "label": "Emissor (E)",
+      "type": "output"
+    }
+  ],
+  "description": "Transistor bipolar de junção NPN para amplificação e comutação"
+}

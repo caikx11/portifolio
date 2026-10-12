@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caio - Desenvolvedor Full Stack</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Portfólio de Caio - Desenvolvedor especializado em criar aplicações web e mobile modernas e funcionais">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Caio</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#projects">Projetos</a></li>
+                <li><a href="#skills">Habilidades</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h1>Olá, eu sou <span class="highlight">Caio</span></h1>
+            <p>Desenvolvedor Full Stack apaixonado por criar soluções elegantes, funcionais e centradas no usuário</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn primary">Ver meus projetos</a>
+                <a href="#contact" class="btn secondary">Falar comigo</a>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>Sobre mim</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Sou desenvolvedor com experiência em criação de aplicações web e mobile, focado em entregar produtos de alta qualidade com ótima experiência do usuário. Tenho paixão por resolver problemas complexos com soluções simples e elegantes.</p>
+                    <p>Minha jornada no desenvolvimento começou com a curiosidade de entender como as coisas funcionam por trás das telas. Ao longo dos anos, aprendi que o melhor código não é apenas o que funciona, mas o que é fácil de entender, manter e escalar.</p>
+                    <p>Quando não estou codificando, gosto de aprender sobre novas tecnologias, ler livros de tecnologia e passar tempo ao ar livre.</p>
+                </div>
+                <div class="about-image">
+                    <!-- Placeholder for profile image -->
+                    <div class="profile-placeholder">
+                        <span>CP</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Meus Projetos</h2>
+            <p class="projects-subtitle">50 projetos desenvolvidos com foco em beleza, funcionalidade e progressão de complexidade</p>
+            <div class="projects-grid" id="projects-grid">
+                <!-- Projetos serão inseridos aqui dinamicamente pelo JavaScript -->
+            </div>
+        </section>
+
+        
+        <section id="skills">
+            <h2>Habilidades Técnicas</h2>
+            <p class="skills-subtitle">Tecnologias e ferramentas que utilizo no meu dia a dia</p>
+            <div class="skills-container">
+                <!-- Frontend -->
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Vue.js</span>
+                        <span class="skill-tag">Next.js</span>
+                        <span class="skill-tag">Svelte</span>
+                        <span class="skill-tag">Tailwind CSS</span>
+                        <span class="skill-tag">Bootstrap</span>
+                    </div>
+                </div>
+
+                <!-- Backend -->
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Express.js</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">FastAPI</span>
+                        <span class="skill-tag">REST API</span>
+                        <span class="skill-tag">GraphQL</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <!-- Mobile -->
+                <div class="skill-category">
+                    <h3>Mobile</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React Native</span>
+                        <span class="skill-tag">Flutter</span>
+                        <span class="skill-tag">Ionic</span>
+                        <span class="skill-tag">Swift</span>
+                        <span class="skill-tag">Kotlin</span>
+                    </div>
+                </div>
+
+                <!-- DevOps & Tools -->
+                <div class="skill-category">
+                    <h3>DevOps & Ferramentas</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">CI/CD</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">Jest</span>
+                        <span class="skill-tag">Postman</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Vamos trabalhar juntos?</h2>
+            <p class="contact-subtitle">Estou disponível para novos projetos e colaborações. Fique à vontade para me enviar uma mensagem!</p>
+            <form id="contact-form" class="contact-form">
+                <div class="form-group">
+                    <label for="name">Nome completo</label>
+                    <input type="text" id="name" name="name" placeholder="Digite seu nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Endereço de email</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Assunto</label>
+                    <input type="text" id="subject" name="subject" placeholder="Sobre o que você quer falar?" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Mensagem</label>
+                    <textarea id="message" name="message" placeholder="Digite sua mensagem aqui..." rows="6" required></textarea>
+                </div>
+
+                <button type="submit" class="btn primary btn-block">Enviar Mensagem</button>
+            </form>
+
+            <div class="contact-info">
+                <div class="info-item">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">caio@email.com</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Localização:</span>
+                    <span class="info-value">Brasil</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Disponibilidade:</span>
+                    <span class="info-value">Integral</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+                <a href="#">Twitter</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Caio. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicativo de Notas</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Meu Aplicativo de Notas</h1>
+        <div class="header-actions">
+            <button id="new-note-btn" class="btn-primary">+ Nova Nota</button>
+            <input type="text" id="search-input" placeholder="Buscar notas...">
+        </div>
+    </header>
+
+    <main>
+        <div class="sidebar">
+            <h2>Categorias</h2>
+            <div id="categories-list">
+                <!-- Categorias serão inseridas aqui -->
+            </div>
+            <div id="tags-list">
+                <!-- Tags serão inseridas aqui -->
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div id="notes-list">
+                <!-- Notas serão inseridas aqui -->
+            </div>
+
+            <!-- Modal para nova/editar nota -->
+            <div id="note-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn" id="close-note-modal">&times;</span>
+                    <h2 id="modal-title">Nova Nota</h2>
+                    <form id="note-form">
+                        <input type="hidden" id="note-id">
+                        <div class="form-group">
+                            <label for="note-title">Título:</label>
+                            <input type="text" id="note-title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="note-content">Conteúdo:</label>
+                            <textarea id="note-content" rows="10" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="note-category">Categoria:</label>
+                            <select id="note-category">
+                                <option value="">Selecione uma categoria</option>
+                                <!-- Opções serão inseridas aqui -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="note-tags">Tags (separadas por vírgula):</label>
+                            <input type="text" id="note-tags" placeholder="ex: trabalho, importante, ideia">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-primary">Salvar Nota</button>
+                            <button type="button" id="delete-note-btn" class="btn-danger">Excluir Nota</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Meu Aplicativo de Notas. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

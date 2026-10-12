@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard - Projeto 008</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Dashboard completo de clima com previsão detalhada, alertas e gráficos">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Weather Dashboard</h1>
+            <p class="subtitle">Previsão do tempo detalhada para cidades ao redor do mundo</p>
+        </header>
+
+        <main>
+            <!-- Search Section -->
+            <div class="search-section">
+                <input type="text" id="city-input" placeholder="Digite o nome da cidade...">
+                <button id="search-btn">Buscar Clima</button>
+                <div class="recent-cities" id="recent-cities">
+                    <p>Cidades recentes:</p>
+                    <div class="recent-chips" id="recent-chips"></div>
+                </div>
+            </div>
+
+            <!-- Current Weather Card -->
+            <div class="current-weather-card" id="current-weather">
+                <div class="weather-header">
+                    <h2 id="current-city">--</h2>
+                    <span id="current-country">--</span>
+                </div>
+                <div class="weather-icon" id="current-icon">⛅</span>
+                <div class="temp-large" id="current-temp">--°C</div>
+                <div class="weather-desc" id="current-desc">Busque por uma cidade para ver o clima</div>
+            </div>
+
+            <!-- Forecast Section -->
+            <div class="forecast-section">
+                <h2>Previsão Próximos 5 Dias</h2>
+                <div class="forecast-grid" id="forecast-grid"></div>
+            </div>
+
+            <!-- Alerts Section -->
+            <div class="alerts-section" id="alerts-section">
+                <h2>Avisos e Alertas</h2>
+                <div class="alerts-grid" id="alerts-grid">
+                    <p>Nenhum alerta ativo</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Caio. Weather Dashboard</p>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

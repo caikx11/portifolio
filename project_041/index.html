@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisador de Texto</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Analisador de Texto</h1>
+            <p>Contagem de palavras, frases, caracteres e análise de legibilidade</p>
+        </header>
+
+        <div class="input-section">
+            <label for="text-input">Digite ou cole seu texto aqui:</label>
+            <textarea id="text-input" placeholder="Cole seu texto para análise..."></textarea>
+            <div class="input-controls">
+                <button id="clear-btn">Limpar Texto</button>
+                <button id="analyze-btn" class="primary">Analisar Texto</button>
+            </div>
+        </div>
+
+        <div class="results-section" id="results-section">
+            <h2>Resultados da Análise</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Palavras</h3>
+                    <p id="word-count">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Frases</h3>
+                    <p id="sentence-count">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Caracteres</h3>
+                    <p id="char-count">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Caracteres (sem espaços)</h3>
+                    <p id="char-count-no-spaces">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Parágrafos</h3>
+                    <p id="paragraph-count">0</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Linhas</h3>
+                    <p id="line-count">0</p>
+                </div>
+            </div>
+
+            <div class="readability-section">
+                <h2>Índices de Legibilidade</h2>
+                <div class="readability-grid">
+                    <div class="readability-card">
+                        <h3>Índice de Flesch Reading Ease</h3>
+                        <p id="flesch-score">0</p>
+                        <p id="flesch-interpretation">—</p>
+                    </div>
+                    <div class="readability-card">
+                        <h3>Índice de Flesch-Kincaid Grade</h3>
+                        <p id="fk-grade">0</p>
+                        <p id="fk-interpretation">—</p>
+                    </div>
+                    <div class="readability-card">
+                        <h3>Índice de Gunning Fog</h3>
+                        <p id="fog-index">0</p>
+                        <p id="fog-interpretation">—</p>
+                    </div>
+                    <div class="readability-card">
+                        <h3>Índice de SMOG</h3>
+                        <p id="smog-index">0</p>
+                        <p id="smog-interpretation">—</p>
+                    </div>
+                    <div class="readability-card">
+                        <h3>Índice de Automated Readability</h3>
+                        <p id="ari-score">0</p>
+                        <p id="ari-interpretation">—</p>
+                    </div>
+                    <div class="readability-card">
+                        <h3>Índice de Coleman-Liau</h3>
+                        <p id="cl-index">0</p>
+                        <p id="cl-interpretation">—</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="word-frequency">
+                <h2>Frequência de Palavras</h2>
+                <div id="word-frequency-list">
+                    <p>Analise um texto para ver a frequência de palavras.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

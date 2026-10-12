@@ -1,0 +1,158 @@
+[
+  {
+    "id": 1,
+    "name": "Bolo de Cenoura",
+    "description": "Um bolo de cenoura simples e delicioso, perfeito para qualquer ocasião.",
+    "ingredients": [
+      "2 xícaras de farinha de trigo",
+      "3 cenouras médias raladas",
+      "4 ovos",
+      "2 xícaras de açúcar",
+      "1 xícara de óleo",
+      "1 colher de sopa de fermento em pó"
+    ],
+    "instructions": [
+      "Bata no liquidificador as cenouras, os ovos e o óleo.",
+      "Adicione o açúcar e bata por mais 2 minutos.",
+      "Transfira para uma tigela e acrescente a farinha de trigo e o fermento.",
+      "Misture bem até ficar homogêneo.",
+      "Asse em forno preaquecido a 180°C por aproximadamente 40 minutos.",
+      "Para a cobertura, derreta o chocolate com o creme de leite e despeje sobre o bolo frio."
+    ],
+    "time": "50 min",
+    "difficulty": "Fácil",
+    "servings": "10 porções",
+    "category": "Sobremesa"
+  },
+  {
+    "id": 2,
+    "name": "Frango à Milanesa",
+    "description": "Filés de frango empanados e fritos, crocantes por fora e suculentos por dentro.",
+    "ingredients": [
+      "500g de peito de frango em filés",
+      "2 ovos",
+      "2 xícaras de farinha de trigo",
+      "2 xícaras de farinha de rosca",
+      "Sal e pimenta a gosto",
+      "Óleo para fritar"
+    ],
+    "instructions": [
+      "Tempere os filés de frango com sal e pimenta.",
+      "Passe cada filé primeiro pela farinha, depois pelos ovos batidos e finalmente pela farinha de rosca.",
+      "Aqueça o óleo em uma frigideira em fogo médio.",
+      "Frite os filés até dourarem dos dois lados.",
+      "Escorra em papel toalha e sirva com limão e salada."
+    ],
+    "time": "30 min",
+    "difficulty": "Fácil",
+    "servings": "4 porções",
+    "category": "Prato Principal"
+  },
+  {
+    "id": 3,
+    "name": "Salada de Quinoa",
+    "description": "Uma salada saudável e nutritiva com quinoa, legumes e tempero especial.",
+    "ingredients": [
+      "1 xícara de quinoa",
+      "2 xícaras de água",
+      "1 pepino picado",
+      "1 pimentão vermelho picado",
+      "1/2 cebola roxa picada",
+      "1/4 xícara de salsinha picada",
+      "Suco de 2 limões",
+      "3 colheres de sopa de azeite de oliva",
+      "Sal e pimenta a gosto"
+    ],
+    "instructions": [
+      "Lave bem a quinoa em água corrente.",
+      "Cozinhe a quinoa na água até que absorva todo o líquido (cerca de 15 minutos).",
+      "Deixe esfriar completamente.",
+      "Em uma tigela grande, misture a quinoa fria com todos os legumes picados.",
+      "Tempere com suco de limão, azeite, sal e pimenta.",
+      "Misture bem e sirva gelada ou em temperatura ambiente."
+    ],
+    "time": "25 min",
+    "difficulty": "Médio",
+    "servings": "4 porções",
+    "category": "Salada"
+  },
+  {
+    "id": 4,
+    "name": "Lasanha à Bolonhesa",
+    "description": "Lasanha tradicional com molho de carne e queijo derretido.",
+    "ingredients": [
+      "500g de massa de lasanha",
+      "500g de carne moída",
+      "1 cebola picada",
+      "2 dentes de alho picados",
+      "1 xícara de molho de tomate",
+      "1/2 xícara de vinho tinto",
+      "200g de mussarela",
+      "100g de parmesão ralado",
+      "Sal, pimenta e noz-moscada a gosto",
+      "Azeite"
+    ],
+    "instructions": [
+      "Cozinhe a massa de lasanha em água com sal até ficar al dente.",
+      "Em uma panela, refogue a cebola e o alho no azeite.",
+      "Adicione a carne moída e refogue até dourarem.",
+      "Acrescente o vinho tinto e deixe evaporar.",
+      "Adicione o molho de tomate e tempere com sal, pimenta e noz-moscada.",
+      "Em um refratário, monte camadas de massa, molho de carne e queijos.",
+      "Repita as camadas até acabar os ingredientes, terminando com queijo por cima.",
+      "Asse em forno preaquecido a 180°C por aproximadamente 30 minutos."
+    ],
+    "time": "60 min",
+    "difficulty": "Médio",
+    "servings": "6 porções",
+    "category": "Prato Principal"
+  },
+  {
+    "id": 5,
+    "name": "Pão de Queijo",
+    "description": "Pão de queijo mineiro, crocante por fora e macio por dentro.",
+    "ingredients": [
+      "500g de polvilho doce",
+      "1 xícara de leite",
+      "1/2 xícara de óleo",
+      "1 ovo",
+      "200g de queijo minas ralado",
+      "Sal a gosto"
+    ],
+    "instructions": [
+      "Em uma panela, aqueça o leite e o óleo até ferver.",
+      "Despeje o líquido fervente sobre o polvilho e misture bem.",
+      "Deixe esfriar um pouco e adicione o ovo, o queijo e o sal.",
+      "Masse até obter uma massa homogênea e que não grude nas mãos.",
+      "Modele bolinhas pequenas e coloque em uma assadeira untada.",
+      "Asse em forno preaquecido a 200°C por aproximadamente 25 minutos, ou até dourarem."
+    ],
+    "time": "35 min",
+    "difficulty": "Fácil",
+    "servings": "20 unidades",
+    "category": "Lanche"
+  },
+  {
+    "id": 6,
+    "name": "Mousse de Maracujá",
+    "description": "Sobremesa leve e refrescante com polpa de maracujá.",
+    "ingredients": [
+      "1 lata de leite condensado",
+      "1 lata de creme de leite",
+      "1 polpa de maracujá",
+      "1 envelope de gelatina sem sabor"
+    ],
+    "instructions": [
+      "Hidrate a gelatina em 5 colheres de sopa de água fria.",
+      "Derreta a gelatina em banho-maria ou no micro-ondas por 10 segundos.",
+      "No liquidificador, bata o leite condensado, o creme de leite e a polpa de maracujá.",
+      "Adicione a gelatina derretida e bata por mais 30 segundos.",
+      "Despeje em taças individuais e leve à geladeira por pelo menos 2 horas.",
+      "Sirva gelada, opcionalmente decorada com sementes de maracujá."
+    ],
+    "time": "15 min + 2h de geladeira",
+    "difficulty": "Fácil",
+    "servings": "6 porções",
+    "category": "Sobremesa"
+  }
+]

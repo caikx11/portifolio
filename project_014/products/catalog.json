@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Camiseta Básica",
+    "description": "Camiseta de algodão premium, disponível em várias cores",
+    "price": 29.90,
+    "image": "https://via.placeholder.com/300x200?text=Camiseta+B%C3%A1sica",
+    "category": "Roupas",
+    "stock": 50
+  },
+  {
+    "id": 2,
+    "name": "Jeans Slim Fit",
+    "description": "Jeans confortável com modelagem slim fit",
+    "price": 89.90,
+    "image": "https://via.placeholder.com/300x200?text=Jeans+Slim+Fit",
+    "category": "Roupas",
+    "stock": 30
+  },
+  {
+    "id": 3,
+    "name": "Tênis Casual",
+    "description": "Tênis versátil para uso diário",
+    "price": 129.90,
+    "image": "https://via.placeholder.com/300x200?text=T%C3%AAnis+Casual",
+    "category": "Calçados",
+    "stock": 25
+  },
+  {
+    "id": 4,
+    "name": "Relógio Analógico",
+    "description": "Relógio clássico com pulseira de couro",
+    "price": 159.90,
+    "image": "https://via.placeholder.com/300x200?text=Rel%C3%B3gio+Anal%C3%B3gico",
+    "category": "Acessórios",
+    "stock": 15
+  },
+  {
+    "id": 5,
+    "name": "Mochila Executiva",
+    "description": "Mochila resistente para laptop e acessórios",
+    "price": 199.90,
+    "image": "https://via.placeholder.com/300x200?text=Mochila+Executiva",
+    "category": "Acessórios",
+    "stock": 20
+  },
+  {
+    "id": 6,
+    "name": "Jaqueta Corta-Vento",
+    "description": "Jaqueta leve e impermeável para dias chuvosos",
+    "price": 119.90,
+    "image": "https://via.placeholder.com/300x200?text=Jaqueta+Corta-Vento",
+    "category": "Roupas",
+    "stock": 35
+  },
+  {
+    "id": 7,
+    "name": "Vestido de Verão",
+    "description": "Vestido leve e fresco para os dias quentes",
+    "price": 79.90,
+    "image": "https://via.placeholder.com/300x200?text=Vestido+de+Ver%C3%A3o",
+    "category": "Roupas",
+    "stock": 40
+  },
+  {
+    "id": 8,
+    "name": "Bolsa de Couro",
+    "description": "Bolsa feminina de couro legítimo com vários compartimentos",
+    "price": 179.90,
+    "image": "https://via.placeholder.com/300x200?text=Bolsa+de+Couro",
+    "category": "Acessórios",
+    "stock": 18
+  },
+  {
+    "id": 9,
+    "name": "Calça Jogger",
+    "description": "Calça confortável estilo jogger para atividades casuais",
+    "price": 69.90,
+    "image": "https://via.placeholder.com/300x200?text=Cal%C3%A7a+Jogger",
+    "category": "Roupas",
+    "stock": 45
+  },
+  {
+    "id": 10,
+    "name": "Sandália Tiras",
+    "description": "Sandália confortável com tiras ajustáveis",
+    "price": 49.90,
+    "image": "https://via.placeholder.com/300x200?text=Sand%C3%A1lia+Tiras",
+    "category": "Calçados",
+    "stock": 60
+  }
+]

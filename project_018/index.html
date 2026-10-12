@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Memes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Gerador de Memes</h1>
+        <p>Crie seus memes personalizados</p>
+    </header>
+
+    <main>
+        <div class="meme-generator">
+            <div class="meme-preview">
+                <div class="meme-image-container" id="meme-container">
+                    <img id="meme-image" src="" alt="Meme">
+                    <div class="meme-text top-text" id="top-text"></div>
+                    <div class="meme-text bottom-text" id="bottom-text"></div>
+                </div>
+                <div class="placeholder" id="placeholder">
+                    <p>Selecione uma imagem ou modelo para começar</p>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="control-section">
+                    <h3>Imagem</h3>
+                    <div class="templates" id="templates">
+                        <!-- Templates will be loaded here -->
+                    </div>
+                    <div class="file-upload">
+                        <label for="image-upload" class="btn-primary">Upload de Imagem</label>
+                        <input type="file" id="image-upload" accept="image/*" hidden>
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <h3>Textos</h3>
+                    <div class="form-group">
+                        <label for="top-text-input">Texto Superior</label>
+                        <input type="text" id="top-text-input" placeholder="Digite o texto superior">
+                    </div>
+                    <div class="form-group">
+                        <label for="bottom-text-input">Texto Inferior</label>
+                        <input type="text" id="bottom-text-input" placeholder="Digite o texto inferior">
+                    </div>
+                </div>
+
+                <div class="control-section">
+                    <h3>Estilo do Texto</h3>
+                    <div class="form-group">
+                        <label for="font-size">Tamanho da Fonte</label>
+                        <input type="range" id="font-size" min="20" max="80" value="40">
+                        <span id="font-size-value">40px</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="font-color">Cor do Texto</label>
+                        <input type="color" id="font-color" value="#ffffff">
+                    </div>
+                    <div class="form-group">
+                        <label for="stroke-color">Cor da Borda</label>
+                        <input type="color" id="stroke-color" value="#000000">
+                    </div>
+                    <div class="form-group">
+                        <label for="stroke-width">Espessura da Borda</label>
+                        <input type="range" id="stroke-width" min="0" max="5" value="2">
+                        <span id="stroke-width-value">2px</span>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="download-btn" class="btn-primary">Baixar Meme</button>
+                    <button id="share-btn" class="btn-secondary">Compartilhar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Gerador de Memes. Para diversão e criatividade!</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

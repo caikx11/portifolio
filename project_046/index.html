@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicativo de Controle de Saúde</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Controle de Saúde Pessoal</h1>
+            <p>Acompanhe sua pressão arterial, glicose, medicação e outros indicadores de saúde</p>
+        </header>
+
+        <main>
+            <div class="sidebar">
+                <h2>Módulos</h2>
+                <div class="module-panel" id="module-panel">
+                    <!-- Módulos serão carregados aqui via JavaScript -->
+                </div>
+            </div>
+
+            <div class="content-wrapper">
+                <div class="toolbar">
+                    <button id="add-entry">Nova Entrada</button>
+                    <button id="view-relatorios">Ver Relatórios</button>
+                    <button id="export-dados">Exportar Dados</button>
+                    <button id="import-dados">Importar Dados</button>
+                    <button id="clear-limpar">Limpar Dados</button>
+                </div>
+
+                <div id="main-content" class="main-content">
+                    <div class="welcome-screen">
+                        <h2>Bem-vindo ao seu Controle de Saúde</h2>
+                        <p>Selecione um módulo na barra lateral para começar a acompanhar seus indicadores de saúde.</p>
+                        <div class="health-metrics">
+                            <div class="metric-card" data-metric="blood-pressure">
+                                <h3>Pressão Arterial</h3>
+                                <p>Registre e acompanhe sua pressão sistólica e diastólica</p>
+                            </div>
+                            <div class="metric-card" data-metric="glucose">
+                                <h3>Glicose</h3>
+                                <p>Monitore seus níveis de glicose em jejum e pós-refeições</p>
+                            </div>
+                            <div class="metric-card" data-metric="medication">
+                                <h3>Medicação</h3>
+                                <p>Controle o horário e dosagem de seus medicamentos</p>
+                            </div>
+                            <div class="metric-card" data-metric="weight">
+                                <h3>Peso</h3>
+                                <p>Acompanhe seu peso e IMC ao longo do tempo</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Conteúdo dinâmico será inserido aqui -->
+                    <div id="dynamic-content"></div>
+                </div>
+            </div>
+
+            <div class="properties-panel" id="properties-panel">
+                <h2>Detalhes da Entrada</h2>
+                <form id="entry-form">
+                    <!-- Formulário será preenchido dinamicamente -->
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+[
+  {
+    "question": "Qual é o maior planeta do Sistema Solar?",
+    "options": ["Terra", "Marte", "Júpiter", "Saturno"],
+    "correctAnswer": 2
+  },
+  {
+    "question": "Qual é o elemento químico mais abundante no universo?",
+    "options": ["Oxigênio", "Carbono", "Hidrogênio", "Hélio"],
+    "correctAnswer": 2
+  },
+  {
+    "question": "Qual é a velocidade da luz no vácuo?",
+    "options": ["300.000 km/s", "150.000 km/s", "450.000 km/s", "600.000 km/s"],
+    "correctAnswer": 0
+  },
+  {
+    "question": "Qual é o órgão responsável pela filtração do sangue?",
+    "options": ["Coração", "Fígado", "Rim", "Pulmão"],
+    "correctAnswer": 2
+  },
+  {
+    "question": "Qual é o tecido que conecta músculo a osso?",
+    "options": ["Ligamento", "Tendão", "Cartilagem", "Fáscia"],
+    "correctAnswer": 1
+  }
+]

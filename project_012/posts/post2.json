@@ -1,0 +1,12 @@
+[
+  {
+    "id": 2,
+    "title": "Dicas para iniciantes em HTML e CSS",
+    "excerpt": "Aprenda os fundamentos essenciais para começar sua jornada no desenvolvimento web com boas práticas.",
+    "content": "<p>Neste post, compartilhamos dicas valiosas para quem está começando a aprender HTML e CSS. Cobrimos desde a estrutura básica até técnicas avançadas de estilização.</p><ul><li>Use semântica HTML adequada</li><li>Aprenda Flexbox e Grid para layouts</li><li>Pratique responsividade desde o início</li><li>Mantenha seu código organizado e comentado</li></ul><p>Lembre-se: a prática constante é a chave para se tornar um bom desenvolvedor!</p>",
+    "date": "2026-10-08",
+    "author": "Especialista Web",
+    "category": "Desenvolvimento Web",
+    "tags": ["HTML", "CSS", "iniciantes", "tutorial"]
+  }
+]

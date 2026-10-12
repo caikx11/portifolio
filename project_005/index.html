@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima Atual - Projeto 005</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="description" content="Aplicativo de Clima e Previsão do Tempo com interface moderna">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Consulta de Clima</h1>
+            <p class="subtitle">Consulte o clima atual de qualquer cidade do mundo</p>
+        </header>
+
+        <main>
+            <div class="search-box">
+                <input type="text" id="city-input" placeholder="Digite o nome da cidade...">
+                <button id="search-btn">Buscar</button>
+            </div>
+
+            <div class="weather-card" id="weather-card">
+                <div class="weather-header">
+                    <h2 id="city-name">--</h2>
+                    <span id="country">--</span>
+                </div>
+                <div class="weather-body">
+                    <div class="temperature">
+                        <span id="temp">--</span><span class="unit">°C</span>
+                    </div>
+                    <div class="weather-icon" id="weather-icon">⛅</div>
+                </div>
+                <div class="weather-desc" id="weather-desc">Busque por uma cidade para ver o clima</div>
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <span>Umidade</span>
+                        <strong id="humidity">--%</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Vento</span>
+                        <strong id="wind">-- km/h</strong>
+                    </div>
+                    <div class="detail-item">
+                        <span>Sensação</span>
+                        <strong id="feels-like">--°C</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-cities">
+                <p>Cidades populares:</p>
+                <div class="city-chips">
+                    <button class="city-chip" data-city="São Paulo">São Paulo</button>
+                    <button class="city-chip" data-city="Rio de Janeiro">Rio de Janeiro</button>
+                    <button class="city-chip" data-city="New York">Nova York</button>
+                    <button class="city-chip" data-city="London">Londres</button>
+                    <button class="city-chip" data-city="Tokyo">Tóquio</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Caio. Aplicativo de Clima</p>
+        </footer>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

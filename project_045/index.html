@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Eletrônica Básica</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Simulador de Eletrônica Básica</h1>
+            <p>Monte circuitos simples com LED, resistores, bateria e fios</p>
+        </header>
+
+        <main>
+            <div class="sidebar">
+                <h2>Componentes</h2>
+                <div class="component-panel" id="component-panel">
+                    <!-- Componentes serão carregados aqui via JavaScript -->
+                </div>
+            </div>
+
+            <div class="canvas-wrapper">
+                <div class="toolbar">
+                    <button id="clear-circuit">Limpar Circuito</button>
+                    <button id="run-simulation">Simular</button>
+                    <button id="stop-simulation">Parar</button>
+                    <button id="save-circuit">Salvar Circuito</button>
+                    <button id="load-circuit">Carregar Circuito</button>
+                    <button id="export-circuit">Exportar</button>
+                </div>
+                <div id="canvas" class="canvas"></div>
+                <div class="circuit-info" id="circuit-info">
+                    <p>Monte seu circuito arrastando componentes da barra lateral</p>
+                </div>
+            </div>
+
+            <div class="properties-panel" id="properties-panel">
+                <h2>Propriedades do Componente</h2>
+                <form id="component-form">
+                    <!-- Formulário de propriedades será preenchido dinamicamente -->
+                </form>
+                <div class="simulation-results" id="simulation-results" style="display: none;">
+                    <h3>Resultados da Simulação</h3>
+                    <div id="results-content"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
