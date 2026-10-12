@@ -290,8 +290,6 @@ class MeditationApp {
             if (Notification.permission === 'granted') {
                 new Notification(title, {
                     body: message,
-                    icon: '/icon-192.png',
-                    badge: '/badge-72.png',
                     tag: 'meditation-complete',
                     data: { timestamp: Date.now() }
                 });
@@ -300,8 +298,6 @@ class MeditationApp {
                     if (permission === 'granted') {
                         new Notification(title, {
                             body: message,
-                            icon: '/icon-192.png',
-                            badge: '/badge-72.png',
                             tag: 'meditation-complete',
                             data: { timestamp: Date.now() }
                         });
@@ -309,7 +305,7 @@ class MeditationApp {
                 });
             }
         }
-    },
+    }
 
     updateSessionStats(mode, duration, details) {
         const today = new Date().toISOString().split('T')[0];
@@ -346,12 +342,12 @@ class MeditationApp {
         localStorage.setItem('meditation_stats', JSON.stringify(this.stats));
         this.updateStatsDisplay();
         this.renderEnhancedStats();
-    },
+    }
 
     getBreathingDuration(pattern) {
         const timings = this.getBreathingTimings();
         return timings.inhale + (timings.hold || 0) + (timings.exhale || 0) + (timings.pause || 0);
-    },
+    }
 
     formatTimer(seconds) {
         const mins = Math.floor(seconds / 60);

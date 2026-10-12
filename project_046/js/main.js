@@ -766,68 +766,6 @@ class HealthControlApp {
         this.charts = {};
     }
 
-        // Blood pressure report
-        const bpEntries = this.data.bloodPressure;
-        if (bpEntries.length > 0) {
-            const avgSystolic = this.calculateAverage(bpEntries, 'systolic').toFixed(1);
-            const avgDiastolic = this.calculateAverage(bpEntries, 'diastolic').toFixed(1);
-            reportsHTML += `
-                <div class="report-section">
-                    <h3>Pressão Arterial</h3>
-                    <p>Registros: ${bpEntries.length}</p>
-                    <p>Média sistólica: ${avgSystolic} mmHg</p>
-                    <p>Média diastólica: ${avgDiastolic} mmHg</p>
-                    ${bpEntries.length > 0 ? `<p>Tendência: ${this.determineTrend(bpEntries.map(e => e.systolic))}</p>` : ''}
-                </div>
-            `;
-        }
-
-        // Glucose report
-        const glucoseEntries = this.data.glucose;
-        if (glucoseEntries.length > 0) {
-            const avgGlucose = this.calculateAverage(glucoseEntries, 'value').toFixed(1);
-            reportsHTML += `
-                <div class="report-section">
-                    <h3>Glicose</h3>
-                    <p>Registros: ${glucoseEntries.length}</p>
-                    <p>Média: ${avgGlucose} mg/dL</p>
-                </div>
-            `;
-        }
-
-        // Weight report
-        const weightEntries = this.data.weight;
-        if (weightEntries.length > 0) {
-            const weightChange = ((weightEntries[weightEntries.length - 1].peso - weightEntries[0].peso) / weightEntries[0].peso * 100).toFixed(1);
-            reportsHTML += `
-                <div class="report-section">
-                    <h3>Peso e IMC</h3>
-                    <p>Peso inicial: ${weightEntries[0].peso} kg</p>
-                    <p>Peso atual: ${weightEntries[weightEntries.length - 1].peso} kg</p>
-                    <p>Variação: ${weightChange}%</p>
-                    <p>IMC atual: ${weightEntries[weightEntries.length - 1].imc.toFixed(1)}</p>
-                </div>
-            `;
-        }
-
-        // Medication report
-        const medEntries = this.data.medication;
-        if (medEntries.length > 0) {
-            reportsHTML += `
-                <div class="report-section">
-                    <h3>Medicação</h3>
-                    <p>Total de medicações registradas: ${medEntries.length}</p>
-                </div>
-            `;
-        }
-
-        if (!bpEntries.length && !glucoseEntries.length && !weightEntries.length && !medEntries.length) {
-            reportsHTML = '<p>Nenhum dado disponível para gerar relatórios.</p>';
-        }
-
-        dynamicContent.innerHTML = reportsHTML;
-    }
-
     determineTrend(values) {
         if (values.length < 2) return 'Insuficiente dados';
 

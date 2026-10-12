@@ -15,7 +15,7 @@ const checkoutBtn = document.getElementById('checkout-btn');
 // Fetch products from JSON file
 async function fetchProducts() {
     try {
-        const response = await fetch('../products/catalog.json');
+        const response = await fetch('products/catalog.json');
         if (!response.ok) {
             throw new Error('Failed to fetch products');
         }

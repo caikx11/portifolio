@@ -39,7 +39,7 @@ async function init() {
 // Fetch recipes from JSON database or fallback
 async function fetchRecipes() {
     try {
-        const response = await fetch('../recipes/database.json');
+        const response = await fetch('recipes/database.json');
         if (!response.ok) throw new Error('Failed to fetch recipes');
         recipes = await response.json();
     } catch (error) {

@@ -33,7 +33,7 @@ class RecipeApp {
     async loadRecipes() {
         try {
             // Tentar carregar receitas do arquivo local
-            const response = await fetch('../recipes/database.json');
+            const response = await fetch('recipes/database.json');
             if (!response.ok) throw new Error('Failed to load recipes');
             this.recipes = await response.json();
             this.filteredRecipes = [...this.recipes];
