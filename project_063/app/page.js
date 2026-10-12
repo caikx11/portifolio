@@ -45,7 +45,7 @@ export default function Home() {
 
   return (
     <>
-      <a className="back-link" href="../index.html">← Portfólio</a>
+      <a className="back-link" href="../projetos.html">← Portfólio</a>
       <main>
         <div className="avatar" aria-hidden="true">AL</div>
         <h1>Ana Luz</h1>

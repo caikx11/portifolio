@@ -68,7 +68,7 @@ export default function Home() {
 
   return (
     <>
-      <a className="back-link" href="../index.html">← Portfólio</a>
+      <a className="back-link" href="../projetos.html">← Portfólio</a>
       <div className="demo-banner">Projeto de portfólio: checkout em <b>modo demonstração</b>, sem chaves nem cobranças reais.</div>
       <header className="nav"><span className="logo">Faísca<i /></span><nav aria-label="Seções"><a href="#recursos">Recursos</a><a href="#precos">Preços</a><a href="#faq">FAQ</a></nav></header>
       <main>

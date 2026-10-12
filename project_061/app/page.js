@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <>
-      <a className="back-link" href="../index.html">← Portfólio</a>
+      <a className="back-link" href="../projetos.html">← Portfólio</a>
       <header className="masthead">
         <a className="brand" href="#/" aria-label="Maré Alta, início">Maré Alta</a>
         <p className="tagline">Anotações sobre web, design e código.</p>
