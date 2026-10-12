@@ -41,3 +41,5 @@ body{background:linear-gradient(180deg,var(--sage),#f6f2ea)!important;color:var(
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 html{background:var(--sage)}main,.reservation-main,.reservation-content,.reservation-sidebar{background:none!important;box-shadow:none!important;padding-left:0;padding-right:0}
 .day-date{display:none}
+.reservation-content{padding:0!important;margin:0!important;min-height:0!important}
+.reservation-main{margin:0!important;padding:0!important}

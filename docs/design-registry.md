@@ -32,3 +32,23 @@
 - 038 Mural de Dúvidas: neo-brutalista, amarelo #ffd84a, rosa #ff7eb6, azul #6ec8ff, tinta #14110f; Bricolage Grotesque + Azeret Mono
 - 039 Bolso Claro: menta #eaf7ef, verde #0f8b6d, coral #ff6b57, lima #c4f26b; DM Serif Display + Manrope
 - 040 Cruzadinha do Dia: papel-jornal #f1ecdf, tinta #17150f, marca-texto #ffe066, vermelho #c8321e; Abril Fatface + Lora + Oswald
+| 011 Quiz | Game-show arcade: #1a0b3b indigo, #ffd23f sun, #ff3d81 hot pink, #27e1ff cyan | Bungee + Rubik |
+| 012 Blog | Editorial paper: #f5efe3 cream, #211d18 ink, #9b2c2c oxblood | Fraunces + Newsreader |
+| 013 Reservas | Spa/wellness: #e9efe7 sage, #1f4d47 deep teal, #c97b5a clay | Cormorant Garamond + DM Sans |
+| 014 Loja | Neo-brutalist streetwear: #f4f1ea, #0a0a0a, #ffe600 yellow, #ff5ca8 pink | Space Grotesk + Space Mono |
+| 015 Notas | Notebook + sticky notes: #efe4cf desk, #2b3a55 ink, #e9c46a tape, #d1495b | Caveat + Nunito |
+| 016 Memoria | Candy pastel toy-box: #fff6ea, #4a3b5c, #ff7aa8, #9be7c4, #c9b6ff | Baloo 2 + Nunito |
+| 017 Conversor | Private-bank light: #f3efe6 paper, #0e1b3d navy, #b8892b/#e4c06a gold | Manrope + JetBrains Mono |
+| 018 Memes | Chaotic pop on charcoal: #121212, #c6ff00 lime, #ff2e93 pink | Anton + Archivo |
+| 019 Receitas | Trattoria gingham: #fbf4e6 linen, #c8412b tomato, #5b6b2f olive, #3a2a20 | Abril Fatface + Karla |
+| 020 Chat | Midnight slate & teal: #0b1220, #111a2e, #2dd4bf, #e6edf7 | IBM Plex Sans + IBM Plex Mono |
+- 001 Portfólio: midnight indigo #0a0e1d + #7c8cff / mint #3ee0b0 / amber #ffc65c; Space Grotesk + JetBrains Mono
+- 002 Etch-a-Sketch: toy red #d62839 + cream #f4ead2 + grey screen #c9cdc2; Bungee + Rubik
+- 003 To-Do List: notebook paper #fbf6e9, ink #2a2733, highlighter #ffe27a, accent #e4572e; Fraunces + Karla
+- 004 Calculadora: charcoal #1c1d21 + orange #ff6b1a on stone #d9d5cb; DM Mono + Syne
+- 005 Clima Atual: sky glass gradient (blue #3a8dff to #9cd3ff, muda por condição), branco translúcido; Outfit
+- 006 Pomodoro: plum #1a1020 + tomato #ff5a3c (pausas: teal #35c9a0 / blue #6aa7ff); Sora + IBM Plex Mono
+- 007 Habit Tracker: oat #f3ebde + clay #c4623a + sage #7d9a78; DM Serif Display + DM Sans
+- 008 Weather Dashboard: dark telemetry #070d17 + cyan #22d3ee + amber #fbbf24; Chakra Petch + IBM Plex Sans
+- 009 Gerador de Senhas: terminal black #06090a + lime #b6ff3b; Fira Code + Rajdhani
+- 010 Controle de Finanças: ivory #f5f1e8 + navy #0f2a43 + gold #c9a24b (tema escuro navy); Manrope + Newsreader
