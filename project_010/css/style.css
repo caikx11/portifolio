@@ -70,7 +70,7 @@ select:focus,input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 
 .radio-group label:has(input:checked){background:var(--navy);color:#fff;border-color:var(--navy)}
 body.dark-theme .radio-group label:has(input:checked){background:var(--gold);color:#14283d;border-color:var(--gold)}
 .radio-group input{accent-color:var(--gold)}
-.charts-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin-bottom:1.3rem}
+.charts-grid{align-items:start;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin-bottom:1.3rem}
 .chart-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1rem;min-width:0}
 .chart-card h3{text-transform:uppercase;letter-spacing:.08em;font-size:.72rem;color:var(--muted);margin-bottom:.8rem}
 .chart-placeholder{min-height:150px}
