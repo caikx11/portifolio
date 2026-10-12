@@ -1,0 +1,1 @@
+module.exports={content:["./index.html","./src/**/*.{ts,tsx}"],theme:{extend:{colors:{paper:"#fbfaf7",ink:"#16181d",violet:{DEFAULT:"#5b3df5",dark:"#4527d6",soft:"#ece8ff"},lime:"#c8f169",line:"#e4e1d8"},fontFamily:{sans:['"Instrument Sans"',"system-ui","sans-serif"],serif:['"Instrument Serif"',"Georgia","serif"]}}},plugins:[]};

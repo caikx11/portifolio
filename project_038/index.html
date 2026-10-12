@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Perguntas e Respostas</title>
+    <title>Mural de Dúvidas</title>
+    <meta name="description" content="Comunidade de perguntas e respostas com votos, tags e ordenação.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@500;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
-        <h1>Comunidade de Perguntas e Respostas</h1>
+        <header class="hero">
+            <h1>Mural de <mark>Dúvidas</mark></h1>
+            <p class="lede">Pergunte, responda e vote. Boas respostas sobem para o topo do mural.</p>
+        </header>
         <div class="header-actions">
             <button id="ask-question-btn">Fazer uma Pergunta</button>
             <div class="sort-options">
@@ -26,9 +34,9 @@
         </div>
 
         <!-- Modal para fazer pergunta -->
-        <div class="modal" id="question-modal" style="display: none;">
+        <div class="modal" id="question-modal" style="display: none;" role="dialog" aria-modal="true" aria-label="Nova pergunta">
             <div class="modal-content">
-                <span class="close-modal">&times;</span>
+                <button type="button" class="close-modal" aria-label="Fechar">&times;</button>
                 <h2>Nova Pergunta</h2>
                 <form id="question-form">
                     <div class="form-group">
@@ -49,9 +57,9 @@
         </div>
 
         <!-- Modal para ver pergunta e respostas -->
-        <div class="modal" id="detail-modal" style="display: none;">
+        <div class="modal" id="detail-modal" style="display: none;" role="dialog" aria-modal="true" aria-label="Pergunta e respostas">
             <div class="modal-content large">
-                <span class="close-modal">&times;</span>
+                <button type="button" class="close-modal" aria-label="Fechar">&times;</button>
                 <div id="question-detail">
                     <!-- Detalhes da pergunta serão carregados aqui -->
                 </div>

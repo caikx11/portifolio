@@ -1,0 +1,1 @@
+module.exports={content:["./index.html","./src/**/*.ts"],theme:{extend:{colors:{coal:"#14110f",panel:"#1f1a17",edge:"#342d28",amber:"#ffca28",flame:"#ff7a45",sync:"#3dd6c6",bone:"#f4ebe0"},fontFamily:{sans:['Figtree',"system-ui","sans-serif"],mono:['"Martian Mono"',"ui-monospace","monospace"]}}},plugins:[]};

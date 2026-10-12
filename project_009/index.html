@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Senhas - Projeto 009</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <meta name="description" content="Gerador de senhas seguras com medidor de força, opções personalizáveis e histórico">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
-            <h1>Gerador de Senhas</h1>
-            <p class="subtitle">Crie senhas seguras e únicas instantaneamente</p>
+            <h1>Cofre<span>_</span>Senhas</h1>
+            <p class="subtitle">Senhas aleatórias geradas no seu navegador com crypto.getRandomValues. Nada é enviado nem salvo.</p>
         </header>
 
         <main>
             <!-- Generated Password Display -->
             <div class="password-display">
-                <input type="text" id="generated-password" readonly placeholder="Clique em Gerar para criar uma senha">
+                <input type="text" id="generated-password" readonly placeholder="Clique em Gerar para criar uma senha" aria-label="Senha gerada" spellcheck="false">
                 <button class="copy-btn" id="copy-btn" title="Copiar senha">
-                    <span class="copy-icon">📋</span>
-                    <span class="copied-text" style="display: none;">Copiado!</span>
+                    <span class="copy-icon">Copiar</span>
+                    <span class="copied-text" hidden>Copiado!</span>
                 </button>
             </div>
 
@@ -29,6 +34,8 @@
                 <div class="strength-header">
                     <span>Força da senha</span>
                     <span id="strength-label">Muito Fraca</span>
+                </div>
+                <div class="entropy" id="entropy">Entropia: 0 bits
                 </div>
                 <div class="strength-bar">
                     <div class="strength-fill" id="strength-fill"></div>

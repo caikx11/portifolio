@@ -1,0 +1,46 @@
+/* 045 Simulador de Eletrônica - placa de circuito: verde-PCB, cobre e ouro */
+:root,:root:root{
+  --primary-color:#c9822b;--primary-dark:#9a5f17;--primary-light:#e9a84f;--primary-accent:#f6c874;
+  --bg-main:#0b2a22;--bg-card:#11392e;--bg-card-hover:#164536;--bg-sidebar:#11392e;--bg-input:#0d2f26;--bg-muted:#0d2f26;--bg-schematic:#f3efe0;
+  --text-primary:#e8f3ec;--text-secondary:#b4d1c3;--text-muted:#7fa793;--text-light:#fff;
+  --border-color:#2b6a55;--border-focus:#f6c874;--border-grid:rgba(11,42,34,.12);
+  --bk-bg:#c9822b;--bk-fg:#0b2a22;
+}
+html{background:#0b2a22}
+body{font-family:'Chakra Petch',system-ui,sans-serif;color:#e8f3ec;overflow-x:hidden;
+ background:radial-gradient(circle at 20% 10%,#14503f 0,transparent 45%),radial-gradient(circle,#1b6a55 1px,transparent 1.5px) 0 0/26px 26px,#0b2a22}
+body::before,body::after{display:none}
+.container{width:100%;max-width:1500px;margin:0 auto;padding:3rem 12px 12px;background:transparent;box-shadow:none;border:0}
+.container::before{display:none}
+header{background:transparent!important;border:0!important;box-shadow:none!important}
+h1,h2,h3{font-family:'Chakra Petch',sans-serif;color:#f6c874;-webkit-text-fill-color:currentColor;background:none}
+h1{font-weight:700;letter-spacing:.02em;text-shadow:0 0 18px rgba(246,200,116,.35)}
+header p{color:#b4d1c3;font-family:'IBM Plex Mono',monospace;font-style:normal}
+.sidebar,.canvas-wrapper,.properties-panel{background:#11392e;border:1px solid #2b6a55;border-radius:14px;box-shadow:0 0 0 1px #0b2a22,0 10px 30px -12px #000}
+.component-item{background:#0d2f26;border:1px solid #2b6a55;border-radius:10px;cursor:pointer;color:#e8f3ec;transition:transform .15s,border-color .15s,box-shadow .15s}
+.component-item:hover{transform:translateX(3px);border-color:#f6c874}
+.component-item.active{border-color:#f6c874;box-shadow:0 0 0 2px #f6c874 inset,0 0 14px rgba(246,200,116,.4)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px}
+button{font-family:'Chakra Petch',sans-serif;cursor:pointer;color:#0b2a22;background:#f6c874;border:2px solid #c9822b;border-radius:8px}
+button:hover{background:#ffd98f;transform:translateY(-2px)}
+#stop-simulation,#clear-circuit{background:#e5575a;border-color:#a93538;color:#fff}
+#run-simulation{background:#46d39a;border-color:#1c8c63;color:#05261b}
+input,select,textarea{background:#0d2f26;color:#e8f3ec;border:1px solid #2b6a55;border-radius:8px;max-width:100%;font-family:'IBM Plex Mono',monospace}
+label{color:#b4d1c3}
+:focus-visible{outline:3px solid #f6c874;outline-offset:2px}
+#canvas{display:block;flex:none;width:100%;height:480px;max-width:100%;touch-action:none;border:2px solid #c9822b;background-color:#f3efe0;cursor:crosshair}
+.circuit-info{color:#b4d1c3;font-family:'IBM Plex Mono',monospace;font-size:.85rem}
+@media (max-width:900px){
+  main{flex-direction:column!important}
+  .sidebar,.properties-panel{width:100%!important;max-height:none!important}
+  .canvas-wrapper{width:100%;min-width:0}
+  .component-panel{display:flex!important;flex-wrap:wrap;gap:8px}
+  #canvas{height:380px}
+}
+@media (max-width:480px){.container{padding:3rem 8px 8px}.canvas-wrapper{padding:.75rem!important}}
+.back-link{position:fixed;top:10px;left:10px;z-index:9999;padding:5px 11px;font:600 12px/1.2 system-ui,sans-serif;text-decoration:none;color:var(--bk-fg,#fff);background:var(--bk-bg,rgba(20,20,30,.72));border:1px solid var(--bk-bd,rgba(255,255,255,.25));border-radius:999px;backdrop-filter:blur(6px);opacity:.8;transition:opacity .2s,transform .2s}
+.back-link:hover,.back-link:focus-visible{opacity:1;transform:translateX(-2px);outline:2px solid currentColor;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+header h1{font-family:'Chakra Petch',sans-serif;-webkit-text-fill-color:#f6c874;background:none;left:auto;transform:none;display:block;text-align:center}
+.properties-panel h2::before,.sidebar h2::before{display:none}
+.properties-panel h2,.sidebar h2{font-family:'Chakra Petch',sans-serif;color:#f6c874}

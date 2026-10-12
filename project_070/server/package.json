@@ -1,0 +1,25 @@
+{
+  "name": "blog-fullstack",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3070",
+    "build": "next build",
+    "start": "next start -p 3070",
+    "test": "jest"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "next": "14.2.15",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.3.0",
+    "jest": "^29.7.0",
+    "typescript": "^5.5.0"
+  }
+}

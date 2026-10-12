@@ -3,8 +3,9 @@ class RecipeApp {
     constructor() {
         this.recipes = [];
         this.filteredRecipes = [];
-        this.favorites = new Set(JSON.parse(localStorage.getItem('favorites') || '[]'));
-        this.offlineRecipes = new Set(JSON.parse(localStorage.getItem('offlineRecipes') || '[]'));
+        const read = (k) => { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch (e) { return []; } };
+        this.favorites = new Set(read('favorites'));
+        this.offlineRecipes = new Set(read('offlineRecipes'));
         this.currentTab = 'all';
         this.init();
     }
@@ -14,6 +15,19 @@ class RecipeApp {
         this.bindEvents();
         this.updateStatus();
         this.renderTabs();
+        this.registerSW();
+    }
+
+    registerSW() {
+        if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+            navigator.serviceWorker.register('sw.js').catch(err => console.warn('SW não registrado:', err));
+        }
+    }
+
+    esc(t) {
+        const d = document.createElement('div');
+        d.textContent = t == null ? '' : String(t);
+        return d.innerHTML;
     }
 
     bindEvents() {
@@ -22,10 +36,17 @@ class RecipeApp {
             if (e.key === 'Enter') this.searchRecipes();
         });
 
+        document.getElementById('close-detail-btn').addEventListener('click', () => this.closeDetail());
+        document.getElementById('recipe-detail').addEventListener('click', (e) => {
+            if (e.target.id === 'recipe-detail') this.closeDetail();
+        });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.closeDetail(); });
+        document.getElementById('search-input').addEventListener('input', () => this.applyFilters());
+
         // Tab events
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
-                this.setTab(e.target.dataset.tab);
+                this.setTab(e.currentTarget.dataset.tab);
             });
         });
     }
@@ -33,9 +54,10 @@ class RecipeApp {
     async loadRecipes() {
         try {
             // Tentar carregar receitas do arquivo local
-            const response = await fetch('../recipes/database.json');
+            const response = await fetch('recipes/database.json');
             if (!response.ok) throw new Error('Failed to load recipes');
             this.recipes = await response.json();
+            try { localStorage.setItem('recipes', JSON.stringify(this.recipes)); } catch (e) { /* ignore */ }
             this.filteredRecipes = [...this.recipes];
             this.renderRecipes();
         } catch (error) {
@@ -112,7 +134,8 @@ class RecipeApp {
         const container = document.getElementById('recipes-container');
 
         if (this.filteredRecipes.length === 0) {
-            container.innerHTML = '<div class="empty-state">Nenhuma receita encontrada</div>';
+            const msgs = { favorites: 'Toque em uma receita e marque como favorita para vê-la aqui.', offline: 'Salve receitas para usá-las sem internet. Elas aparecerão aqui.' };
+            container.innerHTML = `<div class="empty-state">${msgs[this.currentTab] && !document.getElementById('search-input').value ? msgs[this.currentTab] : 'Nenhuma receita encontrada.'}</div>`;
             return;
         }
 
@@ -124,7 +147,7 @@ class RecipeApp {
                 <div class="recipe-card ${isOffline ? 'offline' : ''} ${isFavorite ? 'favorite' : ''}"
                      data-recipe-id="${recipe.id}">
                     <div class="recipe-header">
-                        <h3 class="recipe-title">${recipe.name}</h3>
+                        <h3 class="recipe-title">${this.esc(recipe.name)}</h3>
                         <div class="recipe-tags">
                             ${isOffline ? '<span class="tag offline">Offline</span>' : ''}
                             ${isFavorite ? '<span class="tag favorite">Favorita</span>' : ''}
@@ -136,8 +159,8 @@ class RecipeApp {
                     </div>
                     <p class="recipe-description">${recipe.description || 'Descrição não disponível'}</p>
                     <div class="recipe-footer">
-                        <span>${recipe.servings || ''} porções</span>
-                        <span>${recipe.category || ''}</span>
+                        <span>${recipe.servings ? recipe.servings + ' porções' : ''}</span>
+                        <span>${this.esc(recipe.category || '')}</span>
                     </div>
                 </div>
             `;
@@ -145,6 +168,9 @@ class RecipeApp {
 
         // Adicionar event listeners para os cards
         document.querySelectorAll('.recipe-card').forEach(card => {
+            card.tabIndex = 0;
+            card.setAttribute('role', 'button');
+            card.addEventListener('keydown', (e) => { if (e.key === 'Enter') card.click(); });
             card.addEventListener('click', (e) => {
                 // Ignorar cliques nos botões internos (se existirem)
                 if (!e.target.classList.contains('btn')) {
@@ -155,6 +181,11 @@ class RecipeApp {
         });
     }
 
+    closeDetail() {
+        document.getElementById('recipe-detail').style.display = 'none';
+        document.body.classList.remove('modal-open');
+    }
+
     showRecipeDetail(recipeId) {
         const recipe = this.recipes.find(r => r.id === recipeId);
         if (!recipe) return;
@@ -163,7 +194,7 @@ class RecipeApp {
         const contentContainer = document.querySelector('.recipe-content');
 
         contentContainer.innerHTML = `
-            <h2>${recipe.name}</h2>
+            <h2>${this.esc(recipe.name)}</h2>
             <div class="detail-section">
                 <h3>Descrição</h3>
                 <p>${recipe.description || 'Descrição não disponível'}</p>
@@ -171,13 +202,13 @@ class RecipeApp {
             <div class="detail-section">
                 <h3>Ingredientes</h3>
                 <ul class="ingredients-list">
-                    ${recipe.ingredients ? recipe.ingredients.map(ing => `<li>${ing}</li>`).join('') : '<li>Ingredientes não informados</li>'}
+                    ${recipe.ingredients ? recipe.ingredients.map(ing => `<li>${this.esc(ing)}</li>`).join('') : '<li>Ingredientes não informados</li>'}
                 </ul>
             </div>
             <div class="detail-section">
                 <h3>Instruções</h3>
                 <ol class="instructions-list">
-                    ${recipe.instructions ? recipe.instructions.map(step => `<li>${step}</li>`).join('') : '<li>Instruções não informadas</li>'}
+                    ${recipe.instructions ? recipe.instructions.map(step => `<li>${this.esc(step)}</li>`).join('') : '<li>Instruções não informadas</li>'}
                 </ol>
             </div>
             <div class="detail-section">
@@ -200,6 +231,8 @@ class RecipeApp {
             this.offlineRecipes.has(recipeId) ? 'Remover do Offline' : 'Salvar para Offline';
 
         detailContainer.style.display = 'flex';
+        document.body.classList.add('modal-open');
+        detailContainer.scrollTop = 0;
     }
 
     toggleFavorite(recipeId) {
@@ -249,7 +282,7 @@ class RecipeApp {
     updateStatus() {
         // Simular verificação de conexão
         const isOnline = navigator.onLine;
-        document.getElementById('status-text').textContent = isOnline ? 'Online' : 'Offline';
+        document.getElementById('status-text').textContent = isOnline ? 'Online' : 'Offline · usando cache';
         document.getElementById('status-dot').className = isOnline ? 'online' : 'offline';
     }
 

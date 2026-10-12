@@ -5,6 +5,7 @@ class ContractGeneratorApp {
         this.contractData = {};
         this.contractTypes = {
             'prestacao-servicos': {
+                description: 'Contratação de profissionais autônomos ou empresas para serviços específicos.',
                 title: 'Prestação de Serviços',
                 icon: '💼',
                 fields: [
@@ -21,6 +22,7 @@ class ContractGeneratorApp {
                 ]
             },
             'locacao-imovel': {
+                description: 'Aluguel de residências, salas comerciais ou espaços.',
                 title: 'Locação de Imóvel',
                 icon: '🏠',
                 fields: [
@@ -40,6 +42,7 @@ class ContractGeneratorApp {
                 ]
             },
             'parceria-empresarial': {
+                description: 'Acordo entre partes para desenvolver projetos em conjunto.',
                 title: 'Parceria Empresarial',
                 icon: '🤝',
                 fields: [
@@ -55,6 +58,7 @@ class ContractGeneratorApp {
                 ]
             },
             'confidencialidade': {
+                description: 'Proteção de informações confidenciais e proprietárias.',
                 title: 'Acordo de Confidencialidade (NDA)',
                 icon: '🔒',
                 fields: [
@@ -76,8 +80,29 @@ class ContractGeneratorApp {
     init() {
         this.setupEventListeners();
         this.renderSidebar();
-        this.loadFromLocalStorage();
         this.renderWelcomeContent();
+        this.loadFromLocalStorage();
+    }
+
+    renderWelcomeContent() {
+        const dynamicContent = document.getElementById('dynamic-content');
+        const cards = Object.entries(this.contractTypes).map(([type, info]) => `
+            <button type="button" class="contract-card" data-contract-type="${type}">
+                <span class="contract-card-icon">${info.icon}</span>
+                <h3>${info.title}</h3>
+                <p>${info.description || ''}</p>
+            </button>
+        `).join('');
+        dynamicContent.innerHTML = `
+            <div class="welcome-screen">
+                <h2>Bem-vindo ao Gerador de Contratos</h2>
+                <p>Escolha um tipo de contrato abaixo (ou na barra lateral) para criar seu documento personalizado.</p>
+                <div class="contract-types">${cards}</div>
+            </div>
+        `;
+        dynamicContent.querySelectorAll('.contract-card').forEach(card => {
+            card.addEventListener('click', () => this.showContractForm(card.dataset.contractType));
+        });
     }
 
     setupEventListeners() {
@@ -110,6 +135,7 @@ class ContractGeneratorApp {
             if (this.validateForm(form)) {
                 this.saveContractData();
                 this.generateContractPreview();
+                this.hidePropertiesPanel();
                 this.showNotification('Dados do contrato salvos com sucesso!');
             }
         });
@@ -267,6 +293,7 @@ class ContractGeneratorApp {
                     ${contractText.replace(/\n/g, '<br>')}
                 </div>
                 <div class="contract-actions">
+                    <button class="btn-secondary" onclick="app.showContractForm(app.currentContractType)">Editar Dados</button>
                     <button class="btn-secondary" onclick="app.copyToClipboard()">Copiar Texto</button>
                     <button class="btn-secondary" onclick="app.printContract()">Imprimir</button>
                 </div>
@@ -294,7 +321,7 @@ class ContractGeneratorApp {
         ${d.servico}
 
         CLÁUSULA 2ª - DO PRAZO
-        Este contrato terá vigência de ${d.data-inicio} até ${d.data-termino},
+        Este contrato terá vigência de ${d["data-inicio"]} até ${d["data-termino"]},
         totalizando aproximadamente ${d.prazo} para execução dos serviços.
 
         CLÁUSULA 3ª - DO VALOR E PAGAMENTO
@@ -341,7 +368,7 @@ class ContractGeneratorApp {
         ${d.imovel}, para fins residenciais.
 
         CLÁUSULA 2ª - DO PRAZO
-        O prazo desta locação será de ${d.data-inicio} até ${d.data-termino},
+        O prazo desta locação será de ${d["data-inicio"]} até ${d["data-termino"]},
         correspondente a aproximadamente ${d.duracao}.
 
         CLÁUSULA 3ª - DO ALUGUEL E PAGAMENTOS
@@ -397,7 +424,7 @@ class ContractGeneratorApp {
         CLÁUSULA 3ª - DA DURAÇÃO
         A presente parceria terá vigência de ${d.duracao}, iniciando-se na data da assinatura deste instrumento.
 
-        ${d.propriedade-intelectual ? 'CLÁUSULA 4ª - DA PROPRIEDADE INTELECTUAL\n' + d.propriedade-intelectual + '\n\n' : ''}
+        ${d["propriedade-intelectual"] ? 'CLÁUSULA 4ª - DA PROPRIEDADE INTELECTUAL\n' + d["propriedade-intelectual"] + '\n\n' : ''}
         ${d.lucros ? 'CLÁUSULA 5ª - DA DISTRIBUIÇÃO DE LUCROS E PREJUÍZOS\n' + d.lucros + '\n\n' : ''}
         ${d.confidencialidade ? 'CLÁUSULA 6ª - DA CONFIDENCIALIDADE\n' + d.confidencialidade + '\n\n' : ''}
         ${d.rescisao ? 'CLÁUSULA 7ª - DA RESCISÃO\n' + d.rescisao + '\n\n' : ''}
@@ -424,15 +451,15 @@ class ContractGeneratorApp {
         Pelo presente instrumento, ficam entre si obrigadas as partes identificadas abaixo:
 
         PARTE REVELADORA:
-        ${d.parte-reveladora}
+        ${d["parte-reveladora"]}
 
         PARTE RECEPTORA:
-        ${d.parte-receptora}
+        ${d["parte-receptora"]}
 
         CLÁUSULA 1ª - DAS INFORMAÇÕES CONFIDENCIAIS
         Consideram-se informações confidenciais, para efeito deste acordo, aquelas
         descritas a seguir:
-        ${d.informacoes-confidenciais}
+        ${d["informacoes-confidenciais"]}
 
         CLÁUSULA 2ª - DAS OBRIGAÇÕES
         A PARTE RECEPTORA obriga-se a:
@@ -446,7 +473,7 @@ class ContractGeneratorApp {
 
         ${d.devolucao ? 'CLÁUSULA 5ª - DA DEVOLUÇÃO OU DESTRUIÇÃO\n' + d.devolucao + '\n\n' : ''}
         ${d.remedios ? 'CLÁUSULA 6ª - DOS REMEDIOS\n' + d.remedios + '\n\n' : ''}
-        ${d.lei-aplicavel ? 'CLÁUSULA 7ª - DA LEI APLICÁVEL E FORO\n' + d.lei-aplicavel + '\n\n' : ''}
+        ${d["lei-aplicavel"] ? 'CLÁUSULA 7ª - DA LEI APLICÁVEL E FORO\n' + d["lei-aplicavel"] + '\n\n' : ''}
 
         CLÁUSULA ÚLTIMA - DAS DISPOSIÇÕES GERAIS
         Este acordo será regido pelas leis da República Federativa do Brasil,
@@ -457,7 +484,7 @@ class ContractGeneratorApp {
         em 2 vias de igual teor, na presença de 2 testemunhas.
 
         ______________________________    ______________________________
-        ${d.parte-reveladora}           ${d.parte-receptora}
+        ${d["parte-reveladora"]}           ${d["parte-receptora"]}
 
         Testemunha 1: _____________________   Testemunha 2: _____________________
         `;
@@ -484,6 +511,7 @@ class ContractGeneratorApp {
                 this.contractData = parsed.contractData || {};
                 if (this.currentContractType && Object.keys(this.contractData).length > 0) {
                     this.showContractForm(this.currentContractType);
+                    this.hidePropertiesPanel();
                     this.generateContractPreview();
                 }
             }

@@ -3,62 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editor de Imagens Básico</title>
+    <title>Câmara Escura</title>
+    <meta name="description" content="Editor de imagens no navegador com filtros, rotação, espelhamento e download.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Editor de Imagens Básico</h1>
+    <a class="back-link" href="../index.html">← Portfólio</a>
+    <main class="container">
+        <header class="hero">
+            <h1><span class="lamp" aria-hidden="true"></span>Câmara Escura</h1>
+            <p class="lede">Revele suas fotos: ajuste luz, cor e foco direto no navegador. Nada é enviado para servidores.</p>
+        </header>
+
         <div class="upload-section">
+            <label class="file-btn" for="image-upload">Escolher imagem</label>
             <input type="file" id="image-upload" accept="image/*">
-            <button id="reset-btn">Redefinir Imagem</button>
+            <button id="sample-btn" type="button">Usar imagem de exemplo</button>
+            <button id="reset-btn" type="button">Redefinir</button>
         </div>
 
         <div class="editor-section">
-            <div class="image-preview">
-                <img id="original-image" src="#" alt="Imagem original">
-                <img id="edited-image" src="#" alt="Imagem editada">
+            <div class="stage">
+                <div class="image-preview" id="preview">
+                    <canvas id="edit-canvas" aria-label="Pré-visualização da imagem editada"></canvas>
+                    <p class="placeholder" id="placeholder">Solte uma imagem aqui ou escolha um arquivo</p>
+                </div>
+                <div class="tools">
+                    <button id="rotate-btn" type="button" disabled>Girar 90°</button>
+                    <button id="flip-btn" type="button" disabled>Espelhar</button>
+                    <button id="compare-btn" type="button" disabled>Segure para comparar</button>
+                </div>
             </div>
 
-            <div class="filters-section">
-                <h2>Filtros</h2>
-                <div class="filter-group">
-                    <label for="brightness">Brilho:</label>
-                    <input type="range" id="brightness" min="-100" max="100" value="0">
-                    <span id="brightness-value">0</span>%
+            <aside class="filters-section">
+                <h2>Ajustes</h2>
+                <div class="presets" aria-label="Predefinições">
+                    <button type="button" data-preset="none">Original</button>
+                    <button type="button" data-preset="vivid">Vívido</button>
+                    <button type="button" data-preset="mono">P&amp;B</button>
+                    <button type="button" data-preset="vintage">Vintage</button>
                 </div>
-                <div class="filter-group">
-                    <label for="contrast">Contraste:</label>
-                    <input type="range" id="contrast" min="-100" max="100" value="0">
-                    <span id="contrast-value">0</span>%
-                </div>
-                <div class="filter-group">
-                    <label for="saturation">Saturação:</label>
-                    <input type="range" id="saturation" min="-100" max="100" value="0">
-                    <span id="saturation-value">0</span>%
-                </div>
-                <div class="filter-group">
-                    <label for="blur">Desfoque:</label>
-                    <input type="range" id="blur" min="0" max="20" value="0">
-                    <span id="blur-value">0</span>px
-                </div>
-                <div class="filter-group">
-                    <label for="grayscale">Escala de Cinza:</label>
-                    <input type="range" id="grayscale" min="0" max="100" value="0">
-                    <span id="grayscale-value">0</span>%
-                </div>
-                <div class="filter-group">
-                    <label for="sepia">Sépia:</label>
-                    <input type="range" id="sepia" min="0" max="100" value="0">
-                    <span id="sepia-value">0</span>%
-                </div>
-            </div>
+                <div class="filter-group"><label for="brightness">Brilho</label><input type="range" id="brightness" min="-100" max="100" value="0"><output><span id="brightness-value">0</span>%</output></div>
+                <div class="filter-group"><label for="contrast">Contraste</label><input type="range" id="contrast" min="-100" max="100" value="0"><output><span id="contrast-value">0</span>%</output></div>
+                <div class="filter-group"><label for="saturation">Saturação</label><input type="range" id="saturation" min="-100" max="100" value="0"><output><span id="saturation-value">0</span>%</output></div>
+                <div class="filter-group"><label for="blur">Desfoque</label><input type="range" id="blur" min="0" max="20" value="0"><output><span id="blur-value">0</span>px</output></div>
+                <div class="filter-group"><label for="grayscale">Cinza</label><input type="range" id="grayscale" min="0" max="100" value="0"><output><span id="grayscale-value">0</span>%</output></div>
+                <div class="filter-group"><label for="sepia">Sépia</label><input type="range" id="sepia" min="0" max="100" value="0"><output><span id="sepia-value">0</span>%</output></div>
+            </aside>
         </div>
 
         <div class="actions-section">
-            <button id="download-btn">Baixar Imagem</button>
+            <button id="download-btn" type="button" disabled>Baixar PNG</button>
         </div>
-    </div>
+    </main>
     <script src="js/main.js"></script>
 </body>
 </html>

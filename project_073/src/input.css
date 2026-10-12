@@ -1,0 +1,13 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+@layer base{
+ body{@apply bg-blue-950 text-chalk font-sans antialiased pt-14;background-image:linear-gradient(rgba(142,202,230,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(142,202,230,.07) 1px,transparent 1px);background-size:28px 28px}
+ :focus-visible{outline:3px solid #ffd166;outline-offset:2px;border-radius:4px}
+ @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+}
+@layer components{
+ .btn{@apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-bold transition-colors}
+ .btn-sig{@apply btn bg-sig text-blue-950 hover:brightness-110}
+ .btn-line{@apply btn border border-cyan/40 hover:bg-blue-800}
+ .back{@apply fixed left-3 top-3 z-50 rounded-full bg-sig px-3.5 py-1.5 text-sm font-bold text-blue-950 shadow hover:brightness-110}
+ .code{@apply rounded-md border border-cyan/30 bg-blue-900 p-3 font-mono text-sm}
+}

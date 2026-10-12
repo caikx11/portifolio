@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Habit Tracker - Projeto 007</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <meta name="description" content="Rastreador de Hábitos com streak, categorias e visualização de progresso">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
-            <h1>Habit Tracker</h1>
+            <h1>Habit <em>Tracker</em></h1>
             <p class="subtitle">Construa hábitos, mantenha a consistência</p>
         </header>
 
@@ -18,17 +23,17 @@
             <!-- Add Habit Section -->
             <div class="add-habit-section">
                 <button class="add-habit-btn" id="add-habit-btn">
-                    <span>+</span> Novo Hábito
+                    <span>+</span> Novo hábito
                 </button>
-                <div class="habit-form" id="habit-form" style="display: none;">
-                    <input type="text" id="habit-name" placeholder="Nome do hábito (ex: Beber água)">
+                <div class="habit-form" id="habit-form" hidden>
+                    <input type="text" id="habit-name" placeholder="Nome do hábito (ex: Beber água)" aria-label="Nome do hábito" maxlength="60">
                     <select id="habit-category">
-                        <option value="health">🏥 Saúde</option>
-                        <option value="productivity">💼 Produtividade</option>
-                        <option value="learning">📚 Aprendizado</option>
-                        <option value="fitness">💪 Fitness</option>
-                        <option value="mindfulness">🧘 Mindfulness</option>
-                        <option value="other">📦 Outro</option>
+                        <option value="health">Saúde</option>
+                        <option value="productivity">Produtividade</option>
+                        <option value="learning">Aprendizado</option>
+                        <option value="fitness">Fitness</option>
+                        <option value="mindfulness">Mindfulness</option>
+                        <option value="other">Outro</option>
                     </select>
                     <div class="frequency-options">
                         <label>
@@ -41,7 +46,7 @@
                             <input type="radio" name="frequency" value="custom"> Personalizado
                         </label>
                     </div>
-                    <div class="custom-days" id="custom-days" style="display: none;">
+                    <div class="custom-days" id="custom-days" hidden>
                         <span>Dias da semana:</span>
                         <div class="day-buttons">
                             <button type="button" data-day="0">Dom</button>

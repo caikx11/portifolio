@@ -1,339 +1,167 @@
-// Pomodoro Timer with Task Management
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM Elements
-    const timerDisplay = document.getElementById('timer-display');
+// Pomodoro com timer baseado em timestamp, tarefa ativa e streak diário
+document.addEventListener('DOMContentLoaded', () => {
+    const $ = id => document.getElementById(id);
+    const display = $('timer-display'), startBtn = $('start-btn'), pauseBtn = $('pause-btn'), resetBtn = $('reset-btn');
+    const ring = $('ring-fg'), taskList = $('task-list'), area = $('task-input-area');
     const modeButtons = document.querySelectorAll('.mode-btn');
-    const startBtn = document.getElementById('start-btn');
-    const pauseBtn = document.getElementById('pause-btn');
-    const resetBtn = document.getElementById('reset-btn');
-    const addTaskBtn = document.getElementById('add-task-btn');
-    const taskInputArea = document.getElementById('task-input-area');
-    const taskInput = document.getElementById('task-input');
-    const taskPomodoros = document.getElementById('task-pomodoros');
-    const saveTaskBtn = document.getElementById('save-task-btn');
-    const taskList = document.getElementById('task-list');
+    const C = 2 * Math.PI * 100;
+    ring.style.strokeDasharray = C;
 
-    // Stats Elements
-    const completedPomodorosEl = document.getElementById('completed-pomodoros');
-    const focusTimeEl = document.getElementById('focus-time');
-    const completedTasksEl = document.getElementById('completed-tasks');
-    const currentStreakEl = document.getElementById('current-streak');
+    const MODES = { pomodoro: 25 * 60, 'short-break': 5 * 60, 'long-break': 15 * 60 };
+    const LABEL = { pomodoro: 'Foco', 'short-break': 'Pausa curta', 'long-break': 'Pausa longa' };
+    const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+    const read = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } };
+    const write = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
 
-    // State
-    let timerInterval = null;
-    let timeLeft = 25 * 60; // 25 minutes in seconds
-    let currentMode = 'pomodoro';
-    let isRunning = false;
+    let tasks = read('pomodoroTasks', []);
+    let days = read('pomodoroDays', {}); // { 'YYYY-MM-DD': { pomodoros, focus, tasks } }
+    let activeId = null;
+    let mode = 'pomodoro', total = MODES[mode], left = total, endAt = 0, timer = null, running = false;
 
-    const modes = {
-        pomodoro: 25 * 60,
-        'short-break': 5 * 60,
-        'long-break': 15 * 60
-    };
+    const day = () => (days[today()] ||= { pomodoros: 0, focus: 0, tasks: 0 });
+    const fmt = s => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`;
 
-    let tasks = [];
-    let stats = {
-        completedPomodoros: 0,
-        focusTime: 0,
-        completedTasks: 0,
-        currentStreak: 0
-    };
-
-    // Initialize
-    loadFromStorage();
-    updateTimerDisplay();
-    renderTasks();
-    updateStats();
-
-    // Event Listeners
-    modeButtons.forEach(btn => {
-        btn.addEventListener('click', () => switchMode(btn.dataset.mode));
-    });
-
-    startBtn.addEventListener('click', startTimer);
-    pauseBtn.addEventListener('click', pauseTimer);
-    resetBtn.addEventListener('click', resetTimer);
-
-    addTaskBtn.addEventListener('click', () => {
-        taskInputArea.style.display = taskInputArea.style.display === 'none' ? 'flex' : 'none';
-        taskInput.focus();
-    });
-
-    saveTaskBtn.addEventListener('click', addTask);
-    taskInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') addTask();
-    });
-
-    // Switch mode
-    function switchMode(mode) {
-        currentMode = mode;
-        timeLeft = modes[mode];
-
-        modeButtons.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.mode === mode);
-        });
-
-        resetTimer();
+    function draw() {
+        display.textContent = fmt(left);
+        ring.style.strokeDashoffset = C * (1 - left / total);
+        document.title = `${running ? fmt(left) + ' · ' : ''}Pomodoro Timer`;
+        document.body.dataset.mode = mode;
     }
-
-    // Timer functions
-    function startTimer() {
-        if (isRunning) return;
-        isRunning = true;
-        startBtn.disabled = true;
-        pauseBtn.disabled = false;
-
-        timerInterval = setInterval(() => {
-            timeLeft--;
-            updateTimerDisplay();
-
-            if (timeLeft <= 0) {
-                timerComplete();
-            }
-        }, 1000);
+    function tick() {
+        left = Math.max(0, Math.round((endAt - Date.now()) / 1000));
+        draw();
+        if (left <= 0) complete();
     }
-
-    function pauseTimer() {
-        if (!isRunning) return;
-        isRunning = false;
-        clearInterval(timerInterval);
-        startBtn.disabled = false;
-        pauseBtn.disabled = true;
+    function start() {
+        if (running) return;
+        running = true; endAt = Date.now() + left * 1000;
+        timer = setInterval(tick, 250);
+        startBtn.disabled = true; pauseBtn.disabled = false;
+        tick();
     }
-
-    function resetTimer() {
-        pauseTimer();
-        timeLeft = modes[currentMode];
-        updateTimerDisplay();
-        startBtn.disabled = false;
-        pauseBtn.disabled = true;
+    function pause() {
+        if (!running) return;
+        running = false; clearInterval(timer);
+        startBtn.disabled = false; startBtn.textContent = 'Continuar'; pauseBtn.disabled = true;
+        draw();
     }
-
-    function timerComplete() {
-        pauseTimer();
-        playNotificationSound();
-
-        if (currentMode === 'pomodoro') {
-            stats.completedPomodoros++;
-            stats.focusTime += 25;
-            saveToStorage();
-            updateStats();
-
-            // Auto-switch to break
-            const completedTasks = tasks.filter(t => t.completed).length;
-            if (completedTasks > 0 && stats.completedPomodoros % 4 === 0) {
-                switchMode('long-break');
-            } else {
-                switchMode('short-break');
-            }
-
-            showNotification('Pomodoro completo! Hora de uma pausa.', 'success');
+    function reset() {
+        running = false; clearInterval(timer);
+        left = total = MODES[mode];
+        startBtn.disabled = false; startBtn.textContent = 'Iniciar'; pauseBtn.disabled = true;
+        draw();
+    }
+    function setMode(m) {
+        mode = m;
+        modeButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === m));
+        reset();
+    }
+    function complete() {
+        const was = mode;
+        pause(); beep();
+        if (was === 'pomodoro') {
+            const d = day(); d.pomodoros++; d.focus += 25;
+            const t = tasks.find(x => x.id === activeId);
+            if (t) { t.done = Math.min(t.est, t.done + 1) ; }
+            saveAll(); renderTasks(); renderStats();
+            toast('Pomodoro completo! Hora de uma pausa.', 'success');
+            setMode(d.pomodoros % 4 === 0 ? 'long-break' : 'short-break');
         } else {
-            showNotification('Pausa finalizada! Pressione Iniciar para continuar.', 'info');
-            // Auto-switch back to pomodoro
-            if (currentMode === 'long-break' || currentMode === 'short-break') {
-                switchMode('pomodoro');
-            }
+            toast('Pausa finalizada. Pronto para focar?', 'info');
+            setMode('pomodoro');
         }
     }
 
-    function updateTimerDisplay() {
-        const minutes = Math.floor(timeLeft / 60);
-        const seconds = timeLeft % 60;
-        timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-    }
+    function saveAll() { write('pomodoroTasks', tasks); write('pomodoroDays', days); }
 
-    // Task functions
-    function addTask() {
-        const name = taskInput.value.trim();
-        const pomodoros = parseInt(taskPomodoros.value) || 1;
-
-        if (!name) {
-            showNotification('Digite o nome da tarefa', 'error');
-            return;
+    function streak() {
+        let n = 0; const d = new Date();
+        if (!(days[today()]?.pomodoros > 0)) d.setDate(d.getDate() - 1);
+        for (;;) {
+            const k = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            if (days[k]?.pomodoros > 0) { n++; d.setDate(d.getDate() - 1); } else break;
         }
-
-        const task = {
-            id: Date.now(),
-            name,
-            estimatedPomodoros: pomodoros,
-            completedPomodoros: 0,
-            completed: false,
-            createdAt: new Date().toISOString()
-        };
-
-        tasks.push(task);
-        saveToStorage();
-        renderTasks();
-        updateStats();
-
-        taskInput.value = '';
-        taskPomodoros.value = 1;
-        taskInputArea.style.display = 'none';
-        showNotification('Tarefa adicionada!', 'success');
+        return n;
     }
-
-    function deleteTask(id) {
-        tasks = tasks.filter(t => t.id !== id);
-        saveToStorage();
-        renderTasks();
-        updateStats();
-        showNotification('Tarefa removida', 'info');
-    }
-
-    function toggleTaskComplete(id) {
-        const task = tasks.find(t => t.id === id);
-        if (!task) return;
-
-        task.completed = !task.completed;
-        if (task.completed) {
-            stats.completedTasks++;
-        } else {
-            stats.completedTasks--;
-        }
-        saveToStorage();
-        renderTasks();
-        updateStats();
+    function renderStats() {
+        const d = day();
+        $('completed-pomodoros').textContent = d.pomodoros;
+        $('focus-time').textContent = `${d.focus} min`;
+        $('completed-tasks').textContent = d.tasks;
+        $('current-streak').textContent = streak();
     }
 
     function renderTasks() {
         taskList.innerHTML = '';
-
-        if (tasks.length === 0) {
-            const emptyMsg = document.createElement('li');
-            emptyMsg.style.textAlign = 'center';
-            emptyMsg.style.color = 'var(--gray-400)';
-            emptyMsg.style.padding = '1rem';
-            emptyMsg.textContent = 'Nenhuma tarefa. Adicione uma para começar!';
-            taskList.appendChild(emptyMsg);
-            return;
+        const act = tasks.find(t => t.id === activeId);
+        $('timer-task').textContent = act ? act.name : 'Sem tarefa ativa';
+        if (!tasks.length) {
+            const li = document.createElement('li'); li.className = 'empty'; li.textContent = 'Nenhuma tarefa ainda. Adicione a primeira.';
+            taskList.appendChild(li); return;
         }
-
-        tasks.forEach(task => {
+        tasks.forEach(t => {
             const li = document.createElement('li');
-            li.className = `task-item ${task.completed ? 'completed' : ''}`;
-            li.innerHTML = `
-                <div class="task-checkbox ${task.completed ? 'checked' : ''}"></div>
-                <div class="task-info">
-                    <span class="task-name">${task.name}</span>
-                    <span class="task-pomodoros">${task.completedPomodoros}/${task.estimatedPomodoros} pomodoros</span>
-                </div>
-                <button class="task-delete" title="Excluir">🗑️</button>
-            `;
-
-            const checkbox = li.querySelector('.task-checkbox');
-            const deleteBtn = li.querySelector('.task-delete');
-
-            checkbox.addEventListener('click', () => toggleTaskComplete(task.id));
-            deleteBtn.addEventListener('click', () => deleteTask(task.id));
-
+            li.className = 'task-item' + (t.completed ? ' completed' : '') + (t.id === activeId ? ' current' : '');
+            const chk = document.createElement('button'); chk.className = 'task-checkbox' + (t.completed ? ' checked' : '');
+            chk.setAttribute('role', 'checkbox'); chk.setAttribute('aria-checked', t.completed); chk.setAttribute('aria-label', 'Concluir ' + t.name);
+            const info = document.createElement('button'); info.className = 'task-info'; info.title = 'Definir como tarefa ativa';
+            const name = document.createElement('span'); name.className = 'task-name'; name.textContent = t.name;
+            const meta = document.createElement('span'); meta.className = 'task-pomodoros'; meta.textContent = `${'●'.repeat(t.done)}${'○'.repeat(Math.max(0, t.est - t.done))}  ${t.done}/${t.est}`;
+            info.append(name, meta);
+            const del = document.createElement('button'); del.className = 'task-delete'; del.setAttribute('aria-label', 'Excluir ' + t.name); del.textContent = '×';
+            chk.addEventListener('click', () => {
+                t.completed = !t.completed;
+                const d = day(); d.tasks = Math.max(0, d.tasks + (t.completed ? 1 : -1));
+                if (t.completed && activeId === t.id) activeId = null;
+                saveAll(); renderTasks(); renderStats();
+            });
+            info.addEventListener('click', () => { if (!t.completed) { activeId = activeId === t.id ? null : t.id; renderTasks(); } });
+            del.addEventListener('click', () => { tasks = tasks.filter(x => x.id !== t.id); if (activeId === t.id) activeId = null; saveAll(); renderTasks(); });
+            li.append(chk, info, del);
             taskList.appendChild(li);
         });
     }
 
-    // Stats
-    function updateStats() {
-        completedPomodorosEl.textContent = stats.completedPomodoros;
-        focusTimeEl.textContent = `${stats.focusTime} min`;
-        completedTasksEl.textContent = stats.completedTasks;
-        currentStreakEl.textContent = stats.currentStreak;
+    function addTask() {
+        const name = $('task-input').value.trim();
+        const est = Math.min(10, Math.max(1, parseInt($('task-pomodoros').value) || 1));
+        if (!name) return toast('Digite o nome da tarefa', 'error');
+        const t = { id: Date.now(), name, est, done: 0, completed: false };
+        tasks.push(t); if (!activeId) activeId = t.id;
+        saveAll(); renderTasks();
+        $('task-input').value = ''; $('task-pomodoros').value = 1;
+        area.hidden = true; $('add-task-btn').setAttribute('aria-expanded', 'false');
     }
 
-    // Storage
-    function saveToStorage() {
-        localStorage.setItem('pomodoroTasks', JSON.stringify(tasks));
-        localStorage.setItem('pomodoroStats', JSON.stringify(stats));
+    function toast(msg, type = 'info') {
+        document.querySelector('.notification')?.remove();
+        const n = document.createElement('div');
+        n.className = `notification notification-${type}`; n.setAttribute('role', 'status'); n.textContent = msg;
+        document.body.appendChild(n);
+        setTimeout(() => { n.classList.add('notification-hide'); setTimeout(() => n.remove(), 300); }, 3000);
     }
-
-    function loadFromStorage() {
-        const savedTasks = localStorage.getItem('pomodoroTasks');
-        const savedStats = localStorage.getItem('pomodoroStats');
-
-        if (savedTasks) {
-            try {
-                tasks = JSON.parse(savedTasks);
-            } catch (e) {
-                tasks = [];
-            }
-        }
-
-        if (savedStats) {
-            try {
-                stats = JSON.parse(savedStats);
-            } catch (e) {
-                stats = { completedPomodoros: 0, focusTime: 0, completedTasks: 0, currentStreak: 0 };
-            }
-        }
-    }
-
-    // Notification
-    function showNotification(message, type = 'info') {
-        const existing = document.querySelector('.notification');
-        if (existing) existing.remove();
-
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.textContent = message;
-
-        document.body.appendChild(notification);
-
-        setTimeout(() => {
-            notification.classList.add('notification-hide');
-            setTimeout(() => notification.remove(), 300);
-        }, 3000);
-    }
-
-    // Notification sound using Web Audio API
-    function playNotificationSound() {
+    function beep() {
         try {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-
-            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-            oscillator.frequency.setValueAtTime(600, audioContext.currentTime + 0.1);
-            oscillator.frequency.setValueAtTime(800, audioContext.currentTime + 0.2);
-
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.5);
-        } catch (e) {
-            // Audio not supported or blocked
-        }
+            const ac = new (window.AudioContext || window.webkitAudioContext)();
+            const o = ac.createOscillator(), g = ac.createGain();
+            o.connect(g); g.connect(ac.destination);
+            o.frequency.setValueAtTime(800, ac.currentTime); o.frequency.setValueAtTime(600, ac.currentTime + .15); o.frequency.setValueAtTime(800, ac.currentTime + .3);
+            g.gain.setValueAtTime(.25, ac.currentTime); g.gain.exponentialRampToValueAtTime(.01, ac.currentTime + .6);
+            o.start(); o.stop(ac.currentTime + .6);
+        } catch (e) {}
     }
 
-    // Add notification styles
-    const style = document.createElement('style');
-    style.textContent = `
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            color: white;
-            font-weight: 500;
-            z-index: 1000;
-            box-shadow: var(--shadow-lg);
-            transform: translateX(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
+    modeButtons.forEach(b => b.addEventListener('click', () => setMode(b.dataset.mode)));
+    startBtn.addEventListener('click', start);
+    pauseBtn.addEventListener('click', pause);
+    resetBtn.addEventListener('click', reset);
+    $('add-task-btn').addEventListener('click', e => {
+        area.hidden = !area.hidden;
+        e.currentTarget.setAttribute('aria-expanded', String(!area.hidden));
+        if (!area.hidden) $('task-input').focus();
+    });
+    $('save-task-btn').addEventListener('click', addTask);
+    $('task-input').addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
 
-        .notification-show { transform: translateX(0); opacity: 1; }
-        .notification-hide { transform: translateX(100px); opacity: 0; }
-
-        .notification-info { background: var(--primary-color); }
-        .notification-success { background: var(--secondary-color); }
-        .notification-error { background: var(--accent-color); }
-
-        .notification { animation: slideIn 0.3s ease forwards; }
-        @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    `;
-    document.head.appendChild(style);
+    renderTasks(); renderStats(); draw();
 });

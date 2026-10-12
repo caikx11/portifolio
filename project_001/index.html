@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Caio - Desenvolvedor Full Stack</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <meta name="description" content="Portfólio de Caio - Desenvolvedor especializado em criar aplicações web e mobile modernas e funcionais">
+    <meta name="description" content="Portfólio de Caio - Desenvolvedor Full Stack com 75 projetos">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <header>
         <nav>
-            <div class="logo">Caio</div>
+            <a class="logo" href="#home">caio<span>.dev</span></a>
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">Sobre</a></li>
@@ -24,10 +29,11 @@
     <main>
         <section id="home">
             <h1>Olá, eu sou <span class="highlight">Caio</span></h1>
-            <p>Desenvolvedor Full Stack apaixonado por criar soluções elegantes, funcionais e centradas no usuário</p>
+            <p>Desenvolvedor Full Stack que cria aplicações elegantes, responsivas e fáceis de usar. Veja 75 projetos funcionando</p>
             <div class="cta-buttons">
                 <a href="#projects" class="btn primary">Ver meus projetos</a>
                 <a href="#contact" class="btn secondary">Falar comigo</a>
+                <a href="https://github.com/caikx11" class="btn secondary" target="_blank" rel="noopener">GitHub</a>
             </div>
         </section>
 
@@ -35,14 +41,13 @@
             <h2>Sobre mim</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Sou desenvolvedor com experiência em criação de aplicações web e mobile, focado em entregar produtos de alta qualidade com ótima experiência do usuário. Tenho paixão por resolver problemas complexos com soluções simples e elegantes.</p>
-                    <p>Minha jornada no desenvolvimento começou com a curiosidade de entender como as coisas funcionam por trás das telas. Ao longo dos anos, aprendi que o melhor código não é apenas o que funciona, mas o que é fácil de entender, manter e escalar.</p>
-                    <p>Quando não estou codificando, gosto de aprender sobre novas tecnologias, ler livros de tecnologia e passar tempo ao ar livre.</p>
+                    <p>Sou desenvolvedor Full Stack e construí 75 projetos: 50 com HTML, CSS e JavaScript puros e 25 com React, TypeScript, Next.js, Node, NestJS e testes automatizados. Cada um tem layout próprio e funciona no celular.</p>
+                    <p>Gosto de código simples de ler e de interfaces que funcionam bem em qualquer tela.</p>
                 </div>
                 <div class="about-image">
                     <!-- Placeholder for profile image -->
                     <div class="profile-placeholder">
-                        <span>CP</span>
+                        <span>{ CP }</span>
                     </div>
                 </div>
             </div>
@@ -50,7 +55,9 @@
 
         <section id="projects">
             <h2>Meus Projetos</h2>
-            <p class="projects-subtitle">50 projetos desenvolvidos com foco em beleza, funcionalidade e progressão de complexidade</p>
+            <p class="projects-subtitle">75 projetos, de JavaScript puro a React, Next.js e APIs. Clique em um para abrir</p>
+            <label class="project-search"><span class="sr-only">Buscar projeto</span><input type="search" id="project-search" placeholder="Buscar projeto por nome ou número…" autocomplete="off"></label>
+            <p class="no-results" id="no-results" hidden>Nenhum projeto encontrado.</p>
             <div class="projects-grid" id="projects-grid">
                 <!-- Projetos serão inseridos aqui dinamicamente pelo JavaScript -->
             </div>
@@ -59,76 +66,20 @@
         
         <section id="skills">
             <h2>Habilidades Técnicas</h2>
-            <p class="skills-subtitle">Tecnologias e ferramentas que utilizo no meu dia a dia</p>
             <div class="skills-container">
-                <!-- Frontend -->
-                <div class="skill-category">
-                    <h3>Frontend</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">TypeScript</span>
-                        <span class="skill-tag">React</span>
-                        <span class="skill-tag">Vue.js</span>
-                        <span class="skill-tag">Next.js</span>
-                        <span class="skill-tag">Svelte</span>
-                        <span class="skill-tag">Tailwind CSS</span>
-                        <span class="skill-tag">Bootstrap</span>
-                    </div>
-                </div>
-
-                <!-- Backend -->
-                <div class="skill-category">
-                    <h3>Backend</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Node.js</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Express.js</span>
-                        <span class="skill-tag">Django</span>
-                        <span class="skill-tag">FastAPI</span>
-                        <span class="skill-tag">REST API</span>
-                        <span class="skill-tag">GraphQL</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">PostgreSQL</span>
-                    </div>
-                </div>
-
-                <!-- Mobile -->
-                <div class="skill-category">
-                    <h3>Mobile</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">React Native</span>
-                        <span class="skill-tag">Flutter</span>
-                        <span class="skill-tag">Ionic</span>
-                        <span class="skill-tag">Swift</span>
-                        <span class="skill-tag">Kotlin</span>
-                    </div>
-                </div>
-
-                <!-- DevOps & Tools -->
-                <div class="skill-category">
-                    <h3>DevOps & Ferramentas</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">GitHub</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">CI/CD</span>
-                        <span class="skill-tag">AWS</span>
-                        <span class="skill-tag">Linux</span>
-                        <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">Jest</span>
-                        <span class="skill-tag">Postman</span>
-                    </div>
-                </div>
-            </div>
+<div class="skill-category"><h3>Front-end</h3><div class="skill-tags"><span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span><span class="skill-tag">JavaScript (ES6+)</span><span class="skill-tag">TypeScript</span><span class="skill-tag">React</span><span class="skill-tag">Next.js</span><span class="skill-tag">Tailwind CSS</span><span class="skill-tag">Layout responsivo</span><span class="skill-tag">Acessibilidade</span></div></div>
+<div class="skill-category"><h3>Back-end</h3><div class="skill-tags"><span class="skill-tag">Node.js</span><span class="skill-tag">NestJS</span><span class="skill-tag">TypeScript</span><span class="skill-tag">APIs REST</span><span class="skill-tag">Autenticação JWT</span></div></div>
+<div class="skill-category"><h3>Banco de dados e serviços</h3><div class="skill-tags"><span class="skill-tag">PostgreSQL</span><span class="skill-tag">Firebase</span><span class="skill-tag">Stripe (pagamentos)</span><span class="skill-tag">localStorage</span></div></div>
+<div class="skill-category"><h3>Testes e ferramentas</h3><div class="skill-tags"><span class="skill-tag">Jest</span><span class="skill-tag">React Testing Library</span><span class="skill-tag">Git</span><span class="skill-tag">GitHub</span><span class="skill-tag">VS Code</span><span class="skill-tag">IA para desenvolvedores</span></div></div>
+<div class="skill-category"><h3>Nos projetos deste portfólio</h3><div class="skill-tags"><span class="skill-tag">HTML5</span><span class="skill-tag">CSS3</span><span class="skill-tag">JavaScript puro</span><span class="skill-tag">Canvas e SVG</span><span class="skill-tag">Chart.js</span><span class="skill-tag">Service Worker</span></div></div>
+</div>
         </section>
 
         <section id="contact">
             <h2>Vamos trabalhar juntos?</h2>
-            <p class="contact-subtitle">Estou disponível para novos projetos e colaborações. Fique à vontade para me enviar uma mensagem!</p>
+            <p class="contact-subtitle">Quer conversar sobre um projeto ou oportunidade? Envie uma mensagem e eu respondo por e-mail.</p>
             <form id="contact-form" class="contact-form">
+                <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true">
                 <div class="form-group">
                     <label for="name">Nome completo</label>
                     <input type="text" id="name" name="name" placeholder="Digite seu nome" required>
@@ -155,15 +106,15 @@
             <div class="contact-info">
                 <div class="info-item">
                     <span class="info-label">Email:</span>
-                    <span class="info-value">caio@email.com</span>
+                    <span class="info-value"><a href="mailto:caikx11@gmail.com">caikx11@gmail.com</a></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">GitHub:</span>
+                    <span class="info-value"><a href="https://github.com/caikx11" target="_blank" rel="noopener">github.com/caikx11</a></span>
                 </div>
                 <div class="info-item">
                     <span class="info-label">Localização:</span>
                     <span class="info-value">Brasil</span>
-                </div>
-                <div class="info-item">
-                    <span class="info-label">Disponibilidade:</span>
-                    <span class="info-value">Integral</span>
                 </div>
             </div>
         </section>
@@ -172,9 +123,8 @@
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#">LinkedIn</a>
-                <a href="#">GitHub</a>
-                <a href="#">Twitter</a>
+                <a href="https://github.com/caikx11" target="_blank" rel="noopener">GitHub</a>
+                <a href="mailto:caikx11@gmail.com">E-mail</a>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 Caio. Todos os direitos reservados.</p>

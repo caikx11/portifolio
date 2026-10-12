@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Blog Full Stack · Tinta&amp;Pixel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Public+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fffdf8;--ink:#14161f;--blue:#1d3fd8;--hi:#ffe45c;--mut:#5d6070;--line:#e6e2d4;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 "Public Sans",system-ui,sans-serif}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px;border-radius:4px}
+[hidden]{display:none!important}
+a{color:var(--blue)}
+.back{position:fixed;bottom:14px;left:14px;z-index:10;background:var(--ink);color:#fff;padding:9px 15px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;box-shadow:0 6px 18px #0003}
+.back:hover{background:var(--blue)}
+.mode{background:var(--hi);border-bottom:2px solid var(--ink);padding:8px 16px;font-size:14px;font-weight:500;text-align:center}
+.mode.real{background:#c9f5d4}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px max(16px,calc(50% - 360px));border-bottom:2px solid var(--ink)}
+.logo{font:400 26px "Young Serif",serif;text-decoration:none;color:var(--ink)}
+.logo b{color:var(--blue)}
+nav a{margin-left:16px;font-weight:700;text-decoration:none;color:var(--ink);padding:2px 0;border-bottom:3px solid transparent}
+nav a:hover,nav a[aria-current=page]{border-color:var(--blue)}
+main{max-width:720px;margin:0 auto;padding:28px 16px 90px}
+h1{font:400 clamp(30px,6vw,46px)/1.1 "Young Serif",serif;margin:0 0 18px}
+h1 mark{background:var(--hi);padding:0 .1em}
+h2{font:400 24px/1.2 "Young Serif",serif;margin:0 0 4px}
+.card{padding:18px 0;border-bottom:1px solid var(--line)}
+.card h2 a{color:var(--ink);text-decoration:none;background:linear-gradient(var(--hi),var(--hi)) 0 100%/0 40% no-repeat;transition:background-size .25s}
+.card h2 a:hover{background-size:100% 40%}
+.meta{font-size:14px;color:var(--mut)}
+article p{margin:0 0 1em}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border:2px solid var(--ink);border-radius:99px;margin-left:6px;vertical-align:middle}
+.tag.draft{background:var(--hi)}
+label{display:grid;gap:4px;font-weight:700;font-size:14px;margin-bottom:12px}
+input[type=text],input[type=password],textarea{font:inherit;width:100%;padding:10px;border:2px solid var(--ink);border-radius:8px;background:#fff}
+input:focus,textarea:focus{border-color:var(--blue)}
+.chk{display:flex;align-items:center;gap:8px;font-weight:500}
+.chk input{width:20px;height:20px;accent-color:var(--blue)}
+button{font:700 15px "Public Sans";padding:9px 16px;border:2px solid var(--ink);background:var(--hi);border-radius:8px;cursor:pointer;color:var(--ink)}
+button:hover{box-shadow:3px 3px 0 var(--ink)}
+button.sec{background:#fff}
+button.sm{padding:4px 10px;font-size:13px}
+.err{color:#b3173a;font-weight:500;min-height:22px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.rowitem{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.empty{color:var(--mut);padding:20px 0}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="back" href="../index.html">← Portfólio</a>
+<div id="mode" class="mode" role="status">Detectando API…</div>
+<header class="bar">
+  <a class="logo" href="#/">Tinta<b>&amp;</b>Pixel</a>
+  <nav aria-label="Principal"><a href="#/" id="nHome">Blog</a><a href="#/admin" id="nAdmin">Painel</a></nav>
+</header>
+<main id="view" tabindex="-1"></main>
+<script>
+(() => {
+  const REAL = 'http://localhost:3070';
+  const $ = (s) => document.querySelector(s);
+  let mode = 'mock', token = null;
+  const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+
+  // ---- mock: mesma API do Next + SQLite (dados em localStorage; senha da demo: admin) ----
+  const slugify = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60) || 'post';
+  const db = () => { try { return JSON.parse(store.get('p070-db')) || { seq: 1, posts: [] }; } catch { return { seq: 1, posts: [] }; } };
+  const persist = (d) => store.set('p070-db', JSON.stringify(d));
+  const fail = (m, status = 400) => Object.assign(new Error(m), { status });
+  function validate(i, partial) {
+    const o = {};
+    if (!partial || i.title !== undefined) { if (typeof i.title !== 'string' || !i.title.trim() || i.title.length > 120) throw fail('Título obrigatório (até 120 caracteres)'); o.title = i.title.trim(); }
+    if (!partial || i.body !== undefined) { if (typeof i.body !== 'string' || !i.body.trim()) throw fail('Texto obrigatório'); o.body = i.body; }
+    if (i.excerpt !== undefined) { if (i.excerpt.length > 300) throw fail('Resumo inválido (até 300 caracteres)'); o.excerpt = i.excerpt; }
+    if (i.published !== undefined) o.published = !!i.published;
+    return o;
+  }
+  async function mock(method, path, body = {}) {
+    await new Promise((r) => setTimeout(r, 40));
+    const d = db();
+    if (path === '/api/login') { if (body.password !== 'admin') throw fail('Senha incorreta', 401); return { token: 'demo-token' }; }
+    const admin = token === 'demo-token';
+    const m = path.match(/^\/api\/posts(?:\/([^?]+))?(\?all=1)?$/); if (!m) throw fail('Not found', 404);
+    const key = m[1]; const all = !!m[2];
+    if (!key && method === 'GET') { if (all && !admin) throw fail('Não autorizado', 401); return d.posts.filter((p) => all || p.published).sort((a, b) => b.id - a.id); }
+    if (!key && method === 'POST') {
+      if (!admin) throw fail('Não autorizado', 401);
+      const v = validate(body, false); let slug = slugify(v.title); const base = slug; let n = 2; while (d.posts.some((p) => p.slug === slug)) slug = base + '-' + n++;
+      const p = { id: d.seq++, slug, title: v.title, excerpt: v.excerpt ?? v.body.slice(0, 140), body: v.body, published: !!v.published, createdAt: new Date().toISOString() };
+      d.posts.push(p); persist(d); return p;
+    }
+    const p = d.posts.find((x) => (/^\d+$/.test(key) ? x.id === Number(key) : x.slug === key));
+    if (method === 'GET') { if (!p || (!p.published && !admin)) throw fail('Post não encontrado', 404); return p; }
+    if (!admin) throw fail('Não autorizado', 401);
+    if (!p) throw fail('Post não encontrado', 404);
+    if (method === 'PUT') { Object.assign(p, validate(body, true)); persist(d); return p; }
+    if (method === 'DELETE') { d.posts = d.posts.filter((x) => x !== p); persist(d); return null; }
+  }
+  async function api(method, path, body) {
+    if (mode === 'mock') return mock(method, path, body);
+    const r = await fetch(REAL + path, { method, headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: 'Bearer ' + token } : {}) }, body: body ? JSON.stringify(body) : undefined });
+    const b = r.status === 204 ? null : await r.json();
+    if (!r.ok) throw fail(b.error || 'Erro ' + r.status, r.status);
+    return b;
+  }
+
+  // ---- views ----
+  const el = (tag, props = {}, ...kids) => { const e = Object.assign(document.createElement(tag), props); e.append(...kids); return e; };
+  const fmtDate = (s) => new Date(String(s).replace(' ', 'T') + (/Z|\+/.test(s) || String(s).includes('T') ? '' : 'Z')).toLocaleDateString('pt-BR');
+  const view = $('#view');
+  let rid = 0; // evita que uma tela antiga (resposta atrasada) sobrescreva a atual
+  const paint = (my, ...nodes) => { if (my === rid) view.replaceChildren(...nodes); };
+  async function home() {
+    const my = rid; const posts = await api('GET', '/api/posts');
+    const out = [el('h1', {}, 'Últimos ', el('mark', {}, 'posts'))];
+    if (!posts.length) out.push(el('p', { className: 'empty' }, 'Nenhum post publicado ainda. Crie o primeiro no painel.'));
+    for (const p of posts) out.push(el('article', { className: 'card' }, el('h2', {}, el('a', { href: '#/post/' + p.slug, textContent: p.title })), el('div', { className: 'meta', textContent: fmtDate(p.createdAt) }), el('p', { textContent: p.excerpt })));
+    paint(my, ...out);
+  }
+  async function post(slug) {
+    const my = rid;
+    try { const p = await api('GET', '/api/posts/' + slug);
+      paint(my, el('a', { href: '#/' }, '← Todos os posts'), el('h1', { textContent: p.title, style: 'margin-top:12px' }), el('div', { className: 'meta', textContent: fmtDate(p.createdAt) }),
+        el('article', {}, ...p.body.split(/\n{2,}/).map((t) => el('p', { textContent: t }))));
+    } catch (e) { paint(my, el('h1', { textContent: 'Post não encontrado' }), el('a', { href: '#/' }, '← Voltar')); }
+  }
+  function loginView() {
+    const err = el('p', { className: 'err', role: 'alert' });
+    const pw = el('input', { type: 'password', autocomplete: 'current-password' });
+    const f = el('form', {}, el('h1', {}, 'Painel'), el('p', { className: 'meta', textContent: mode === 'mock' ? 'Senha da demonstração: admin' : 'Use a senha configurada em ADMIN_PASSWORD (padrão: admin).' }), el('label', {}, 'Senha', pw), el('button', { textContent: 'Entrar' }), err);
+    f.onsubmit = async (e) => { e.preventDefault(); try { token = (await api('POST', '/api/login', { password: pw.value })).token; admin(); } catch (x) { err.textContent = x.message; } };
+    view.replaceChildren(f); pw.focus();
+  }
+  async function admin() {
+    if (!token) return loginView();
+    let edit = {}; const list = el('div'); const msg = el('p', { className: 'err', role: 'status' });
+    const title = el('input', { type: 'text', maxLength: 120 }), excerpt = el('input', { type: 'text', maxLength: 300 }), body = el('textarea', { rows: 7 }), pub = el('input', { type: 'checkbox' });
+    const submit = el('button', { type: 'submit', textContent: 'Criar post' });
+    const form = el('form', { className: 'card' }, el('label', {}, 'Título', title), el('label', {}, 'Resumo (opcional)', excerpt), el('label', {}, 'Texto', body),
+      el('label', { className: 'chk' }, pub, 'Publicado'), el('div', { className: 'row' }, submit, el('button', { type: 'button', className: 'sec', textContent: 'Limpar', onclick: () => fill({}) })), msg);
+    function fill(p) { edit = p; title.value = p.title || ''; excerpt.value = p.excerpt || ''; body.value = p.body || ''; pub.checked = !!p.published; submit.textContent = p.id ? 'Atualizar post' : 'Criar post'; msg.textContent = ''; }
+    async function refresh() {
+      const posts = await api('GET', '/api/posts?all=1'); list.replaceChildren();
+      if (!posts.length) list.append(el('p', { className: 'empty', textContent: 'Nenhum post cadastrado.' }));
+      for (const p of posts) list.append(el('div', { className: 'rowitem' }, el('span', {}, p.title, el('span', { className: 'tag' + (p.published ? '' : ' draft'), textContent: p.published ? 'publicado' : 'rascunho' })),
+        el('span', { className: 'row' },
+          el('button', { className: 'sm sec', textContent: 'Editar', onclick: () => { fill(p); title.focus(); } }),
+          el('button', { className: 'sm sec', textContent: p.published ? 'Despublicar' : 'Publicar', onclick: async () => { await api('PUT', '/api/posts/' + p.id, { published: !p.published }); refresh(); } }),
+          el('button', { className: 'sm sec', textContent: 'Excluir', onclick: async () => { await api('DELETE', '/api/posts/' + p.id); if (edit.id === p.id) fill({}); refresh(); } }))));
+    }
+    form.onsubmit = async (e) => { e.preventDefault(); const data = { title: title.value, body: body.value, published: pub.checked }; if (excerpt.value) data.excerpt = excerpt.value;
+      try { edit.id ? await api('PUT', '/api/posts/' + edit.id, data) : await api('POST', '/api/posts', data); fill({}); msg.textContent = 'Salvo!'; refresh(); } catch (x) { msg.textContent = x.message; } };
+    view.replaceChildren(el('h1', {}, 'Painel de ', el('mark', {}, 'posts')), form, el('h2', { style: 'margin-top:24px', textContent: 'Todos os posts' }), list);
+    refresh();
+  }
+  async function route() {
+    rid++; const h = location.hash.replace(/^#/, '') || '/'; const [, a, b] = h.split('/');
+    $('#nHome').setAttribute('aria-current', a === 'admin' ? 'false' : 'page'); $('#nAdmin').setAttribute('aria-current', a === 'admin' ? 'page' : 'false');
+    if (a === 'post' && b) await post(b); else if (a === 'admin') await admin(); else await home();
+  }
+  addEventListener('hashchange', route);
+
+  (async () => {
+    try { const c = new AbortController(); setTimeout(() => c.abort(), 900); if ((await fetch(REAL + '/api/health', { signal: c.signal })).ok) mode = 'real'; } catch {}
+    const m = $('#mode'); m.classList.toggle('real', mode === 'real');
+    m.textContent = mode === 'real' ? 'Servidor Next.js real conectado: ' + REAL : 'Modo demonstração: posts simulados no navegador (localStorage). Rode o servidor em localhost:3070 para usar a API real.';
+    if (mode === 'mock' && !db().posts.length) { token = 'demo-token';
+      await mock('POST', '/api/posts', { title: 'Olá, mundo full stack', body: 'Este blog foi feito com Next.js e SQLite.\n\nAcesse o Painel (senha: admin) para criar, editar e publicar posts.', published: true }); token = null; }
+    route();
+  })();
+})();
+</script>
+</body>
+</html>

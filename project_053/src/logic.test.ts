@@ -1,0 +1,10 @@
+import { addDays, createHabit, stage, streak, toggleCheck, validateName, weekDays, weekDone, loadHabits, Habit } from './logic';
+const T = '2024-03-01';
+const h = (checks: string[]): Habit => ({ ...createHabit('Ler', '📚', 5, T), checks });
+test('addDays cruza mês/ano', () => { expect(addDays('2024-03-01', -1)).toBe('2024-02-29'); expect(addDays('2024-12-31', 1)).toBe('2025-01-01'); });
+test('streak conta até ontem se hoje vazio', () => { expect(streak(h(['2024-02-29', '2024-02-28']), T)).toBe(2); expect(streak(h(['2024-02-20']), T)).toBe(0); expect(streak(h([T, '2024-02-29']), T)).toBe(2); });
+test('toggle', () => { const a = toggleCheck(h([]), T); expect(a.checks).toEqual([T]); expect(toggleCheck(a, T).checks).toEqual([]); });
+test('estágios', () => { expect(stage(h([]), T)).toBe(0); expect(stage(h([T]), T)).toBe(1); expect(stage(h([T, '2024-02-29', '2024-02-28', '2024-02-27']), T)).toBe(2); });
+test('semana', () => { expect(weekDays(T)).toHaveLength(7); expect(weekDone(h([T, '2024-01-01']), T)).toBe(1); });
+test('validação', () => { expect(validateName('', [])).toBeTruthy(); expect(validateName('ler', [h([])])).toMatch(/já tem/); expect(validateName('Correr', [h([])])).toBeNull(); });
+test('load', () => { expect(loadHabits('xx')).toEqual([]); expect(loadHabits(null)).toEqual([]); });

@@ -78,7 +78,6 @@ class BlogApp {
         this.renderCategories();
         this.renderTags();
         this.renderPosts();
-        this.addEventListeners();
     }
 
     renderCategories() {
@@ -91,6 +90,7 @@ class BlogApp {
         allLink.href = '#';
         allLink.textContent = 'Todos';
         allLink.dataset.category = '';
+        if (!this.currentCategory) allLink.classList.add('active');
         allLink.addEventListener('click', (e) => {
             e.preventDefault();
             this.filterByCategory('');
@@ -105,6 +105,7 @@ class BlogApp {
             const link = document.createElement('a');
             link.href = '#';
             link.textContent = category;
+            if (this.currentCategory === category) link.classList.add('active');
             link.dataset.category = category;
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -130,6 +131,7 @@ class BlogApp {
             tagElement.textContent = tag;
             tagElement.className = 'tag';
             tagElement.dataset.tag = tag;
+            if (this.currentTag === tag) tagElement.classList.add('active');
             tagElement.addEventListener('click', (e) => {
                 e.preventDefault();
                 this.filterByTag(tag);
@@ -237,56 +239,17 @@ class BlogApp {
                     ${post.content}
                 </div>
                 <div class="post-tags">
-                    <strong>Tags:</span> ${post.tags.map(tag => `<span class="tag-small">${tag}</span>`).join('')}
+                    <strong>Tags:</strong> ${post.tags.map(tag => `<span class="tag-small">${tag}</span>`).join('')}
                 </div>
             </div>
         `;
 
-        // Add styles for modal
-        const style = document.createElement('style');
-        style.textContent = `
-            .post-modal {
-                display: block;
-                position: fixed;
-                z-index: 1000;
-                left: 0;
-                top: 0;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0,0,0,0.5);
-            }
-            .post-modal-content {
-                background-color: white;
-                margin: 5% auto;
-                padding: 30px;
-                width: 80%;
-                max-width: 800px;
-                border-radius: 10px;
-                position: relative;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            }
-            .close-modal {
-                position: absolute;
-                top: 15px;
-                right: 20px;
-                font-size: 28px;
-                font-weight: bold;
-                color: #aaa;
-                cursor: pointer;
-            }
-            .close-modal:hover {
-                color: #222;
-                text-decoration: none;
-            }
-            .post-content {
-                line-height: 1.7;
-                color: #333;
-            }
-        `;
-        document.head.appendChild(style);
+        const style = { remove() {} };
 
         // Add modal to body
         document.body.appendChild(modal);
+        const esc = (e) => { if (e.key === 'Escape') { modal.remove(); document.removeEventListener('keydown', esc); } };
+        document.addEventListener('keydown', esc);
 
         // Close modal when clicking X
         const closeBtn = modal.querySelector('.close-modal');

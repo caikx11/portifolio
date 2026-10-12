@@ -1,0 +1,45 @@
+:root { --paper:#f4f1ea; --ink:#111; --cobalt:#2640ff; --hot:#ff4d2e; --lime:#c8f169; --white:#fff; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Bricolage Grotesque", system-ui, sans-serif; }
+body { background-image: radial-gradient(#11111a14 1px, transparent 1px); background-size: 18px 18px; min-height: 100vh; }
+.back-link { position: fixed; top: 10px; left: 10px; z-index: 50; background: var(--lime); color: var(--ink); padding: 6px 12px; border: 2px solid var(--ink); border-radius: 8px; font-size: 13px; font-weight: 800; text-decoration: none; box-shadow: 3px 3px 0 var(--ink); }
+:focus-visible { outline: 4px solid var(--hot); outline-offset: 2px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.wrap { max-width: 680px; margin: 0 auto; padding: 64px 16px 48px; }
+.box { background: var(--white); border: 3px solid var(--ink); border-radius: 18px; box-shadow: 8px 8px 0 var(--ink); padding: 20px; }
+h1 { font-size: clamp(2.4rem, 11vw, 4rem); line-height: .95; margin: 4px 0 10px; font-weight: 800; letter-spacing: -.03em; color: var(--cobalt); }
+h2 { font-size: 1.25rem; margin: 22px 0 8px; font-weight: 800; }
+h2.q { font-size: clamp(1.25rem, 5vw, 1.7rem); margin: 6px 0 14px; outline-offset: 6px; }
+.tag, kbd, .muted { font-family: "Red Hat Mono", monospace; }
+.tag { background: var(--ink); color: var(--lime); display: inline-block; padding: 3px 8px; border-radius: 6px; font-size: 12px; margin: 0; }
+.lead { font-size: 1.05rem; margin: 0 0 14px; }
+.muted { color: #555; font-size: 13px; margin: 6px 0; }
+fieldset { border: 0; padding: 0; margin: 0 0 14px; }
+legend { font-weight: 800; margin-bottom: 6px; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.chip { border: 3px solid var(--ink); background: var(--white); padding: 6px 14px; border-radius: 999px; font-weight: 700; }
+.chip.on { background: var(--cobalt); color: #fff; box-shadow: 3px 3px 0 var(--ink); }
+.go { background: var(--hot); color: #fff; border: 3px solid var(--ink); border-radius: 12px; padding: 12px 22px; font-weight: 800; font-size: 1.05rem; box-shadow: 4px 4px 0 var(--ink); margin-top: 8px; }
+.go:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 var(--ink); }
+.go.alt { background: var(--lime); color: var(--ink); }
+.row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 14px; }
+.link { background: none; border: 0; text-decoration: underline; padding: 6px 0; font-weight: 700; }
+.records, .review { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.records li { display: flex; justify-content: space-between; gap: 8px; border-bottom: 2px dashed #ccc; padding: 4px 0; flex-wrap: wrap; }
+.bar { display: flex; justify-content: space-between; font-weight: 800; flex-wrap: wrap; gap: 6px; }
+.timer { height: 14px; border: 3px solid var(--ink); border-radius: 8px; overflow: hidden; margin-top: 8px; background: #eee; }
+.timer i { display: block; height: 100%; background: var(--cobalt); transition: width 1s linear; }
+.timer i.low { background: var(--hot); }
+.opts { list-style: none; padding: 0; margin: 0 0 14px; display: grid; gap: 10px; }
+.opt { width: 100%; text-align: left; border: 3px solid var(--ink); border-radius: 12px; background: var(--white); padding: 12px; font-weight: 600; display: flex; gap: 10px; align-items: baseline; overflow-wrap: anywhere; }
+.opt:hover:not(:disabled) { background: var(--lime); }
+.opt kbd { background: var(--ink); color: #fff; border-radius: 6px; padding: 1px 7px; font-size: 13px; flex: none; }
+.opt:disabled { cursor: default; color: var(--ink); }
+.opt.right { background: var(--lime); box-shadow: 4px 4px 0 var(--ink); }
+.opt.wrong { background: #ffb4a6; }
+.opt.dim { opacity: .55; }
+.why { background: #eef0ff; border: 3px solid var(--cobalt); border-radius: 12px; padding: 10px 12px; }
+.big { font-size: 3rem; font-weight: 800; margin: 0; } .big small { font-size: 1.1rem; }
+.review li { border-left: 8px solid; padding: 6px 10px; background: #fafafa; }
+.review .ok { border-color: #2e9e4f; } .review .ko { border-color: var(--hot); }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }

@@ -1,0 +1,41 @@
+{
+  "name": "todo-api-nest",
+  "version": "1.0.0",
+  "private": true,
+  "description": "To-Do API com NestJS + TypeScript",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "ts-node src/main.ts",
+    "start:prod": "node dist/main.js",
+    "test": "jest",
+    "test:e2e": "jest --testRegex e2e-spec.ts$"
+  },
+  "dependencies": {
+    "@nestjs/common": "^10.4.0",
+    "@nestjs/core": "^10.4.0",
+    "@nestjs/platform-express": "^10.4.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^10.4.0",
+    "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.0.0",
+    "@types/supertest": "^6.0.2",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0",
+    "ts-jest": "^29.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  },
+  "jest": {
+    "moduleFileExtensions": ["js", "json", "ts"],
+    "rootDir": ".",
+    "testRegex": ".*(spec)\\.ts$",
+    "transform": { "^.+\\.ts$": ["ts-jest", { "tsconfig": "tsconfig.spec.json" }] },
+    "testEnvironment": "node"
+  }
+}

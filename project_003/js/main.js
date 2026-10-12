@@ -142,9 +142,9 @@ document.addEventListener('DOMContentLoaded', function() {
             emptyState.className = 'empty-state';
             emptyState.innerHTML =
                 currentFilter === 'active'
-                    ? 'Nenhuma tarefa ativa! 🎉'
+                    ? 'Tudo feito por aqui. Respire fundo.'
                     : currentFilter === 'completed'
-                        ? 'Nenhuma tarefa concluída ainda 📝'
+                        ? 'Nada riscado da lista ainda.'
                         : 'Nenhuma tarefa cadastrada. Comece adicionando uma acima!';
             taskList.appendChild(emptyState);
             return;
@@ -155,11 +155,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const taskItem = document.createElement('li');
             taskItem.className = `task-item ${task.completed ? 'completed' : ''}`;
             taskItem.innerHTML = `
-                <div class="task-checkbox ${task.completed ? 'checked' : ''}"></div>
-                <span class="task-text">${task.text}</span>
+                <button type="button" class="task-checkbox ${task.completed ? 'checked' : ''}" role="checkbox" aria-checked="${task.completed}" aria-label="Concluir tarefa"></button>
+                <span class="task-text">${escapeHTML(task.text)}</span>
                 <div class="task-actions">
-                    <button class="edit-btn" title="Editar tarefa">✏️</button>
-                    <button class="delete-btn" title="Excluir tarefa">🗑️</button>
+                    <button class="edit-btn" title="Editar tarefa" aria-label="Editar tarefa">Editar</button>
+                    <button class="delete-btn" title="Excluir tarefa" aria-label="Excluir tarefa">Excluir</button>
                 </div>
             `;
 
@@ -199,23 +199,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Save tasks to localStorage
     function saveTasksToStorage() {
-        localStorage.setItem('todoTasks', JSON.stringify(tasks));
+        try { localStorage.setItem('todoTasks', JSON.stringify(tasks)); } catch (e) {}
     }
 
     // Load tasks from localStorage
     function loadTasksFromStorage() {
-        const savedTasks = localStorage.getItem('todoTasks');
+        let savedTasks = null;
+        try { savedTasks = localStorage.getItem('todoTasks'); } catch (e) {}
         if (savedTasks) {
             try {
                 tasks = JSON.parse(savedTasks);
             } catch (error) {
                 console.error('Error parsing tasks from localStorage:', error);
                 tasks = [];
-                localStorage.removeItem('todoTasks');
+                try { localStorage.removeItem('todoTasks'); } catch (e) {}
             }
         } else {
             tasks = [];
         }
+    }
+
+    function escapeHTML(s) {
+        const d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
     }
 
     // Show notification (simple implementation)
@@ -243,47 +250,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    // Add CSS for notifications (since we're adding them dynamically)
-    const style = document.createElement('style');
-    style.textContent = `
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            color: white;
-            font-weight: 500;
-            z-index: 1000;
-            box-shadow: var(--shadow-lg);
-            transform: translateX(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .notification-show {
-            transform: translateX(0);
-            opacity: 1;
-        }
-
-        .notification-hide {
-            transform: translateX(100px);
-            opacity: 0;
-        }
-
-        .notification-info { background: var(--primary-color); }
-        .notification-success { background: var(--secondary-color); }
-        .notification-error { background: var(--accent-color); }
-
-        /* Ensure notification shows */
-        .notification {
-            animation: slideIn 0.3s ease forwards;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateX(100px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-    `;
-    document.head.appendChild(style);
 });

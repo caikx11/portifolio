@@ -165,6 +165,17 @@ class EstoquePro {
         this.updateStorage();
     }
 
+    setupEventListeners() {
+        const btn = document.getElementById('btn-new-product');
+        if (btn) btn.addEventListener('click', () => {
+            const f = document.getElementById('product-form');
+            if (f) f.reset();
+            document.getElementById('modal-form').style.display = 'flex';
+        });
+        document.querySelectorAll('#modal-form .close-modal').forEach(b =>
+            b.addEventListener('click', () => { document.getElementById('modal-form').style.display = 'none'; }));
+    }
+
     setupCategoryFilter() {
         const categorySelect = document.getElementById('category-select');
         if (categorySelect) {

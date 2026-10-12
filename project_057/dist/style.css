@@ -1,0 +1,44 @@
+:root{--bg:#16141f;--col:#211e2e;--card:#2c2840;--ink:#f1eefc;--mute:#9a94b8;--line:#3b3656;--amber:#ffb547;--vio:#8b7cff;--rose:#ff6b8b;font-family:'DM Mono',monospace}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(900px 500px at 10% -10%,#2a2150,transparent),var(--bg);color:var(--ink);min-height:100vh}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.back-link{position:fixed;top:10px;right:10px;z-index:50;background:var(--amber);color:#1a1200;padding:7px 12px;border-radius:999px;font:500 13px 'DM Mono',monospace;text-decoration:none}
+.wrap{padding:56px 16px 24px;max-width:1500px;margin:0 auto}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+h1{font:800 2.2rem 'Bricolage Grotesque',sans-serif;margin:0;letter-spacing:-.03em}h1 span{color:var(--amber)}
+.head p{margin:2px 0 0;color:var(--mute);font-size:.85rem}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+input,textarea,select{font:inherit;color:var(--ink);background:#1a1827;border:1px solid var(--line);border-radius:8px;padding:9px}
+.btn{font:500 .85rem 'DM Mono',monospace;background:var(--amber);color:#1a1200;border:0;border-radius:8px;padding:9px 14px;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.board{display:flex;gap:14px;overflow-x:auto;padding-bottom:12px;align-items:flex-start}
+.col{flex:0 0 290px;background:var(--col);border:1px solid var(--line);border-radius:14px;padding:10px;transition:border-color .15s}
+.col.over{border-color:var(--vio);box-shadow:0 0 0 2px #8b7cff55}.col.dragging{opacity:.5}
+.col-head{display:flex;align-items:center;gap:6px;margin-bottom:8px;cursor:grab}
+.grip{color:var(--mute)}
+.col-title{flex:1;min-width:0;background:transparent;border:1px solid transparent;font:700 1rem 'Bricolage Grotesque',sans-serif;padding:5px}
+.col-title:hover{border-color:var(--line)}
+.count{background:var(--vio);color:#fff;border-radius:99px;padding:1px 8px;font-size:.75rem}
+.x{background:none;border:0;color:var(--mute);font-size:1.3rem;cursor:pointer;border-radius:6px}.x:hover{color:var(--rose)}
+.cards{list-style:none;margin:0;padding:0;display:grid;gap:8px;min-height:20px}
+.card{background:var(--card);border-radius:10px;padding:10px 12px;border-left:4px solid var(--vio);cursor:grab}
+.card.dragging{opacity:.4}
+.card.p-alta{border-color:var(--rose)}.card.p-media{border-color:var(--amber)}
+.card h3{margin:0 0 4px;font:700 .95rem 'Bricolage Grotesque',sans-serif;overflow-wrap:anywhere}
+.card p{margin:0 0 6px;color:var(--mute);font-size:.8rem;overflow-wrap:anywhere}
+.card-foot{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:6px}
+.tag{font-size:.7rem;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.card-btns button{background:none;border:0;color:var(--ink);cursor:pointer;padding:4px 6px;border-radius:6px;font-size:.8rem}
+.card-btns button:hover:not(:disabled){background:var(--line)}.card-btns button:disabled{opacity:.25;cursor:default}
+.hint{color:var(--mute);font-size:.8rem;text-align:center;padding:14px;border:1px dashed var(--line);border-radius:10px}
+.add{width:100%;margin-top:8px;background:none;border:1px dashed var(--line);color:var(--mute);border-radius:10px;padding:8px;cursor:pointer;font:inherit}
+.add:hover{color:var(--amber);border-color:var(--amber)}
+.empty{text-align:center;padding:60px 10px;border:2px dashed var(--line);border-radius:16px;color:var(--mute)}
+.modal{position:fixed;inset:0;background:#0009;display:grid;place-items:center;padding:16px;z-index:60}
+.sheet{background:var(--col);border:1px solid var(--line);border-radius:16px;padding:20px;width:min(420px,100%);display:grid;gap:12px}
+.sheet h2{margin:0;font-family:'Bricolage Grotesque',sans-serif}
+label{display:grid;gap:4px;font-size:.8rem;color:var(--mute)}
+.row{display:flex;gap:8px;justify-content:flex-end}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(max-width:600px){.col{flex-basis:84vw}h1{font-size:1.8rem}.actions{width:100%}.actions input{flex:1;min-width:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}

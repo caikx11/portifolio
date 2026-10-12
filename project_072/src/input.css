@@ -1,0 +1,16 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+@layer base{
+ body{@apply bg-coal text-bone font-sans antialiased pt-14;background-image:radial-gradient(60rem 30rem at 80% -10%,rgba(255,122,69,.18),transparent)}
+ :focus-visible{outline:3px solid #ffca28;outline-offset:2px;border-radius:6px}
+ @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+}
+@layer components{
+ .btn{@apply inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-bold transition-colors}
+ .btn-amber{@apply btn bg-amber text-coal hover:bg-flame}
+ .btn-line{@apply btn border border-edge bg-panel hover:border-amber}
+ .back{@apply fixed left-3 top-3 z-50 rounded-full bg-amber px-3.5 py-1.5 text-sm font-bold text-coal shadow hover:bg-flame}
+ .pulse{animation:pulse 1.6s ease-in-out infinite}
+ @keyframes pulse{50%{opacity:.35}}
+ .flash{animation:flash 1.2s ease-out}
+ @keyframes flash{from{background:rgba(61,214,198,.35)}}
+}

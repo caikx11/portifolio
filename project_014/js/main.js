@@ -15,7 +15,7 @@ const checkoutBtn = document.getElementById('checkout-btn');
 // Fetch products from JSON file
 async function fetchProducts() {
     try {
-        const response = await fetch('../products/catalog.json');
+        const response = await fetch('products/catalog.json');
         if (!response.ok) {
             throw new Error('Failed to fetch products');
         }
@@ -82,6 +82,16 @@ function getProductById(id) {
     return productsCatalog.find(product => product.id === id) || null;
 }
 
+// Local product art (no external images)
+function productArt(product) {
+    const icons = { 'Roupas': '👕', 'Calçados': '👟', 'Acessórios': '⌚', 'Mochilas': '🎒' };
+    const icon = icons[product.category] || ['👕','👖','👟','⌚','🎒','🧥'][(product.id - 1) % 6];
+    const hues = ['#ffe600', '#ff5ca8', '#5ce1ff', '#9dff6b', '#ff9a3c', '#c29bff'];
+    const bg = hues[(product.id - 1) % hues.length];
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200" viewBox="0 0 300 200"><rect width="300" height="200" fill="${bg}"/><circle cx="240" cy="40" r="60" fill="#000" opacity=".08"/><text x="150" y="125" font-size="90" text-anchor="middle">${icon}</text></svg>`;
+    return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+
 // Render products to the page
 function renderProducts(products) {
     productsContainer.innerHTML = ''; // Clear previous content
@@ -91,7 +101,7 @@ function renderProducts(products) {
         productCard.className = 'product-card';
         productCard.innerHTML = `
             <div class="product-image">
-                <img src="${product.image}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Imagem+Indisponível'">
+                <img src="${productArt(product)}" alt="${product.name}" loading="lazy">
             </div>
             <div class="product-info">
                 <h3>${product.name}</h3>

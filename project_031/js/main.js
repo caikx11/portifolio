@@ -290,8 +290,6 @@ class MeditationApp {
             if (Notification.permission === 'granted') {
                 new Notification(title, {
                     body: message,
-                    icon: '/icon-192.png',
-                    badge: '/badge-72.png',
                     tag: 'meditation-complete',
                     data: { timestamp: Date.now() }
                 });
@@ -300,8 +298,6 @@ class MeditationApp {
                     if (permission === 'granted') {
                         new Notification(title, {
                             body: message,
-                            icon: '/icon-192.png',
-                            badge: '/badge-72.png',
                             tag: 'meditation-complete',
                             data: { timestamp: Date.now() }
                         });
@@ -309,7 +305,7 @@ class MeditationApp {
                 });
             }
         }
-    },
+    }
 
     updateSessionStats(mode, duration, details) {
         const today = new Date().toISOString().split('T')[0];
@@ -346,12 +342,12 @@ class MeditationApp {
         localStorage.setItem('meditation_stats', JSON.stringify(this.stats));
         this.updateStatsDisplay();
         this.renderEnhancedStats();
-    },
+    }
 
     getBreathingDuration(pattern) {
         const timings = this.getBreathingTimings();
         return timings.inhale + (timings.hold || 0) + (timings.exhale || 0) + (timings.pause || 0);
-    },
+    }
 
     formatTimer(seconds) {
         const mins = Math.floor(seconds / 60);
@@ -727,19 +723,19 @@ class MeditationApp {
             Math.round(this.stats.totalMinutes / this.stats.totalSessions) : 0;
 
         const mostUsedTimer = Object.entries(this.stats.timerUsage)
-            .sort(([,a], [,b]) => b - a)[0] || [0, 0];
+            .sort(([,a], [,b]) => b - a)[0] || ['0', 0];
 
         const mostUsedBreathing = Object.entries(this.stats.breathingPatterns)
-            .sort(([,a], [,b]) => b - a)[0] || [0, 0];
+            .sort(([,a], [,b]) => b - a)[0] || ['0', 0];
 
         // Format timer usage for display
-        const timerLabel = mostUsedTimer[0] === '0' ? 'Nenhum' :
-            mostUsedTimer[0].startsWith('custom_') ?
+        const timerLabel = String(mostUsedTimer[0]) === '0' ? 'Nenhum' :
+            String(mostUsedTimer[0]).startsWith('custom_') ?
                 `${parseInt(mostUsedTimer[0].split('_')[1])/60} min personalizado` :
                 `${parseInt(mostUsedTimer[0])/60} min`;
 
-        const breathingLabel = mostUsedBreathing[0] === '0' ? 'Nenhum' :
-            mostUsedBreathing[0].replace('-', ' to ').toUpperCase();
+        const breathingLabel = String(mostUsedBreathing[0]) === '0' ? 'Nenhum' :
+            String(mostUsedBreathing[0]).replace('-', ' to ').toUpperCase();
 
         // Goals progress
         const dailyProgress = Math.min(100, Math.round((todayMinutes / this.stats.goals.dailyMinutes) * 100));

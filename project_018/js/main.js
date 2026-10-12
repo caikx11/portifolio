@@ -1,44 +1,50 @@
-// Meme templates (using placeholder images)
+// Local template art (generated SVG, canvas-safe)
+function tpl(emoji, a, b) {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="600" height="600" fill="url(#g)"/><text x="300" y="400" font-size="280" text-anchor="middle">${emoji}</text></svg>`;
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
+// Meme templates
 const templates = [
     {
         id: 'drake',
         name: 'Drake',
-        image: 'https://i.imgflip.com/30b1gx.jpg'
+        image: tpl('😎','#ff2e93','#7a00ff')
     },
     {
         id: 'distracted-bf',
         name: 'Namorado Distraído',
-        image: 'https://i.imgflip.com/1ur9b0.jpg'
+        image: tpl('🙄','#ffb300','#ff3d00')
     },
     {
         id: 'change-mind',
         name: 'Mude Minha Opinião',
-        image: 'https://i.imgflip.com/24y43o.jpg'
+        image: tpl('🤔','#00e5ff','#2979ff')
     },
     {
         id: 'expanding-brain',
         name: 'Cérebro Expandindo',
-        image: 'https://i.imgflip.com/1ur9b0.jpg'
+        image: tpl('😂','#c6ff00','#00c853')
     },
     {
         id: 'two-buttons',
         name: 'Dois Botões',
-        image: 'https://i.imgflip.com/2/285468.jpg'
+        image: tpl('🐸','#69f0ae','#00695c')
     },
     {
         id: 'roll-safe',
         name: 'Roll Safe',
-        image: 'https://i.imgflip.com/1o4y0l.jpg'
+        image: tpl('🔥','#ff5252','#b71c1c')
     },
     {
         id: 'this-is-fine',
         name: 'Tudo Bem',
-        image: 'https://i.imgflip.com/2g0j4.jpg'
+        image: tpl('🤯','#e040fb','#311b92')
     },
     {
         id: 'surprised-pikachu',
         name: 'Pikachu Surpreso',
-        image: 'https://i.imgflip.com/2/1otk96.jpg'
+        image: tpl('😏','#40c4ff','#1a237e')
     }
 ];
 

@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Gastos com Gráficos</title>
+    <title>Bolso Claro</title>
+    <meta name="description" content="Controle de gastos com gráficos de categoria e evolução mensal.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
-        <h1>Controle de Gastos</h1>
+        <header class="hero">
+            <p class="eyebrow" id="month-label"></p>
+            <h1>Bolso <em>Claro</em></h1>
+        </header>
         <div class="summary-cards">
             <div class="summary-card income">
                 <h3>Receitas</h3>
@@ -27,11 +35,11 @@
         <div class="charts-section">
             <div class="chart-container">
                 <h2>Gastos por Categoria</h2>
-                <canvas id="pieChart"></canvas>
+                <div class="canvas-wrap"><canvas id="pieChart" aria-label="Gastos por categoria"></canvas></div>
             </div>
             <div class="chart-container">
                 <h2>Evolução Mensal</h2>
-                <canvas id="barChart"></canvas>
+                <div class="canvas-wrap"><canvas id="barChart" aria-label="Receitas e despesas por mês"></canvas></div>
             </div>
         </div>
 
@@ -67,7 +75,8 @@
                         <input type="date" id="trans-date" required>
                     </div>
                 </div>
-                <button type="submit">Adicionar Transação</button>
+                <p class="form-error" id="form-error" role="alert" hidden></p>
+                <button type="submit">Adicionar transação</button>
             </form>
         </div>
 
@@ -88,7 +97,8 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="js/chart-shim.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

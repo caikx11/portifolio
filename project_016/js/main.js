@@ -48,7 +48,7 @@ function initGame() {
     startTimer();
 
     // Add event listener to play again button
-    playAgainBtn.addEventListener('click', restartGame);
+    playAgainBtn.onclick = restartGame;
 }
 
 // Create cards for the game

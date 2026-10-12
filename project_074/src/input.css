@@ -1,0 +1,17 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+@layer base{
+ html,body{@apply h-full}
+ body{@apply bg-ink text-sand font-sans antialiased pt-14}
+ :focus-visible{outline:3px solid #7cc4ff;outline-offset:2px;border-radius:6px}
+ @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+}
+@layer components{
+ .btn{@apply inline-flex items-center justify-center rounded-lg px-3.5 py-2 text-sm font-bold transition-colors disabled:opacity-40}
+ .btn-rose{@apply btn bg-rose text-ink hover:brightness-110}
+ .btn-line{@apply btn border border-edge bg-panel hover:border-sky}
+ .back{@apply fixed left-3 top-3 z-50 rounded-full bg-rose px-3.5 py-1.5 text-sm font-bold text-ink shadow hover:brightness-110}
+ .blink{animation:blink 1s steps(2) infinite}
+ @keyframes blink{50%{opacity:0}}
+ .spin{animation:spin 1s linear infinite}
+ @keyframes spin{to{transform:rotate(360deg)}}
+}

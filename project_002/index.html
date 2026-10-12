@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <titulo>Etch-a-Sketch - Desenho Interativo</titulo>
+    <title>Etch-a-Sketch - Desenho Interativo</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <meta name="description" content="Aplicativo interativo de desenho onde você pode criar arte passando o mouse sobre os pixels">
+    <meta name="description" content="Lousa mágica em grade: desenhe com mouse ou toque, com modos normal, arco-íris e sombra">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
             <h1>Etch-a-Sketch</h1>
-            <p>Crie desenhos movendo o mouse sobre a grade</p>
+            <p>Segure e arraste sobre a grade para desenhar</p>
         </header>
 
-        <main>
+        <main class="toy">
+            <div class="screen-frame">
+                <div id="sketchpad" class="sketchpad" role="img" aria-label="Área de desenho"></div>
+            </div>
+
             <div class="controls">
-                <button id="clearBtn">Limpar Desenho</button>
-                <button id="rainbowBtn">Modo Arco-íris</button>
-                <button id="shadeBtn">Modo Sombra</button>
-                <label for="sizeSlider">Tamanho da Grade: <span id="sizeValue">16</span>x<span id="sizeValue">16</span></label>
-                <input type="range" id="sizeSlider" min="1" max="100" value="16">
+                <div class="modes" role="group" aria-label="Modo de desenho">
+                    <button id="normalBtn" class="active" aria-pressed="true">Pincel</button>
+                    <button id="rainbowBtn" aria-pressed="false">Arco-íris</button>
+                    <button id="shadeBtn" aria-pressed="false">Sombra</button>
+                    <button id="eraserBtn" aria-pressed="false">Borracha</button>
+                </div>
+                <label class="color-field" for="colorPicker">Cor
+                    <input type="color" id="colorPicker" value="#1b1b1f">
+                </label>
+                <label class="size-field" for="sizeSlider">Grade: <output id="sizeValue">16</output> × <output id="sizeValue2">16</output>
+                    <input type="range" id="sizeSlider" min="4" max="64" value="16">
+                </label>
+                <label class="grid-toggle"><input type="checkbox" id="gridToggle" checked> Linhas</label>
+                <button id="clearBtn" class="shake">Limpar (sacudir)</button>
             </div>
-
-            <div id="sketchpad" class="sketchpad">
-                <!-- Grid será gerado aqui -->
-            </div>
-
-            <div class="info">
-                <p>Instruções: Movimente o mouse sobre os quadrados para desenhar. Clique nos botões para mudar o modo de desenho.</p>
-            </div>
+            <p class="info">Dica: funciona com toque no celular. O modo Sombra escurece 10% a cada passada.</p>
         </main>
 
-        <footer>
-            <p>&copy; 2026 Caio. Todos os direitos reservados.</p>
-        </footer>
+        <footer><p>&copy; 2026 Caio. Todos os direitos reservados.</p></footer>
     </div>
-
     <script src="js/main.js"></script>
 </body>
 </html>

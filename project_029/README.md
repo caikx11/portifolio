@@ -45,7 +45,7 @@ project_029/
 
 ### API Mock
 
-A aplicação utiliza uma API mock localizada em `js/api/news-api.js` que simula:
+A aplicação utiliza uma API mock localizada em `api/news-api.js` que simula:
 - Atraso de rede aleatório entre 500ms e 1500ms
 - Filtragem por categoria e busca textual
 - Paginação dos resultados
@@ -53,7 +53,7 @@ A aplicação utiliza uma API mock localizada em `js/api/news-api.js` que simula
 
 ### Dados de Notícias
 
-Os dados estão armazenados em `data/news.json` e contêm notícias de diversas categorias com:
+Os dados estão armazenados em `data/articles.json` e contêm notícias de diversas categorias com:
 - Título
 - Categoria
 - Resumo

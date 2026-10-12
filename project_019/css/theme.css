@@ -1,0 +1,47 @@
+/* Receitas: trattoria gingham & tomato */
+:root{--linen:#fbf4e6;--tomato:#c8412b;--olive:#5b6b2f;--cream:#fffaf0;--ink:#3a2a20;--line:#e6d6b8}
+html,body{overflow-x:hidden}
+html{background:var(--linen)}
+body{background-color:var(--linen)!important;background-image:linear-gradient(90deg,rgba(200,65,43,.07) 50%,transparent 50%),linear-gradient(rgba(200,65,43,.07) 50%,transparent 50%)!important;background-size:36px 36px!important;color:var(--ink);font-family:'Karla',sans-serif;min-height:100vh;padding:0!important;display:block!important}
+body::before,body::after{display:none!important}
+header{background:var(--tomato)!important;color:#fff!important;text-align:center;padding:58px 16px 22px!important;box-shadow:none!important;border-bottom:6px solid var(--olive);border-radius:0!important;max-width:none!important;width:100%!important;margin:0!important}
+header h1{font-family:'Abril Fatface',serif;font-weight:400;font-size:clamp(1.9rem,8vw,3.2rem);color:#fff!important;-webkit-text-fill-color:#fff!important;background:none!important;margin:0}
+header p{color:#ffe3d6!important;margin:4px 0 14px}
+header .btn-primary{background:var(--cream)!important;color:var(--tomato)!important}
+.btn-primary{background:var(--tomato)!important;color:#fff!important;border:2px solid var(--ink)!important;border-radius:99px!important;padding:10px 20px;font:700 .95rem 'Karla',sans-serif;cursor:pointer;box-shadow:3px 3px 0 var(--ink);transition:transform .12s,box-shadow .12s}
+.btn-primary:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--ink)}
+.btn-secondary{background:none!important;color:var(--olive)!important;border:2px solid var(--olive)!important;border-radius:99px!important;padding:8px 16px;font:700 .9rem 'Karla',sans-serif;cursor:pointer;transition:background .2s,color .2s}
+.btn-secondary:hover{background:var(--olive)!important;color:#fff!important}
+main{background:none!important;box-shadow:none!important;max-width:1240px;margin:0 auto;padding:22px 16px!important}
+.app-container{display:grid;grid-template-columns:280px minmax(0,1fr);gap:22px;align-items:start;background:none!important}
+.sidebar,.main-content{min-width:0;background:none!important;box-shadow:none!important}
+.filters,.favorites-section{background:var(--cream)!important;border:2px solid var(--ink)!important;border-radius:16px!important;box-shadow:5px 5px 0 var(--olive)!important;padding:16px!important;margin-bottom:18px}
+.filters h3,.favorites-section h3{font-family:'Abril Fatface',serif;font-weight:400;color:var(--tomato)!important;font-size:1.3rem}
+.filter-group{margin-bottom:12px}.filter-group label,#add-recipe-form label{display:block;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.filter-group input,.filter-group select,#add-recipe-form input,#add-recipe-form select,#add-recipe-form textarea{width:100%;box-sizing:border-box;background:#fff!important;border:2px solid var(--line)!important;border-radius:10px!important;padding:9px 11px;font:500 .95rem 'Karla',sans-serif;color:var(--ink)}
+.filter-group input:focus,.filter-group select:focus,#add-recipe-form input:focus,#add-recipe-form select:focus,#add-recipe-form textarea:focus{outline:none;border-color:var(--tomato)!important}
+.recipes-header{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;background:none!important;box-shadow:none!important;padding:0 0 12px!important}
+.recipes-header h2{font-family:'Abril Fatface',serif;font-weight:400;font-size:1.6rem;color:var(--ink)!important}
+.view-toggle{display:flex;gap:6px}.view-toggle button{width:40px;height:40px;border:2px solid var(--ink)!important;border-radius:10px!important;background:var(--cream)!important;color:var(--ink)!important;cursor:pointer;display:grid;place-items:center}
+.view-toggle button.active{background:var(--olive)!important;color:#fff!important}
+.recipes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px}.recipes-list{display:grid;gap:14px}
+.recipe-card{background:var(--cream)!important;border:2px solid var(--ink)!important;border-radius:16px!important;overflow:hidden;box-shadow:5px 5px 0 var(--line)!important;cursor:pointer;transition:transform .18s,box-shadow .18s;min-width:0}
+.recipe-card:hover{transform:translateY(-4px) rotate(-.4deg);box-shadow:8px 8px 0 var(--tomato)!important}
+.recipe-image{max-width:100%;object-fit:cover}
+.recipe-content{padding:14px}.recipe-title{font-family:'Abril Fatface',serif;font-weight:400;font-size:1.25rem;color:var(--ink)!important}
+.recipe-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:.82rem;color:#6d5846!important}
+.recipe-tag{background:var(--linen)!important;color:var(--olive)!important;border:1px solid var(--olive);border-radius:99px!important;padding:1px 9px;font-size:.75rem;font-weight:700}.recipe-tag.favorite{background:var(--tomato)!important;color:#fff!important;border-color:var(--tomato)}
+.empty-state{text-align:center;padding:30px;font-family:'Abril Fatface',serif}
+.modal{background:rgba(58,42,32,.6)!important;backdrop-filter:blur(3px)}
+.modal-content{background:var(--cream)!important;border:3px solid var(--ink)!important;border-radius:20px!important;box-shadow:8px 8px 0 var(--tomato)!important;width:calc(100% - 32px);max-width:760px;box-sizing:border-box;color:var(--ink)!important}
+.close-btn{cursor:pointer;font-size:1.9rem;color:var(--ink)!important}.close-btn:hover{color:var(--tomato)!important}
+.recipe-detail-section h3{font-family:'Abril Fatface',serif;font-weight:400;color:var(--tomato)!important}
+.favorite-item{background:#fff!important;border:1.5px solid var(--line)!important;border-radius:10px!important}
+footer{text-align:center;color:var(--ink)!important;background:none!important;opacity:.7;padding:18px}
+:focus-visible{outline:3px solid var(--tomato);outline-offset:2px}
+.back-link{position:fixed;top:10px;left:10px;z-index:1100;padding:5px 12px;border-radius:99px;background:var(--cream);border:2px solid var(--ink);color:var(--ink);font:700 .78rem 'Karla',sans-serif;text-decoration:none}
+.back-link:hover{background:var(--olive);color:#fff}
+@media(max-width:900px){.app-container{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+.modal-content{padding:44px 20px 20px!important;max-height:90vh;overflow-y:auto}
+.close-btn{position:absolute;top:8px;right:16px}

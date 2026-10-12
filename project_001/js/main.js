@@ -1,3 +1,231 @@
+const PROJECTS = [
+ [
+  "Portfólio Pessoal",
+  "Este site: apresentação, lista dos 50 projetos com busca e formulário de contato"
+ ],
+ [
+  "Etch-a-Sketch",
+  "Lousa mágica com pincel, borracha, seletor de cor e tamanho de grade, com suporte a toque"
+ ],
+ [
+  "To-Do List",
+  "Lista de tarefas com filtros e contadores, salva no navegador (localStorage)"
+ ],
+ [
+  "Calculadora",
+  "Calculadora com modo básico e científico, histórico e uso pelo teclado"
+ ],
+ [
+  "Clima Atual",
+  "Clima por cidade com dados simulados, alternância °C/°F e fundo que muda com o tempo"
+ ],
+ [
+  "Pomodoro Timer",
+  "Temporizador de foco e pausas com tarefa ativa, anel de progresso e sequência diária"
+ ],
+ [
+  "Habit Tracker",
+  "Acompanhamento de hábitos com sequências (streaks) e histórico semanal"
+ ],
+ [
+  "Weather Dashboard",
+  "Painel do tempo com previsão de 24 horas e 5 dias (dados simulados)"
+ ],
+ [
+  "Gerador de Senhas",
+  "Senhas seguras com opções de tamanho e caracteres, medidor de força e entropia"
+ ],
+ [
+  "Controle de Finanças",
+  "Receitas e despesas com filtros, gráficos, categorias e exportação em CSV"
+ ],
+ [
+  "Quiz Interativo",
+  "Quiz por categorias com cronômetro por pergunta e placar"
+ ],
+ [
+  "Blog Simples",
+  "Blog com lista de posts, filtros por categoria e leitura em modal"
+ ],
+ [
+  "Sistema de Reservas",
+  "Calendário de reservas com escolha de horário e confirmação"
+ ],
+ [
+  "Loja Virtual",
+  "Catálogo de produtos com carrinho de compras"
+ ],
+ [
+  "Aplicativo de Notas",
+  "Notas coloridas com busca, salvas no navegador"
+ ],
+ [
+  "Jogo da Memória",
+  "Jogo de pares de cartas com contador de jogadas"
+ ],
+ [
+  "Conversor de Moedas",
+  "Conversão entre moedas com histórico (taxas simuladas)"
+ ],
+ [
+  "Gerador de Memes",
+  "Editor de memes com texto sobre imagem e download do resultado"
+ ],
+ [
+  "Aplicativo de Receitas",
+  "Livro de receitas com categorias, busca e detalhes"
+ ],
+ [
+  "Chat Simulado",
+  "Salas de conversa simuladas com respostas automáticas e indicador de digitação"
+ ],
+ [
+  "Dashboard de Analytics",
+  "Painel com gráficos interativos de métricas"
+ ],
+ [
+  "Editor de Texto Rich",
+  "Editor de texto com formatação (negrito, listas, alinhamento)"
+ ],
+ [
+  "Quiz Avançado",
+  "Plataforma de quizzes com níveis, pontuação e resultados"
+ ],
+ [
+  "Simulador de Física",
+  "Simulação interativa de física com parâmetros ajustáveis"
+ ],
+ [
+  "ProManager",
+  "Gestão de processos jurídicos: cadastro, edição e filtro por status"
+ ],
+ [
+  "EstoquePro",
+  "Controle de estoque industrial com cadastro e alertas de produtos"
+ ],
+ [
+  "Gerador de Diagramas de Fluxo",
+  "Editor de fluxogramas com exportação em imagem"
+ ],
+ [
+  "Leitor de Notícias",
+  "Feed de notícias com busca, filtros e paginação"
+ ],
+ [
+  "Portal de Notícias 360",
+  "Portal de notícias com API simulada, categorias e métricas"
+ ],
+ [
+  "Jogo da Velha",
+  "Dois jogadores ou contra o computador, com placar e histórico"
+ ],
+ [
+  "App de Meditação",
+  "Sessões de meditação e respiração guiada com estatísticas"
+ ],
+ [
+  "FinanceFlow",
+  "Dashboard financeiro com transações, filtros e gráficos"
+ ],
+ [
+  "Validador CPF/CNPJ",
+  "Valida e formata CPF e CNPJ, com gerador de números válidos"
+ ],
+ [
+  "Controle de Hábitos Avançado",
+  "Metas diárias com contador, sequências e recompensas"
+ ],
+ [
+  "Simulador de Investimentos",
+  "Simulação de juros compostos com gráfico e tabela anual"
+ ],
+ [
+  "Receitas com Modo Offline",
+  "Receitas que continuam disponíveis sem internet (service worker)"
+ ],
+ [
+  "Editor de Imagens",
+  "Filtros, giro, espelhamento e download de imagens"
+ ],
+ [
+  "Perguntas e Respostas",
+  "Fórum de perguntas com respostas, votos e filtros"
+ ],
+ [
+  "Controle de Gastos com Gráficos",
+  "Despesas por categoria com gráficos mensais"
+ ],
+ [
+  "Palavras Cruzadas",
+  "Cruzadas em três níveis com dicas e verificação"
+ ],
+ [
+  "Analisador de Texto",
+  "Estatísticas de texto: palavras, frases e tempo de leitura"
+ ],
+ [
+  "Kanban",
+  "Quadro de tarefas com arrastar e soltar, salvo no navegador"
+ ],
+ [
+  "Controle de Estoque",
+  "Inventário com entradas, saídas e relatórios"
+ ],
+ [
+  "Diagramas de Fluxo (v1)",
+  "Primeira versão do editor de fluxogramas com formas arrastáveis"
+ ],
+ [
+  "Simulador de Eletrônica",
+  "Monte circuitos com bateria, resistor e LED e simule"
+ ],
+ [
+  "Controle de Saúde",
+  "Registro de pressão, glicose, peso e medicação, com relatórios"
+ ],
+ [
+  "Gerador de Contratos",
+  "Gera contratos a partir de um formulário, com pré-visualização"
+ ],
+ [
+  "Avaliação de Produtos",
+  "Avaliações com estrelas e comentários"
+ ],
+ [
+  "Biblioteca Pessoal",
+  "Acervo de livros com empréstimos e devoluções"
+ ],
+ [
+  "Plataforma de Ensino",
+  "Cursos com aulas, quizzes e certificado"
+ ],
+ ["TaskFlow", "Quadro de tarefas com prioridade, prazos e progresso", "React,TypeScript,Tailwind"],
+ ["Painel de Cripto", "Preços simulados em tempo real, gráfico de velas e carteira", "React,TypeScript"],
+ ["Habit Garden", "Hábitos que viram plantas conforme a sequência", "React,TypeScript,Jest"],
+ ["Receitário", "Receitas com busca, porções e lista de compras", "React,TypeScript"],
+ ["Quiz Dev", "30 perguntas de programação com tempo e recordes", "React,TypeScript"],
+ ["Notas Markdown", "Editor com preview ao vivo e várias notas", "React,TypeScript"],
+ ["Kanban Pro", "Quadro com arrastar e soltar e colunas editáveis", "React,TypeScript"],
+ ["Foco Pomodoro", "Ciclos de foco com tarefas e gráfico semanal", "React,TypeScript,Jest"],
+ ["Clima React", "Previsão simulada com 24 horas e 7 dias", "React,TypeScript"],
+ ["Catálogo de Filmes", "Busca, filtros, favoritos e detalhes", "React,TypeScript"],
+ ["Blog Next", "Blog com posts em Markdown, busca e tags", "Next.js,TypeScript"],
+ ["SaaS Landing e Preços", "Página de preços com checkout em modo demonstração", "Next.js,TypeScript"],
+ ["Link-in-bio", "Página de links com temas e contador de cliques", "Next.js,TypeScript"],
+ ["Docs Site", "Documentação com busca, sumário e copiar código", "Next.js,TypeScript"],
+ ["Auth JWT", "API de login com JWT e demo no navegador", "Node.js,Express,JWT"],
+ ["To-Do API", "API de tarefas com validação e testes", "NestJS,TypeScript,Jest"],
+ ["Encurtador de URLs", "Links curtos com contagem de cliques", "Node.js,SQLite"],
+ ["Notas Full Stack", "Notas por usuário com login e API", "Express,SQLite,JWT"],
+ ["Chat em Tempo Real", "Salas de chat com WebSocket", "WebSocket,Node.js"],
+ ["Blog Full Stack", "Blog com banco de dados e painel de posts", "Next.js,SQLite"],
+ ["Launchpad SaaS", "Cadastro, planos, painel e faturas (demonstração)", "React,TypeScript"],
+ ["Lista em Tempo Real", "Lista sincronizada entre abas, no estilo Firebase", "TypeScript,Firebase API"],
+ ["TypeScript Playground", "25 utilitários tipados com testes", "TypeScript,Jest"],
+ ["Assistente IA para Devs", "Agentes e ferramentas com respostas simuladas", "React,TypeScript,IA"],
+ ["Biblioteca de Componentes", "Botões, modais, tabs e toasts com código para copiar", "TypeScript,Tailwind"]
+];
+
 // Mobile menu toggle
 document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
@@ -43,91 +271,43 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form submission handling
     const contactForm = document.getElementById('contact-form');
     if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+        contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            // Here you would typically send the form data to a server
-            // For now, we'll just show a success message
-            alert('Obrigado pela sua mensagem! Em um projeto real, esta mensagem seria enviada para um servidor.');
-            this.reset();
+            let st = document.getElementById('form-status');
+            if (!st) { st = document.createElement('p'); st.id = 'form-status'; st.className = 'form-status'; st.setAttribute('role', 'status'); this.appendChild(st); }
+            const btn = this.querySelector('button[type="submit"]');
+            const data = Object.fromEntries(new FormData(this));
+            if (data._honey) return;
+            btn.disabled = true;
+            st.textContent = 'Enviando…';
+            try {
+                const res = await fetch('https://formsubmit.co/ajax/caikx11@gmail.com', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({ name: data.name, email: data.email, _subject: data.subject, message: data.message, _replyto: data.email, _template: 'table' })
+                });
+                const json = await res.json();
+                if (!res.ok || json.success === 'false') throw new Error(json.message || 'Falha no envio');
+                st.textContent = 'Mensagem enviada! Responderei em breve.';
+                this.reset();
+            } catch (err) {
+                const body = encodeURIComponent(`${data.message}\n\n— ${data.name} (${data.email})`);
+                st.innerHTML = 'Não foi possível enviar agora. <a href="mailto:caikx11@gmail.com?subject=' + encodeURIComponent(data.subject) + '&body=' + body + '">Enviar pelo seu aplicativo de e-mail</a>.';
+            } finally {
+                btn.disabled = false;
+            }
         });
     }
 
     // Lista de todos os 50 projetos do portfólio
-    const portfolioProjects = Array.from({length: 50}, (_, i) => {
+    const portfolioProjects = Array.from({length: 75}, (_, i) => {
         const projectNumber = (i + 1).toString().padStart(3, '0');
-        const titles = {
-            1: 'Portfólio Pessoal', 2: 'Landing Page', 3: 'To-Do List', 4: 'Calculadora',
-            5: 'App de Clima', 6: 'Pomodoro Timer', 7: 'Habit Tracker', 8: 'Weather Dashboard',
-            9: 'Gerador de Senhas', 10: 'Controle de Finanças', 11: 'Quiz Interativo', 12: 'Blog Pessoal',
-            13: 'Gerenciador de Tarefas', 14: 'Agenda Digital', 15: 'Aplicativo de Notas', 16: 'Conversor de Moedas',
-            17: 'Lista de Compras', 18: 'Controle de Gastos', 19: 'Sistema de Login', 20: 'Chat Simulado',
-            21: 'API de Notícias', 22: 'Gerador de Códigos QR', 23: 'Contador de Palavras', 24: 'Validador de Formulários',
-            25: 'ProManager', 26: 'Sistema de Reservas', 27: 'Catálogo de Produtos', 28: 'Gerenciador de Arquivos',
-            29: 'Notícias em Tempo Real', 30: 'Jogo da Velha', 31: 'Visualização de Dados', 32: 'Dashboard Interativo',
-            33: 'Sistema de Autenticação', 34: 'Gerenciador de Equipe', 35: 'Painel Administrativo', 36: 'E-commerce',
-            37: 'Rede Social Simples', 38: 'Sistema de Votação', 39: 'Gerenciador de Templates', 40: 'Conversor de Imagens',
-            41: 'Analisador de Texto', 42: 'Quadro Kanban', 43: 'Controle de Estoque', 44: 'Gerador de Diagramas',
-            45: 'Simulador de Eletrônica', 46: 'Controle de Saúde', 47: 'Gerador de Contratos', 48: 'Avaliação de Produtos',
-            49: 'Controle de Biblioteca', 50: 'Plataforma de Ensino'
-        };
-
-        const descriptions = {
-            1: 'Site de portfólio pessoal com layout moderno e responsivo para apresentar habilidades e projetos',
-            2: 'Landing page profissional com navegação suave, seções interativas e formulário de contato',
-            3: 'Aplicativo de gerenciamento de tarefas com armazenamento em localStorage, filtros e estatísticas',
-            4: 'Calculadora matemática com modos básico e científico, histórico de cálculos e design responsivo',
-            5: 'Aplicativo de clima com previsão do tempo, busca por cidades e exibição de informações meteorológicas',
-            6: 'Timer Pomodoro com gerenciamento de tarefas, estatísticas de produtividade e notificações sonoras',
-            7: 'Rastreador de hábitos com sequências (streaks), categorização, calendário semanal e métricas de progresso',
-            8: 'Dashboard meteorológico com previsão de 5 dias, alertas meteorológicos e histórico de cidades pesquisadas',
-            9: 'Gerador de senhas seguras com medidor de força, opções personalizáveis e histórico de senhas geradas',
-            10: 'Controle avançado de finanças pessoais com registro de transações, filtros, relatórios e exportação CSV',
-            11: 'Quiz interativo com múltiplas categorias, cronometragem por pergunta, placar e feedback imediato',
-            12: 'Blog simples com sistema de posts, comentários, categorias e armazenamento em localStorage',
-            13: 'Sistema de gerenciamento de tarefas com prioridades, prazos e organização por projetos',
-            14: 'Agenda digital compromissada com visualização por dia, semana e mês, além de lembretes',
-            15: 'Aplicativo de notas com categorização, busca por tags, arquivamento e sincronização',
-            16: 'Conversor de moedas com taxa de câmbio em tempo real (simulada), histórico de conversões e gráficos',
-            17: 'Lista de compras inteligente com categorização de produtos, preços e compartilhamento',
-            18: 'Controle de gastos com gráficos interativos, categorização de despesas e metas de economia',
-            19: 'Sistema de autenticação com login, registro, recuperação de senha e validação de formulários',
-            20: 'Simulador de chat com salas de discussão, histórico de mensagens e indicadores de digitação',
-            21: 'API de notícias simulada com endpoints para buscar, filtrar e categorizar notícias por tema',
-            22: 'Gerador de códigos QR com personalização de design, cores e download em diferentes formatos',
-            23: 'Contador de palavras e caracteres com análise de legibilidade, densidade de palavras e estatísticas de texto',
-            24: 'Validador de formulários em tempo real com máscaras de entrada e feedback visual instantâneo',
-            25: 'ProManager - Sistema profissional de gestão de projetos com tarefas, marcos e alocação de recursos',
-            26: 'Sistema de reservas com calendário interativo, seleção de horários e confirmação de agendamentos',
-            27: 'Catálogo de produtos com carrinho de compras, filtros de busca e processo de checkout simulado',
-            28: 'Gerenciador de arquivos com upload, download, organização por pastas e visualização de documentos',
-            29: 'Portal de notícias em tempo real com atualizações automáticas, filtros por categoria e modo escuro',
-            30: 'Jogo da velha online com modo dois jogadores, contra o computador (IA Minimax) e histórico de partidas',
-            31: 'Ferramenta de visualização de dados com gráficos interativos, filtros dinâmicos e exportação de relatórios',
-            32: 'Dashboard interativo com métricas em tempo real, widgets personalizáveis e drill-down de dados',
-            33: 'Sistema de autenticação avançado com login social, JWT, refresh tokens e controle de acesso por roles',
-            34: 'Painel de gerenciamento de equipe com perfis, atribuição de tarefas, controle de ponto e relatórios',
-            35: 'Painel administrativo completo com gestão de usuários, permissões, configurações do sistema e logs',
-            36: 'Plataforma de e-commerce com catálogo de produtos, carrinho, processo de checkout e integração de pagamentos',
-            37: 'Rede social simples com perfil de usuários, publicações, comentários, curtir e sistema de seguir',
-            38: 'Sistema de votação e enquetes com criação de pesquisas, opções múltiplas e resultados em tempo real',
-            39: 'Gerenciador de templates com biblioteca de modelos, personalização e geração de documentos',
-            40: 'Conversor de imagens com redimensionamento, conversão de formato e aplicação de filtros básicos',
-            41: 'Analisador de texto com contagem de palavras, frases, caracteres, parágrafos e índices de legibilidade',
-            42: 'Quadro Kanban com arrastar e soltar, colunas personalizáveis, limites de WIP e relatórios de fluxo',
-            43: 'Sistema profissional de controle de estoque com entrada/saída de produtos, relatórios e alertas de reposição',
-            44: 'Gerador de diagramas de fluxo com formas conectáveis, edição de propriedades e exportação para múltiplos formatos',
-            45: 'Simulador de eletrônica básica com componentes como LED, resistores, baterias e análise de circuitos em tempo real',
-            46: 'Aplicativo de controle de saúde com monitoramento de pressão arterial, glicose, medicação e relatórios médicos',
-            47: 'Gerador de contratos simples com cláusulas personalizáveis, pré-visualização em tempo real e exportação para PDF',
-            48: 'Sistema de avaliação de produtos com sistema de estrelas, comentários detalhados e análise de sentimento',
-            49: 'Aplicativo de controle de biblioteca pessoal com empréstimos, devoluções, busca de obras e histórico de leituras',
-            50: 'Plataforma de ensino com vídeo-aulas, quizzes interativos, sistema de certificação e acompanhamento de progresso'
-        };
+        const [pTitle, pDescription, pTags] = PROJECTS[i];
         return {
             number: projectNumber,
-            title: titles[i + 1] || `Projeto ${projectNumber}`,
-            description: descriptions[i + 1] || `Projeto ${projectNumber} do portfólio com funcionalidades específicas e design único.`,
-            tags: ['HTML5', 'CSS3', 'JavaScript'],
+            title: pTitle,
+            description: pDescription,
+            tags: pTags ? pTags.split(',') : ['HTML5', 'CSS3', 'JavaScript'],
             link: `../project_${projectNumber}/index.html`
         };
     });
@@ -156,6 +336,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
             projectsGrid.appendChild(projectCard);
+        });
+    }
+    const search = document.getElementById('project-search');
+    if (search) {
+        search.addEventListener('input', () => {
+            const q = search.value.trim().toLowerCase();
+            let shown = 0;
+            document.querySelectorAll('.project-card').forEach(card => {
+                const ok = card.textContent.toLowerCase().includes(q);
+                card.hidden = !ok;
+                if (ok) shown++;
+            });
+            document.getElementById('no-results').hidden = shown > 0;
         });
     }
     const fadeElements = document.querySelectorAll('.fade-in-up');

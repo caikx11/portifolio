@@ -375,6 +375,22 @@ class CircuitSimulator {
         this.canvas.addEventListener('dragleave', (e) => this.canvas.classList.remove('dragover'));
         this.canvas.addEventListener('drop', (e) => this.onCanvasDrop(e));
 
+        // Touch support: map single-finger gestures to the mouse handlers
+        const touchPt = (e) => ({ clientX: e.changedTouches[0].clientX, clientY: e.changedTouches[0].clientY });
+        this.canvas.addEventListener('touchstart', (e) => { e.preventDefault(); this.onMouseDown(touchPt(e)); }, { passive: false });
+        this.canvas.addEventListener('touchmove', (e) => { e.preventDefault(); this.onMouseMove(touchPt(e)); }, { passive: false });
+        this.canvas.addEventListener('touchend', (e) => { e.preventDefault(); this.onMouseUp(touchPt(e)); }, { passive: false });
+
+        // Keep the drawing buffer equal to the CSS size so pointer coordinates stay 1:1
+        this.resizeCanvas = () => {
+            const w = Math.max(200, Math.floor(this.canvas.clientWidth));
+            const h = Math.max(200, Math.floor(this.canvas.clientHeight));
+            if (this.canvas.width !== w) this.canvas.width = w;
+            if (this.canvas.height !== h) this.canvas.height = h;
+        };
+        window.addEventListener('resize', this.resizeCanvas);
+        this.resizeCanvas();
+
         // Toolbar buttons
         document.getElementById('clear-circuit').addEventListener('click', () => this.clearCircuit());
         document.getElementById('run-simulation').addEventListener('click', () => this.runSimulation());
@@ -420,7 +436,16 @@ class CircuitSimulator {
             return;
         }
 
-        // Click on empty canvas - deselect
+        // Click on empty canvas: place the component chosen in the panel (tap-to-place), else deselect
+        if (this.selectedComponentId && this.componentDefinitions[this.selectedComponentId]) {
+            const px = Math.round(x / this.gridSize) * this.gridSize;
+            const py = Math.round(y / this.gridSize) * this.gridSize;
+            this.addComponent(this.selectedComponentId, px, py);
+            this.selectedComponentId = null;
+            document.querySelectorAll('.component-item.active').forEach(n => n.classList.remove('active'));
+            this.render();
+            return;
+        }
         this.selectedComponent = null;
         this.render();
     }
@@ -1227,6 +1252,7 @@ class CircuitSimulator {
 
     selectComponent(componentId) {
         this.selectedComponentId = componentId;
+        document.querySelectorAll('.component-item').forEach(n => n.classList.toggle('active', n.dataset.componentId === componentId));
         this.render();
     }
 
@@ -1318,7 +1344,7 @@ class CircuitSimulator {
 
         // Draw grid if enabled
         if (this.showGrid) {
-            this.context.strokeStyle = '#e0e0e0';
+            this.context.strokeStyle = 'rgba(11,42,34,0.10)';
             this.context.lineWidth = 1;
             for (let x = 0; x < this.canvas.width; x += this.gridSize) {
                 this.context.beginPath();
@@ -1335,8 +1361,9 @@ class CircuitSimulator {
         }
 
         // Draw wires
-        this.context.strokeStyle = '#000000';
-        this.context.lineWidth = 2;
+        this.context.strokeStyle = '#b8721f';
+        this.context.lineWidth = 3;
+        this.context.lineCap = 'round';
         for (const wire of this.wires) {
             this.context.beginPath();
             this.context.moveTo(wire.start.x, wire.start.y);
@@ -1346,21 +1373,35 @@ class CircuitSimulator {
 
         // Draw components
         for (const comp of this.components) {
+            const lit = this.isSimulating && comp.definition.id === 'led';
+            this.context.save();
+            if (lit) { this.context.shadowColor = comp.definition.color; this.context.shadowBlur = 22; }
             this.context.fillStyle = comp.definition.color;
-            this.context.fillRect(comp.x, comp.y, comp.width, comp.height);
-            this.context.strokeStyle = '#333';
+            this.context.beginPath();
+            if (this.context.roundRect) this.context.roundRect(comp.x, comp.y, comp.width, comp.height, 8);
+            else this.context.rect(comp.x, comp.y, comp.width, comp.height);
+            this.context.fill();
+            this.context.restore();
+            this.context.strokeStyle = '#26352e';
             this.context.lineWidth = 2;
-            this.context.strokeRect(comp.x, comp.y, comp.width, comp.height);
+            this.context.stroke();
+
+            // Name label under the component
+            this.context.fillStyle = '#26352e';
+            this.context.font = '600 11px "Chakra Petch", sans-serif';
+            this.context.textAlign = 'center';
+            this.context.textBaseline = 'top';
+            this.context.fillText(comp.definition.name, comp.x + comp.width / 2, comp.y + comp.height + 8);
 
             // Draw symbol
-            this.context.fillStyle = '#000';
-            this.context.font = '16px Arial';
+            this.context.fillStyle = '#fff';
+            this.context.font = '700 16px "Chakra Petch", Arial';
             this.context.textAlign = 'center';
             this.context.textBaseline = 'middle';
             this.context.fillText(comp.definition.symbol, comp.x + comp.width / 2, comp.y + comp.height / 2);
 
             // Draw connection points
-            this.context.fillStyle = '#ff0000';
+            this.context.fillStyle = '#f6c874';
             for (const conn of comp.connections) {
                 let pointX, pointY;
                 switch (conn.name) {
@@ -1420,7 +1461,7 @@ class CircuitSimulator {
 
         // Draw selected component outline
         if (this.selectedComponent) {
-            this.context.strokeStyle = '#00ff00';
+            this.context.strokeStyle = '#f08c00';
             this.context.lineWidth = 3;
             this.context.strokeRect(this.selectedComponent.x, this.selectedComponent.y, this.selectedComponent.width, this.selectedComponent.height);
         }

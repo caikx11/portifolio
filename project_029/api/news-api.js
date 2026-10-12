@@ -2,7 +2,14 @@
 // In a real application, this would be a backend server
 // For this project, we'll simulate an API delay and return the news data
 
-const newsData = require('../data/news.json');
+let newsData = [];
+async function loadNews() {
+  if (newsData.length) return newsData;
+  const res = await fetch('data/articles.json');
+  const json = await res.json();
+  newsData = Array.isArray(json) ? json : (json.articles || []);
+  return newsData;
+}
 
 // Simulate network delay
 function delay(ms) {
@@ -13,6 +20,8 @@ function delay(ms) {
 async function getNews(filters = {}) {
   // Simulate network delay (500ms - 1500ms)
   await delay(Math.random() * 1000 + 500);
+
+  await loadNews();
 
   // Apply filters
   let filteredNews = [...newsData];
@@ -57,4 +66,6 @@ async function getNews(filters = {}) {
 // For CommonJS compatibility
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { getNews };
+} else {
+  window.getNews = getNews;
 }

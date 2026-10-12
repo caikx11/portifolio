@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FinanceFlow - Dashboard Financeiro Profissional</title>
+    <title>FinanceFlow</title>
+    <meta name="description" content="Dashboard financeiro pessoal com gráficos e filtros.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="js/chart-shim.js"></script>
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="dashboard-root">
         <!-- Header -->
         <header class="dashboard-header">
@@ -146,6 +149,14 @@
                 <h2>Transações Recentes</h2>
                 <div class="section-actions">
                     <input type="search" id="search-transactions" class="search-input" placeholder="Buscar transações..." aria-label="Buscar transações">
+                    <select id="type-filter" class="filter-select" aria-label="Filtrar por tipo">
+                        <option value="">Todos os tipos</option>
+                        <option value="receita">Receitas</option>
+                        <option value="despesa">Despesas</option>
+                    </select>
+                    <select id="asset-filter" class="filter-select" aria-label="Filtrar por categoria">
+                        <option value="">Todas as categorias</option>
+                    </select>
                 </div>
             </div>
             <div class="table-wrapper">

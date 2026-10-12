@@ -1,0 +1,55 @@
+/* 046 Controle de Saude - clinico e acolhedor: menta, coral e azul-petroleo */
+:root,:root:root{
+  --primary-color:#0f9d86;--primary-dark:#0a7a68;--primary-light:#3cc4ad;--primary-accent:#9be3d6;
+  --heart-color:#ff6b6b;--glucose-color:#f5a524;--pressure-color:#ef4f6a;--weight-color:#4f7cff;
+  --bg-main:#eaf7f3;--bg-card:#ffffff;--bg-card-hover:#f3fbf8;--bg-sidebar:#ffffff;--bg-input:#f6fbf9;--bg-muted:#eaf7f3;--bg-wellness:#eaf7f3;
+  --text-primary:#0f3d38;--text-secondary:#43706b;--text-muted:#7aa09a;--border-color:#cfe8e1;--border-focus:#0f9d86;
+  --bk-bg:#0f3d38;--bk-fg:#9be3d6;
+}
+html{background:#eaf7f3}
+body{font-family:'Outfit',system-ui,sans-serif;color:#0f3d38;overflow-x:hidden;
+ background:radial-gradient(circle at 90% 0,rgba(255,107,107,.14),transparent 40%),radial-gradient(circle at 0 20%,rgba(15,157,134,.16),transparent 45%),#eaf7f3}
+body::before,body::after{display:none}
+.container{width:100%;max-width:1400px;margin:0 auto;padding:3rem 14px 14px;background:transparent;box-shadow:none;border:0}
+.container::before{display:none}
+header{background:transparent!important;box-shadow:none!important;border:0!important;text-align:center}
+header h1{font-family:'Outfit',sans-serif;font-weight:700;font-size:clamp(1.8rem,5.5vw,2.8rem);color:#0f3d38;-webkit-text-fill-color:#0f3d38;background:none;left:auto;transform:none;display:block}
+header h1::after{display:none}
+header p{color:#43706b;font-style:normal;max-width:620px;margin:.4rem auto 0}
+.sidebar,.content-wrapper{background:#fff;border:1px solid #cfe8e1;border-radius:20px;box-shadow:0 12px 30px -18px rgba(15,61,56,.35)}
+.module-btn{display:flex;align-items:center;gap:10px;width:100%;cursor:pointer;border-radius:14px;transition:transform .15s,background .2s,box-shadow .2s}
+.module-btn:hover{transform:translateX(3px);background:#e2f6f0}
+.module-btn.active{background:#0f9d86;color:#fff;box-shadow:0 8px 18px -8px #0f9d86}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px}
+.toolbar button,.btn-primary,.btn-secondary,.btn-cancel{font-family:'Outfit',sans-serif;font-weight:600;cursor:pointer;border-radius:12px;transition:transform .15s,box-shadow .2s}
+.toolbar button:hover{transform:translateY(-2px)}
+.metric-card{cursor:pointer;border-radius:18px;transition:transform .2s,box-shadow .2s}
+.metric-card:hover{transform:translateY(-4px);box-shadow:0 14px 26px -14px rgba(15,61,56,.45)}
+.entries-list{display:grid;gap:8px}
+.entries-list:empty::before{content:'Nenhum registro ainda. Use "Adicionar Entrada" para começar.';display:block;padding:18px;border:2px dashed #cfe8e1;border-radius:14px;color:#43706b;text-align:center}
+.entry-item{border-radius:14px;border:1px solid #cfe8e1;background:#f6fbf9;padding:12px 14px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.chart-offline{padding:14px;border-radius:12px;background:#fff4e0;color:#8a5a00}
+.report-section canvas{max-width:100%}
+input,select,textarea{font-family:inherit;border-radius:10px;border:1px solid #cfe8e1;padding:10px 12px;width:100%;background:#f6fbf9}
+:focus-visible{outline:3px solid rgba(15,157,134,.5);outline-offset:2px}
+/* painel de entrada como gaveta lateral */
+.properties-panel{display:none!important}
+.properties-panel.active{display:block!important;position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);max-height:none!important;overflow-y:auto;z-index:100;border-radius:20px 0 0 20px;box-shadow:-30px 0 60px -20px rgba(15,61,56,.45);background:#fff;padding:1.4rem;animation:slideIn .25s ease-out}
+.properties-panel form label{display:block;margin:.7rem 0 .25rem;font-weight:600;color:#43706b}
+.form-actions{display:flex;gap:8px;margin-top:1.1rem}
+.form-actions button{flex:1}
+@keyframes slideIn{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
+@media (max-width:900px){
+  main{flex-direction:column!important}
+  .sidebar{width:100%!important;max-height:none!important}
+  .module-panel{display:grid!important;grid-template-columns:1fr 1fr;gap:8px}
+  .properties-panel.active{border-radius:20px 20px 0 0;top:auto;width:100%;max-height:88vh!important;box-shadow:0 -20px 50px -10px rgba(15,61,56,.5)}
+}
+.back-link{position:fixed;top:10px;left:10px;z-index:9999;padding:5px 11px;font:600 12px/1.2 system-ui,sans-serif;text-decoration:none;color:var(--bk-fg,#fff);background:var(--bk-bg,rgba(20,20,30,.72));border:1px solid var(--bk-bd,rgba(255,255,255,.25));border-radius:999px;backdrop-filter:blur(6px);opacity:.8;transition:opacity .2s,transform .2s}
+.back-link:hover,.back-link:focus-visible{opacity:1;transform:translateX(-2px);outline:2px solid currentColor;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+h2,h3,h4{font-family:'Outfit',sans-serif!important;-webkit-text-fill-color:currentColor!important}
+.module-btn{color:#0f3d38;background:#f6fbf9;border:2px solid #cfe8e1;padding:.8rem 1rem;font:600 .95rem 'Outfit',sans-serif;text-align:left}
+.module-btn.active{color:#fff;border-color:#0f9d86}
+.content-wrapper{padding:1.2rem}
+.report-section,.stats-summary,.welcome-screen{border-radius:16px}

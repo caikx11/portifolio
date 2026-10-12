@@ -19,6 +19,7 @@ class ChatApp {
         this.setupEventListeners();
         // Renderizar interface inicial
         this.renderRoomsList();
+        if (this.rooms.length) this.selectRoom(this.rooms[0].id);
     }
 
     loadInitialData() {
@@ -183,6 +184,38 @@ class ChatApp {
         // Scroll para o final
         const messagesContainer = document.getElementById('chat-messages');
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+        this.simulateReply(this.currentRoomId);
+    }
+
+    simulateReply(roomId) {
+        const replies = [
+            'Boa ideia! 👍', 'Concordo totalmente.', 'Hmm, interessante... conta mais!',
+            'Haha, boa! 😄', 'Também penso assim.', 'Alguém mais quer opinar?', 'Isso me lembra um projeto antigo 🤔'
+        ];
+        const container = document.getElementById('chat-messages');
+        clearTimeout(this.typingTimer);
+        this.typingTimer = setTimeout(() => {
+            if (this.currentRoomId !== roomId) return;
+            const typing = document.createElement('div');
+            typing.className = 'message received typing';
+            typing.innerHTML = '<div class="message-content"><span></span><span></span><span></span></div>';
+            container.appendChild(typing);
+            container.scrollTop = container.scrollHeight;
+            this.typingTimer = setTimeout(() => {
+                typing.remove();
+                const msg = {
+                    id: Date.now(), roomId, userId: 2,
+                    text: replies[Math.floor(Math.random() * replies.length)],
+                    timestamp: new Date().toLocaleString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+                };
+                this.messages[roomId].push(msg);
+                if (this.currentRoomId === roomId) {
+                    this.addMessageToDOM(msg);
+                    container.scrollTop = container.scrollHeight;
+                }
+            }, 1200);
+        }, 600);
     }
 
     addMessageToDOM(message) {

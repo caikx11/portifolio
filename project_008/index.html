@@ -4,58 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard - Projeto 008</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <meta name="description" content="Dashboard completo de clima com previsão detalhada, alertas e gráficos">
+    <meta name="description" content="Painel meteorológico com gráfico por hora, previsão de 5 dias e alertas (dados simulados)">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
-            <h1>Weather Dashboard</h1>
-            <p class="subtitle">Previsão do tempo detalhada para cidades ao redor do mundo</p>
+            <div>
+                <h1>Weather<span>/</span>Dash</h1>
+                <p class="subtitle">Painel de previsão · dados simulados</p>
+            </div>
+            <form class="search-section" id="search-form" autocomplete="off">
+                <input type="text" id="city-input" placeholder="Buscar cidade..." aria-label="Cidade">
+                <button type="submit" id="search-btn">Buscar</button>
+            </form>
         </header>
 
-        <main>
-            <!-- Search Section -->
-            <div class="search-section">
-                <input type="text" id="city-input" placeholder="Digite o nome da cidade...">
-                <button id="search-btn">Buscar Clima</button>
-                <div class="recent-cities" id="recent-cities">
-                    <p>Cidades recentes:</p>
-                    <div class="recent-chips" id="recent-chips"></div>
-                </div>
-            </div>
+        <div class="recent-cities" id="recent-cities">
+            <span>Recentes</span>
+            <div class="recent-chips" id="recent-chips"></div>
+        </div>
 
-            <!-- Current Weather Card -->
-            <div class="current-weather-card" id="current-weather">
+        <main class="grid">
+            <section class="current-weather-card" id="current-weather">
                 <div class="weather-header">
                     <h2 id="current-city">--</h2>
                     <span id="current-country">--</span>
                 </div>
-                <div class="weather-icon" id="current-icon">⛅</span>
-                <div class="temp-large" id="current-temp">--°C</div>
-                <div class="weather-desc" id="current-desc">Busque por uma cidade para ver o clima</div>
-            </div>
-
-            <!-- Forecast Section -->
-            <div class="forecast-section">
-                <h2>Previsão Próximos 5 Dias</h2>
-                <div class="forecast-grid" id="forecast-grid"></div>
-            </div>
-
-            <!-- Alerts Section -->
-            <div class="alerts-section" id="alerts-section">
-                <h2>Avisos e Alertas</h2>
-                <div class="alerts-grid" id="alerts-grid">
-                    <p>Nenhum alerta ativo</p>
+                <div class="now">
+                    <div class="weather-icon" id="current-icon" aria-hidden="true">⛅</div>
+                    <div class="temp-large" id="current-temp">--°C</div>
                 </div>
-            </div>
+                <div class="weather-desc" id="current-desc">Busque por uma cidade para ver o clima</div>
+                <dl class="metrics" id="metrics"></dl>
+            </section>
+
+            <section class="panel chart-panel">
+                <h2>Próximas 24 horas</h2>
+                <div id="hourly-chart" class="chart" role="img" aria-label="Gráfico de temperatura por hora"></div>
+            </section>
+
+            <section class="panel forecast-section">
+                <h2>Próximos 5 dias</h2>
+                <div class="forecast-grid" id="forecast-grid"></div>
+            </section>
+
+            <section class="panel alerts-section" id="alerts-section">
+                <h2>Avisos e alertas</h2>
+                <div class="alerts-grid" id="alerts-grid"></div>
+            </section>
         </main>
 
-        <footer>
-            <p>&copy; 2026 Caio. Weather Dashboard</p>
-        </footer>
+        <footer><p>&copy; 2026 Caio. Weather Dashboard</p></footer>
     </div>
-
     <script src="js/main.js"></script>
 </body>
 </html>

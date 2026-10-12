@@ -1,164 +1,144 @@
-// Editor de Imagens Básico
+// Câmara Escura - editor de imagens com canvas
+const FILTER_IDS = ['brightness', 'contrast', 'saturation', 'blur', 'grayscale', 'sepia'];
+const PRESETS = {
+    none: { brightness: 0, contrast: 0, saturation: 0, blur: 0, grayscale: 0, sepia: 0 },
+    vivid: { brightness: 5, contrast: 20, saturation: 45, blur: 0, grayscale: 0, sepia: 0 },
+    mono: { brightness: 0, contrast: 25, saturation: 0, blur: 0, grayscale: 100, sepia: 0 },
+    vintage: { brightness: 8, contrast: -10, saturation: -15, blur: 0, grayscale: 0, sepia: 60 }
+};
+
 class ImageEditor {
     constructor() {
-        this.originalImage = null;
-        this.editedImage = null;
-        this.canvas = null;
-        this.ctx = null;
+        this.img = null;
+        this.rotation = 0;
+        this.flipped = false;
+        this.comparing = false;
+        this.canvas = document.getElementById('edit-canvas');
+        this.ctx = this.canvas.getContext('2d');
         this.init();
     }
 
+    $(id) { return document.getElementById(id); }
+
     init() {
-        const uploadInput = document.getElementById('image-upload');
-        const resetBtn = document.getElementById('reset-btn');
-        const downloadBtn = document.getElementById('download-btn');
-        const originalImg = document.getElementById('original-image');
-        const editedImg = document.getElementById('edited-image');
+        this.$('image-upload').addEventListener('change', (e) => this.loadFile(e.target.files[0]));
+        this.$('reset-btn').addEventListener('click', () => this.resetImage());
+        this.$('download-btn').addEventListener('click', () => this.downloadImage());
+        this.$('sample-btn').addEventListener('click', () => this.loadSample());
+        this.$('rotate-btn').addEventListener('click', () => { this.rotation = (this.rotation + 90) % 360; this.applyFilters(); });
+        this.$('flip-btn').addEventListener('click', () => { this.flipped = !this.flipped; this.applyFilters(); });
+        const cmp = this.$('compare-btn');
+        const set = (v) => { this.comparing = v; this.applyFilters(); };
+        ['pointerdown'].forEach(ev => cmp.addEventListener(ev, () => set(true)));
+        ['pointerup', 'pointerleave', 'pointercancel', 'blur'].forEach(ev => cmp.addEventListener(ev, () => this.comparing && set(false)));
+        cmp.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); set(true); } });
+        cmp.addEventListener('keyup', () => set(false));
 
-        // Event listeners
-        uploadInput.addEventListener('change', (e) => this.loadImage(e.target.files[0]));
-        resetBtn.addEventListener('click', () => this.resetImage());
-        downloadBtn.addEventListener('click', () => this.downloadImage());
+        FILTER_IDS.forEach(id => this.$(id).addEventListener('input', () => { this.syncLabels(); this.applyFilters(); }));
+        document.querySelectorAll('[data-preset]').forEach(b => b.addEventListener('click', () => this.setValues(PRESETS[b.dataset.preset])));
 
-        // Filter controls
-        const filters = ['brightness', 'contrast', 'saturation', 'blur', 'grayscale', 'sepia'];
-        filters.forEach(filterId => {
-            const slider = document.getElementById(filterId);
-            const valueSpan = document.getElementById(`${filterId}-value`);
-            slider.addEventListener('input', () => {
-                valueSpan.textContent = slider.value;
-                this.applyFilters();
-            });
+        const prev = this.$('preview');
+        ['dragover', 'dragenter'].forEach(ev => prev.addEventListener(ev, (e) => { e.preventDefault(); prev.classList.add('drag'); }));
+        ['dragleave', 'drop'].forEach(ev => prev.addEventListener(ev, () => prev.classList.remove('drag')));
+        prev.addEventListener('drop', (e) => { e.preventDefault(); this.loadFile(e.dataTransfer.files[0]); });
+    }
+
+    loadFile(file) {
+        if (!file || !file.type.startsWith('image/')) return;
+        const url = URL.createObjectURL(file);
+        this.setImage(url, () => URL.revokeObjectURL(url));
+    }
+
+    loadSample() {
+        const c = document.createElement('canvas');
+        c.width = 960; c.height = 640;
+        const g = c.getContext('2d');
+        const sky = g.createLinearGradient(0, 0, 0, 640);
+        sky.addColorStop(0, '#1f2a6b'); sky.addColorStop(.55, '#e4572e'); sky.addColorStop(1, '#ffc857');
+        g.fillStyle = sky; g.fillRect(0, 0, 960, 640);
+        g.fillStyle = '#fff3b0'; g.beginPath(); g.arc(660, 330, 90, 0, 7); g.fill();
+        [['#2d1e4a', 420, 90], ['#1b1233', 480, 150], ['#0e0a1f', 540, 200]].forEach(([col, y, amp], i) => {
+            g.fillStyle = col; g.beginPath(); g.moveTo(0, 640);
+            for (let x = 0; x <= 960; x += 20) g.lineTo(x, y + Math.sin(x / (110 - i * 20) + i) * amp * .35);
+            g.lineTo(960, 640); g.closePath(); g.fill();
         });
+        this.setImage(c.toDataURL('image/png'));
     }
 
-    loadImage(file) {
-        if (!file) return;
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            this.originalImage = new Image();
-            this.originalImage.onload = () => {
-                // Reset edited image to original
-                this.editedImage = this.originalImage;
-                originalImg.src = this.originalImage.src;
-                editedImg.src = this.originalImage.src;
-                this.createCanvas();
-                this.applyFilters();
-            };
-            this.originalImage.src = e.target.result;
+    setImage(src, done) {
+        const im = new Image();
+        im.onload = () => {
+            this.img = im;
+            this.rotation = 0;
+            this.flipped = false;
+            this.$('placeholder').hidden = true;
+            this.canvas.hidden = false;
+            ['rotate-btn', 'flip-btn', 'compare-btn', 'download-btn'].forEach(id => { this.$(id).disabled = false; });
+            this.applyFilters();
+            if (done) done();
         };
-        reader.readAsDataURL(file);
+        im.onerror = () => { this.$('placeholder').textContent = 'Não foi possível abrir esta imagem.'; this.$('placeholder').hidden = false; };
+        im.src = src;
     }
 
-    createCanvas() {
-        if (!this.originalImage) return;
+    values() {
+        const v = {};
+        FILTER_IDS.forEach(id => { v[id] = parseInt(this.$(id).value, 10) || 0; });
+        return v;
+    }
 
-        // Create canvas if it doesn't exist
-        if (!this.canvas) {
-            this.canvas = document.createElement('canvas');
-            this.ctx = this.canvas.getContext('2d');
-            // Insert canvas before edited image
-            const editedImg = document.getElementById('edited-image');
-            editedImg.parentNode.insertBefore(this.canvas, editedImg.nextSibling);
-        }
+    filterString() {
+        const v = this.values();
+        return `brightness(${100 + v.brightness}%) contrast(${100 + v.contrast}%) saturate(${100 + v.saturation}%) blur(${v.blur}px) grayscale(${v.grayscale}%) sepia(${v.sepia}%)`;
+    }
 
-        // Set canvas size to match image
-        this.canvas.width = this.originalImage.width;
-        this.canvas.height = this.originalImage.height;
+    syncLabels() {
+        const v = this.values();
+        FILTER_IDS.forEach(id => { this.$(`${id}-value`).textContent = v[id]; });
+    }
+
+    setValues(vals) {
+        FILTER_IDS.forEach(id => { this.$(id).value = vals[id]; });
+        this.syncLabels();
+        this.applyFilters();
     }
 
     applyFilters() {
-        if (!this.originalImage || !this.canvas || !this.ctx) return;
-
-        // Clear canvas
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // Draw original image
-        this.ctx.drawImage(this.originalImage, 0, 0);
-
-        // Get filter values
-        const brightness = parseInt(document.getElementById('brightness').value);
-        const contrast = parseInt(document.getElementById('contrast').value);
-        const saturation = parseInt(document.getElementById('saturation').value);
-        const blur = parseInt(document.getElementById('blur').value);
-        const grayscale = parseInt(document.getElementById('grayscale').value);
-        const sepia = parseInt(document.getElementById('sepia').value);
-
-        // Apply filters using CSS
-        this.canvas.style.filter = `
-            brightness(${brightness}%)
-            contrast(${contrast}%)
-            saturate(${saturation}%)
-            blur(${blur}px)
-            grayscale(${grayscale}%)
-            sepia(${sepia}%)
-        `;
-
-        // To actually apply the filters to the image data, we need to redraw
-        // For simplicity in this basic editor, we'll use the CSS approach for display
-        // But to get the actual pixel data for download, we need to use Canvas API filters
-        // Let's implement a basic approach using globalCompositeOperation for some filters
-
-        // Actually, let's redraw with proper filter application
-        this.ctx.save();
-        this.ctx.filter = `
-            brightness(${brightness}%)
-            contrast(${contrast}%)
-            saturate(${saturation}%)
-            blur(${blur}px)
-            grayscale(${grayscale}%)
-            sepia(${sepia}%)
-        `;
-        this.ctx.drawImage(this.originalImage, 0, 0);
-        this.ctx.restore();
-
-        // Update the edited image src with canvas data
-        document.getElementById('edited-image').src = this.canvas.toDataURL();
+        if (!this.img) return;
+        const MAX = 1600;
+        const scale = Math.min(1, MAX / Math.max(this.img.naturalWidth, this.img.naturalHeight));
+        const w = Math.round(this.img.naturalWidth * scale), h = Math.round(this.img.naturalHeight * scale);
+        const swap = this.rotation % 180 !== 0;
+        this.canvas.width = swap ? h : w;
+        this.canvas.height = swap ? w : h;
+        const ctx = this.ctx;
+        ctx.save();
+        ctx.filter = this.comparing ? 'none' : this.filterString();
+        ctx.translate(this.canvas.width / 2, this.canvas.height / 2);
+        ctx.rotate(this.rotation * Math.PI / 180);
+        if (this.flipped) ctx.scale(-1, 1);
+        ctx.drawImage(this.img, -w / 2, -h / 2, w, h);
+        ctx.restore();
     }
 
     resetImage() {
-        // Reset all sliders
-        document.getElementById('brightness').value = 0;
-        document.getElementById('contrast').value = 0;
-        document.getElementById('saturation').value = 0;
-        document.getElementById('blur').value = 0;
-        document.getElementById('grayscale').value = 0;
-        document.getElementById('sepia').value = 0;
-
-        // Update value displays
-        document.getElementById('brightness-value').textContent = '0';
-        document.getElementById('contrast-value').textContent = '0';
-        document.getElementById('saturation-value').textContent = '0';
-        document.getElementById('blur-value').textContent = '0';
-        document.getElementById('grayscale-value').textContent = '0';
-        document.getElementById('sepia-value').textContent = '0';
-
-        // Reset image
-        if (this.originalImage) {
-            document.getElementById('edited-image').src = this.originalImage.src;
-            this.editedImage = this.originalImage;
-            if (this.ctx) {
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.drawImage(this.originalImage, 0, 0);
-            }
-        }
+        this.rotation = 0;
+        this.flipped = false;
+        this.setValues(PRESETS.none);
     }
 
     downloadImage() {
-        if (!this.canvas) {
-            alert('Nenhuma imagem para baixar');
-            return;
-        }
-
-        const link = document.createElement('a');
-        link.download = 'imagem_editada.png';
-        link.href = this.canvas.toDataURL('image/png');
-        link.click();
+        if (!this.img) return;
+        this.comparing = false;
+        this.applyFilters();
+        const a = document.createElement('a');
+        a.download = 'imagem_editada.png';
+        a.href = this.canvas.toDataURL('image/png');
+        a.click();
     }
 }
 
-// Inicializar o aplicativo quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
     window.imageEditor = new ImageEditor();
+    window.imageEditor.canvas.hidden = true;
 });

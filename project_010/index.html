@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Controle de Finanças - Projeto 010</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <meta name="description" content="Controle de finanças pessoais com registro de receitas/despesas, relatórios e gráficos">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
             <h1>Controle de Finanças</h1>
@@ -88,7 +93,7 @@
 
                     <div class="transaction-form-container">
                         <button class="btn btn-primary" id="show-add-form">+ Adicionar Transação</button>
-                        <form id="transaction-form" class="transaction-form">
+                        <form id="transaction-form" class="transaction-form hidden">
                             <div class="form-group">
                                 <label for="transaction-description">Descrição</label>
                                 <input type="text" id="transaction-description" placeholder="Ex: Salário, Supermercado, Aluguel" required>
@@ -159,25 +164,25 @@
                         <div class="chart-card">
                             <h3>Receitas vs Despesas</h3>
                             <div class="chart-placeholder" id="income-expense-chart">
-                                <p>Gráfico será exibido aqui</p>
+                                
                             </div>
                         </div>
                         <div class="chart-card">
                             <h3>Despesas por Categoria</h3>
                             <div class="chart-placeholder" id="expenses-by-category-chart">
-                                <p>Gráfico será exibido aqui</p>
+                                
                             </div>
                         </div>
                         <div class="chart-card">
                             <h3>Evolução Mensal</h3>
                             <div class="chart-placeholder" id="monthly-trend-chart">
-                                <p>Gráfico será exibido aqui</p>
+                                
                             </div>
                         </div>
                         <div class="chart-card">
                             <h3>Distribuição de Receitas</h3>
                             <div class="chart-placeholder" id="income-distribution-chart">
-                                <p>Gráfico será exibido aqui</p>
+                                
                             </div>
                         </div>
                     </div>
@@ -208,11 +213,12 @@
                             </select>
                         </div>
                         <div class="settings-card">
-                            <h3>Visualização Padrão</h3>
+                            <h3>Período padrão das transações</h3>
                             <select id="default-view-select">
-                                <option value="monthly">Mensal</option>
-                                <option value="weekly">Semanal</option>
-                                <option value="yearly">Anual</option>
+                                <option value="monthly">Este mês</option>
+                                <option value="quarterly">Últimos 3 meses</option>
+                                <option value="yearly">Este ano</option>
+                                <option value="all">Tudo</option>
                             </select>
                         </div>
                         <div class="settings-card">
