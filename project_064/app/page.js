@@ -43,7 +43,7 @@ export default function Home() {
 
   return (
     <>
-      <a className="back-link" href="../index.html">← Portfólio</a>
+      <a className="back-link" href="../projetos.html">← Portfólio</a>
       <header className="top">
         <button className="burger" aria-label="Abrir menu" aria-expanded={menu} aria-controls="side" onClick={() => setMenu(!menu)}>☰</button>
         <a className="logo" href="#/introducao"><span aria-hidden="true">▲</span> Trilha<small>docs</small></a>

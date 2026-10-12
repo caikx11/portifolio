@@ -1,0 +1,108 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Portfólio · 75 projetos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d17;--card:#141828;--tx:#eaeefc;--mut:#9aa3c7;--ac:#7c8cff;--ac2:#ff7ce5;--bd:#232845}
+@media(prefers-color-scheme:light){:root{--bg:#f5f6fc;--card:#fff;--tx:#12152b;--mut:#5b6385;--bd:#dfe2f2;--ac:#4a56e6}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 Inter,system-ui,sans-serif}
+header{padding:72px 16px 32px;text-align:center;background:radial-gradient(60% 80% at 50% 0,color-mix(in srgb,var(--ac) 30%,transparent),transparent)}
+h1{font:700 clamp(2rem,6vw,3.6rem)/1.1 "Space Grotesk",sans-serif;margin:0;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+header p{color:var(--mut);margin:12px auto 24px;max-width:48ch}
+input{width:min(480px,100%);padding:14px 18px;border-radius:999px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit}
+input:focus,.chip:focus-visible,.card:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px}
+.chip{border:1px solid var(--bd);background:var(--card);color:var(--mut);padding:6px 14px;border-radius:999px;cursor:pointer;font:inherit;text-transform:capitalize}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+main{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;max-width:1200px;margin:0 auto;padding:16px}
+.card{display:block;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:20px;transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);border-color:var(--ac);box-shadow:0 12px 30px -12px var(--ac)}
+.n{font:700 2.4rem "Space Grotesk";color:var(--ac);opacity:.8}.card h2{font:600 1.1rem "Space Grotesk";margin:4px 0}.card p{margin:0;color:var(--mut);font-size:.9rem}
+.tag{display:inline-block;margin-top:12px;font-size:.75rem;color:var(--ac2);text-transform:uppercase;letter-spacing:.06em}
+.empty{grid-column:1/-1;text-align:center;color:var(--mut)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><p style="margin:0 0 12px"><a href="project_001/index.html" style="color:var(--ac)">← Sobre o Caio</a></p><h1>75 projetos<br>em JS, React e Node</h1><p>Uma coleção de apps de JavaScript puro a React, Next.js e APIs. Escolha um e explore.</p>
+<input id="q" type="search" placeholder="Buscar projeto…" aria-label="Buscar projeto"><div class="chips" id="chips"></div></header>
+<main id="grid"></main>
+<script>
+const RAW=`Caio – Full Stack|Portfólio pessoal|pessoal
+Etch-a-Sketch|Desenho interativo|jogos
+To-Do List|Lista de tarefas|produtividade
+Calculadora|Calculadora matemática|ferramentas
+Clima Atual|Previsão do tempo|dados
+Pomodoro Timer|Foco e pausas|produtividade
+Habit Tracker|Acompanhe hábitos|saúde
+Weather Dashboard|Painel do clima|dados
+Gerador de Senhas|Senhas seguras|ferramentas
+Controle de Finanças|Receitas e despesas|finanças
+Quiz Interativo|Teste seus conhecimentos|jogos
+Blog Simples|Posts e leitura|conteúdo
+Sistema de Reservas|Agendamentos|negócios
+Loja Virtual|Carrinho de compras|negócios
+Aplicativo de Notas|Notas rápidas|produtividade
+Jogo da Memória|Pares de cartas|jogos
+Conversor de Moedas|Câmbio|finanças
+Gerador de Memes|Crie memes|ferramentas
+Aplicativo de Receitas|Livro de receitas|conteúdo
+Chat Simulado|Salas e mensagens|conteúdo
+Dashboard de Analytics|Gráficos interativos|dados
+Editor Rich Text|Editor de texto|ferramentas
+Quiz Avançado|Plataforma de quizzes|jogos
+Simulador de Física|Física interativa|ferramentas
+ProManager|Gestão de projetos|negócios
+EstoquePro|Controle de estoque|negócios
+Diagramas de Fluxo|Gerador de fluxogramas|ferramentas
+Leitor de Notícias|Feed de notícias|conteúdo
+Portal de Notícias 360|Portal completo|conteúdo
+Jogo da Velha|Placar e histórico|jogos
+Meditação|Respiração e sessões|saúde
+FinanceFlow|Dashboard financeiro|finanças
+Validador CPF/CNPJ|Validar e formatar|ferramentas
+Hábitos Avançado|Metas e streaks|saúde
+Simulador de Investimentos|Juros compostos|finanças
+Receitas Offline|Receitas sem rede|conteúdo
+Editor de Imagens|Filtros e ajustes|ferramentas
+Perguntas e Respostas|Comunidade Q&A|conteúdo
+Gastos com Gráficos|Despesas visuais|finanças
+Palavras Cruzadas|Passatempo|jogos
+Analisador de Texto|Estatísticas de texto|ferramentas
+Kanban|Quadro de tarefas|produtividade
+Controle de Estoque|Inventário|negócios
+Diagramas v1|Fluxogramas|ferramentas
+Simulador de Eletrônica|Circuitos|ferramentas
+Controle de Saúde|Métricas de saúde|saúde
+Gerador de Contratos|Documentos|negócios
+Avaliação de Produtos|Reviews|negócios
+Biblioteca Pessoal|Livros e leituras|conteúdo
+Plataforma de Ensino|Cursos online|negócios
+TaskFlow|Quadro de tarefas com prioridade, prazos e progresso|produtividade
+Painel de Cripto|Preços simulados em tempo real, gráfico de velas e carteira|finanças
+Habit Garden|Hábitos que viram plantas conforme a sequência|saúde
+Receitário|Receitas com busca, porções e lista de compras|conteúdo
+Quiz Dev|30 perguntas de programação com tempo e recordes|jogos
+Notas Markdown|Editor com preview ao vivo e várias notas|produtividade
+Kanban Pro|Quadro com arrastar e soltar e colunas editáveis|produtividade
+Foco Pomodoro|Ciclos de foco com tarefas e gráfico semanal|produtividade
+Clima React|Previsão simulada com 24 horas e 7 dias|dados
+Catálogo de Filmes|Busca, filtros, favoritos e detalhes|conteúdo
+Blog Next|Blog com posts em Markdown, busca e tags|conteúdo
+SaaS Landing e Preços|Página de preços com checkout em modo demonstração|negócios
+Link-in-bio|Página de links com temas e contador de cliques|pessoal
+Docs Site|Documentação com busca, sumário e copiar código|ferramentas
+Auth JWT|API de login com JWT e demo no navegador|back-end
+To-Do API|API de tarefas com validação e testes|back-end
+Encurtador de URLs|Links curtos com contagem de cliques|back-end
+Notas Full Stack|Notas por usuário com login e API|back-end
+Chat em Tempo Real|Salas de chat com WebSocket|back-end
+Blog Full Stack|Blog com banco de dados e painel de posts|back-end
+Launchpad SaaS|Cadastro, planos, painel e faturas (demonstração)|negócios
+Lista em Tempo Real|Lista sincronizada entre abas, no estilo Firebase|back-end
+TypeScript Playground|25 utilitários tipados com testes|ferramentas
+Assistente IA para Devs|Agentes e ferramentas com respostas simuladas|ferramentas
+Biblioteca de Componentes|Botões, modais, tabs e toasts com código para copiar|ferramentas`;
+const D=RAW.split('\n').map((l,i)=>{const[t,d,c]=l.split('|');return{id:String(i+1).padStart(3,'0'),t,d,c}});
+const g=document.getElementById('grid'),q=document.getElementById('q'),ch=document.getElementById('chips');let cat='todos';
+['todos',...new Set(D.map(x=>x.c))].forEach(c=>{const b=document.createElement('button');b.className='chip'+(c==='todos'?' on':'');b.textContent=c;b.onclick=()=>{cat=c;[...ch.children].forEach(x=>x.classList.toggle('on',x===b));r()};ch.append(b)});
+function r(){const s=q.value.toLowerCase();const l=D.filter(x=>(cat==='todos'||x.c===cat)&&(x.t+x.d).toLowerCase().includes(s));
+g.innerHTML=l.length?l.map(x=>`<a class="card" href="project_${x.id}/index.html"><div class="n">${x.id}</div><h2>${x.t}</h2><p>${x.d}</p><span class="tag">${x.c}</span></a>`).join(''):'<p class="empty">Nenhum projeto encontrado.</p>'}
+q.oninput=r;r();
+</script></body></html>
