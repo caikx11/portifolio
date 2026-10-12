@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chave Mestra — Auth JWT</title>
+<meta name="description" content="API de autenticação JWT (Express + TypeScript + Jest) com demo estática em modo mock.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b132b'/%3E%3Ccircle cx='12' cy='16' r='5' fill='%235bc0be'/%3E%3Crect x='16' y='14' width='12' height='4' fill='%235bc0be'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;600;700&family=Martian+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<a class="back-link" href="../index.html">← Portfólio</a>
+<header class="hero">
+  <h1>Chave Mestra</h1>
+  <p>Autenticação com <b>JWT</b>: cadastro, login e rota protegida <code>/api/me</code>. Senhas com hash bcrypt na API; nesta demo, PBKDF2 no navegador.</p>
+  <div class="mode" role="group" aria-label="Modo da API">
+    <button id="m-mock" aria-pressed="true">Mock no navegador</button>
+    <button id="m-api" aria-pressed="false">API real</button>
+  </div>
+  <label id="api-row" hidden>URL da API <input id="api-url" value="http://localhost:3000" spellcheck="false"></label>
+  <p id="mode-note" class="note">Modo mock: tudo roda neste navegador (localStorage). Nenhum dado sai daqui.</p>
+</header>
+<main>
+  <section class="card" aria-labelledby="t-auth">
+    <h2 id="t-auth">Acesso</h2>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-reg" aria-selected="true" aria-controls="form-reg">Cadastrar</button>
+      <button role="tab" id="tab-log" aria-selected="false" aria-controls="form-log">Entrar</button>
+    </div>
+    <form id="form-reg" role="tabpanel" aria-labelledby="tab-reg" novalidate>
+      <label>Nome <input name="name" autocomplete="name"></label>
+      <label>E-mail <input name="email" type="email" autocomplete="email"></label>
+      <label>Senha (mín. 8) <input name="password" type="password" autocomplete="new-password"></label>
+      <button class="primary">Criar conta</button>
+    </form>
+    <form id="form-log" role="tabpanel" aria-labelledby="tab-log" hidden novalidate>
+      <label>E-mail <input name="email" type="email" autocomplete="email"></label>
+      <label>Senha <input name="password" type="password" autocomplete="current-password"></label>
+      <button class="primary">Entrar</button>
+    </form>
+    <p id="msg" role="status" class="msg"></p>
+  </section>
+  <section class="card" aria-labelledby="t-sess">
+    <h2 id="t-sess">Sessão</h2>
+    <p id="sess-empty" class="note">Nenhuma sessão. Cadastre-se ou entre para receber um token.</p>
+    <div id="sess" hidden>
+      <p class="label">Token JWT</p>
+      <pre id="jwt" class="token" tabindex="0"></pre>
+      <p class="label">Payload decodificado</p>
+      <pre id="payload" tabindex="0"></pre>
+      <div class="row"><button id="btn-me" class="primary">GET /api/me</button><button id="btn-out">Sair</button></div>
+      <p class="label">Resposta</p>
+      <pre id="me" tabindex="0">—</pre>
+    </div>
+  </section>
+  <section class="card wide" aria-labelledby="t-log">
+    <h2 id="t-log">Log de requisições</h2>
+    <ol id="log" class="log"><li class="none">Nada ainda.</li></ol>
+  </section>
+</main>
+<footer>Express + TypeScript + Jest + supertest · código em <code>src/</code>, testes em <code>__tests__/</code></footer>
+<script src="assets/demo.js"></script>
+</body>
+</html>

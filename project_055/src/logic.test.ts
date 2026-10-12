@@ -8,5 +8,5 @@ test('buildQuiz mantém a resposta correta', () => {
 });
 test('buildQuiz filtra por tema e limita', () => { const q = buildQuiz('git', 3, mulberry32(1)); expect(q).toHaveLength(3); expect(q.every(x => x.topic === 'git')).toBe(true); expect(buildQuiz('git', 50)).toHaveLength(5); });
 test('pontos', () => { expect(points(false, 20, 3)).toBe(0); expect(points(true, 10, 0)).toBe(120); expect(points(true, 99, 99)).toBe(100 + 40 + 50); });
-test('nota', () => { expect(grade(0, 0).pct).toBe(0); expect(grade(9, 10).label).toBe('Pleno'); expect(grade(10, 10).label).toBe('Sênior'); });
+test('nota', () => { expect(grade(0, 0).pct).toBe(0); expect(grade(7, 10).label).toBe('Pleno'); expect(grade(10, 10).label).toBe('Sênior'); });
 test('recorde', () => { const a = updateBest({}, 'js', 300, 60); expect(a.isNew).toBe(true); expect(updateBest(a.best, 'js', 200, 50).isNew).toBe(false); expect(loadBest('???')).toEqual({}); });

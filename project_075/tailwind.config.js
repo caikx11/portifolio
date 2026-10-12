@@ -1,1 +1,1 @@
-module.exports={content:["./index.html","./src/**/*.{ts,tsx}"],theme:{extend:{}},plugins:[]};
+module.exports={content:["./index.html","./src/**/*.ts"],theme:{extend:{colors:{cream:"#f8f4ec",ink:"#1b1a2e",cobalt:{DEFAULT:"#2f5bff",dark:"#1f43d6",soft:"#e4eaff"},tang:"#ff6a3d",line:"#e2dccd"},fontFamily:{sans:['"Red Hat Display"',"system-ui","sans-serif"],mono:['"Red Hat Mono"',"ui-monospace","monospace"]}}},plugins:[]};

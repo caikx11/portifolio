@@ -57,3 +57,13 @@
 - 058 Foco Pomodoro: floresta #0f1f1a + pêssego #ffb38a (pausas: menta #8fe3c0 / azul #9cc4ff) + creme #f6efe2; Unbounded + Work Sans
 - 059 Clima React: azul-gelo #eaf2f8 + tinta #12263a + tangerina #ff7a3d (fundo muda por condição); Young Serif + Plus Jakarta Sans
 - 060 Catálogo de Filmes: cinema vinho #1b0a10 + ouro #e8b84a + vermelho #c1272d + creme #f6ead7; Bebas Neue + Libre Franklin
+- 061 Maré Alta (Blog Next): azul-noite #0d1b24, vidro-do-mar #7fd1c1, coral #ff8a6b, areia #f1e9da; Instrument Serif + Schibsted Grotesk
+- 062 Faísca (SaaS Landing): off-white #fbfaf7, tinta #14121f, violeta #5b3df5, lima #c9f31d (neo-brutalista suave); Unbounded + Figtree
+- 063 Aurora Bio (Link-in-bio): gradientes aurora #ff9a62/#ff4f81/#6a4cff (+ temas Mar e Oliva), vidro translúcido; Young Serif + Gabarito
+- 064 Trilha Docs: azul-gelo #eef2f7, tinta #0e1726, laranja #ff7a1a; Red Hat Display + Red Hat Mono
+- 065 Chave Mestra (Auth JWT): navy #0b132b, painel #1c2541, teal #5bc0be, âmbar #f6ae2d; Familjen Grotesk + Martian Mono
+- 051 TaskFlow: papel #f6f4ee / ink #14213d / índigo #4f46e5 + menta #10b981; Plus Jakarta Sans + Inter
+- 052 Painel de Cripto: obsidiana #0d0b14 / violeta #a78bfa / ouro #fbbf24 (alta #34d399, baixa #fb7185); Unbounded + Figtree
+- 053 Habit Garden: musgo #0f2a1d / creme #fbf5e6 / rosa #ff8fa3 + dourado #ffd166; Young Serif + Hanken Grotesk
+- 054 Receitário: vinho #3b1f2b / açafrão #e8a317 / papel #fffaf2; Gloock + Albert Sans
+- 055 Quiz Dev: neobrutalista papel #f4f1ea / cobalto #2640ff / vermelho #ff4d2e / lima #c8f169; Bricolage Grotesque + Red Hat Mono
