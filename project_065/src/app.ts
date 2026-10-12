@@ -13,6 +13,13 @@ export function createApp(opts: AppOptions) {
   const rounds = opts.bcryptRounds ?? 10;
   const sign = (u: User) => jwt.sign({ sub: String(u.id) }, opts.jwtSecret, { expiresIn: (opts.expiresIn ?? '1h') as any });
   const app = express();
+  app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    if (req.method === 'OPTIONS') return res.sendStatus(204);
+    next();
+  });
   app.use(express.json());
 
   app.post('/api/register', async (req, res) => {

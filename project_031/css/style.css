@@ -663,3 +663,5 @@ header p {
 .back-link:hover{opacity:1}
 .section-actions{display:flex;gap:8px;flex-wrap:wrap}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+html { overflow-x: hidden; }

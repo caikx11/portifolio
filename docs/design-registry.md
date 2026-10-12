@@ -72,3 +72,8 @@
 - 073 Planta TS (playground de utilitários): azul de planta #0a2140 com grade, ciano #8ecae6, amarelo-sinal #ffd166; Schibsted Grotesk + Sometype Mono
 - 074 Oficina (assistente IA, demonstração): grafite #0f1216, rosa #ff5d8f, azul-céu #7cc4ff, areia #efe6d8; Hanken Grotesk + Fragment Mono
 - 075 Tinta UI (biblioteca Tailwind): creme #f8f4ec, tinta #1b1a2e, cobalto #2f5bff, tangerina #ff6a3d; Red Hat Display + Red Hat Mono
+- 066 To-Do API: vinho-noite #1a0f16, carmim #ff3d6e, âmbar #ffd166, menta #5be3a8; Red Hat Display + Red Hat Mono
+- 067 Encurtador Zap: papel pontilhado #f6f7f2, tinta #14121f, violeta elétrico #6c3bff, lima #d4ff3a; Unbounded + Inter
+- 068 Herbário de Notas: linho #f7f4ee, verde-floresta #1f4d3a, rosé #d98a6c; Lora + Figtree
+- 069 Rádio PX: preto #0d0b08, âmbar CRT #ffb000, verde-presença #9dff6b; Major Mono Display + Sometype Mono
+- 070 Tinta&Pixel (Blog): creme #fffdf8, tinta #14161f, azul-royal #1d3fd8, marca-texto #ffe45c; Young Serif + Public Sans

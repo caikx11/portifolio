@@ -110,17 +110,21 @@ button.sm{padding:4px 10px;font-size:13px}
   const el = (tag, props = {}, ...kids) => { const e = Object.assign(document.createElement(tag), props); e.append(...kids); return e; };
   const fmtDate = (s) => new Date(String(s).replace(' ', 'T') + (/Z|\+/.test(s) || String(s).includes('T') ? '' : 'Z')).toLocaleDateString('pt-BR');
   const view = $('#view');
+  let rid = 0; // evita que uma tela antiga (resposta atrasada) sobrescreva a atual
+  const paint = (my, ...nodes) => { if (my === rid) view.replaceChildren(...nodes); };
   async function home() {
-    const posts = await api('GET', '/api/posts');
-    const h = el('h1', {}, 'Últimos ', el('mark', {}, 'posts')); view.replaceChildren(h);
-    if (!posts.length) view.append(el('p', { className: 'empty' }, 'Nenhum post publicado ainda. Crie o primeiro no painel.'));
-    for (const p of posts) view.append(el('article', { className: 'card' }, el('h2', {}, el('a', { href: '#/post/' + p.slug, textContent: p.title })), el('div', { className: 'meta', textContent: fmtDate(p.createdAt) }), el('p', { textContent: p.excerpt })));
+    const my = rid; const posts = await api('GET', '/api/posts');
+    const out = [el('h1', {}, 'Últimos ', el('mark', {}, 'posts'))];
+    if (!posts.length) out.push(el('p', { className: 'empty' }, 'Nenhum post publicado ainda. Crie o primeiro no painel.'));
+    for (const p of posts) out.push(el('article', { className: 'card' }, el('h2', {}, el('a', { href: '#/post/' + p.slug, textContent: p.title })), el('div', { className: 'meta', textContent: fmtDate(p.createdAt) }), el('p', { textContent: p.excerpt })));
+    paint(my, ...out);
   }
   async function post(slug) {
+    const my = rid;
     try { const p = await api('GET', '/api/posts/' + slug);
-      view.replaceChildren(el('a', { href: '#/' }, '← Todos os posts'), el('h1', { textContent: p.title, style: 'margin-top:12px' }), el('div', { className: 'meta', textContent: fmtDate(p.createdAt) }),
+      paint(my, el('a', { href: '#/' }, '← Todos os posts'), el('h1', { textContent: p.title, style: 'margin-top:12px' }), el('div', { className: 'meta', textContent: fmtDate(p.createdAt) }),
         el('article', {}, ...p.body.split(/\n{2,}/).map((t) => el('p', { textContent: t }))));
-    } catch (e) { view.replaceChildren(el('h1', { textContent: 'Post não encontrado' }), el('a', { href: '#/' }, '← Voltar')); }
+    } catch (e) { paint(my, el('h1', { textContent: 'Post não encontrado' }), el('a', { href: '#/' }, '← Voltar')); }
   }
   function loginView() {
     const err = el('p', { className: 'err', role: 'alert' });
@@ -152,7 +156,7 @@ button.sm{padding:4px 10px;font-size:13px}
     refresh();
   }
   async function route() {
-    const h = location.hash.replace(/^#/, '') || '/'; const [, a, b] = h.split('/');
+    rid++; const h = location.hash.replace(/^#/, '') || '/'; const [, a, b] = h.split('/');
     $('#nHome').setAttribute('aria-current', a === 'admin' ? 'false' : 'page'); $('#nAdmin').setAttribute('aria-current', a === 'admin' ? 'page' : 'false');
     if (a === 'post' && b) await post(b); else if (a === 'admin') await admin(); else await home();
   }

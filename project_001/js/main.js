@@ -198,7 +198,32 @@ const PROJECTS = [
  [
   "Plataforma de Ensino",
   "Cursos com aulas, quizzes e certificado"
- ]
+ ],
+ ["TaskFlow", "Quadro de tarefas com prioridade, prazos e progresso", "React,TypeScript,Tailwind"],
+ ["Painel de Cripto", "Preços simulados em tempo real, gráfico de velas e carteira", "React,TypeScript"],
+ ["Habit Garden", "Hábitos que viram plantas conforme a sequência", "React,TypeScript,Jest"],
+ ["Receitário", "Receitas com busca, porções e lista de compras", "React,TypeScript"],
+ ["Quiz Dev", "30 perguntas de programação com tempo e recordes", "React,TypeScript"],
+ ["Notas Markdown", "Editor com preview ao vivo e várias notas", "React,TypeScript"],
+ ["Kanban Pro", "Quadro com arrastar e soltar e colunas editáveis", "React,TypeScript"],
+ ["Foco Pomodoro", "Ciclos de foco com tarefas e gráfico semanal", "React,TypeScript,Jest"],
+ ["Clima React", "Previsão simulada com 24 horas e 7 dias", "React,TypeScript"],
+ ["Catálogo de Filmes", "Busca, filtros, favoritos e detalhes", "React,TypeScript"],
+ ["Blog Next", "Blog com posts em Markdown, busca e tags", "Next.js,TypeScript"],
+ ["SaaS Landing e Preços", "Página de preços com checkout em modo demonstração", "Next.js,TypeScript"],
+ ["Link-in-bio", "Página de links com temas e contador de cliques", "Next.js,TypeScript"],
+ ["Docs Site", "Documentação com busca, sumário e copiar código", "Next.js,TypeScript"],
+ ["Auth JWT", "API de login com JWT e demo no navegador", "Node.js,Express,JWT"],
+ ["To-Do API", "API de tarefas com validação e testes", "NestJS,TypeScript,Jest"],
+ ["Encurtador de URLs", "Links curtos com contagem de cliques", "Node.js,SQLite"],
+ ["Notas Full Stack", "Notas por usuário com login e API", "Express,SQLite,JWT"],
+ ["Chat em Tempo Real", "Salas de chat com WebSocket", "WebSocket,Node.js"],
+ ["Blog Full Stack", "Blog com banco de dados e painel de posts", "Next.js,SQLite"],
+ ["Launchpad SaaS", "Cadastro, planos, painel e faturas (demonstração)", "React,TypeScript"],
+ ["Lista em Tempo Real", "Lista sincronizada entre abas, no estilo Firebase", "TypeScript,Firebase API"],
+ ["TypeScript Playground", "25 utilitários tipados com testes", "TypeScript,Jest"],
+ ["Assistente IA para Devs", "Agentes e ferramentas com respostas simuladas", "React,TypeScript,IA"],
+ ["Biblioteca de Componentes", "Botões, modais, tabs e toasts com código para copiar", "TypeScript,Tailwind"]
 ];
 
 // Mobile menu toggle
@@ -275,14 +300,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Lista de todos os 50 projetos do portfólio
-    const portfolioProjects = Array.from({length: 50}, (_, i) => {
+    const portfolioProjects = Array.from({length: 75}, (_, i) => {
         const projectNumber = (i + 1).toString().padStart(3, '0');
-        const [pTitle, pDescription] = PROJECTS[i];
+        const [pTitle, pDescription, pTags] = PROJECTS[i];
         return {
             number: projectNumber,
             title: pTitle,
             description: pDescription,
-            tags: ['HTML5', 'CSS3', 'JavaScript'],
+            tags: pTags ? pTags.split(',') : ['HTML5', 'CSS3', 'JavaScript'],
             link: `../project_${projectNumber}/index.html`
         };
     });

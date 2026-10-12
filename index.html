@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Portfólio · 50 projetos</title>
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Portfólio · 75 projetos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0b0d17;--card:#141828;--tx:#eaeefc;--mut:#9aa3c7;--ac:#7c8cff;--ac2:#ff7ce5;--bd:#232845}
@@ -20,7 +20,7 @@ main{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:
 .empty{grid-column:1/-1;text-align:center;color:var(--mut)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body>
-<header><h1>50 projetos<br>em HTML, CSS e JS</h1><p>Uma coleção de apps feitos com vanilla web. Escolha um e explore.</p>
+<header><h1>75 projetos<br>em JS, React e Node</h1><p>Uma coleção de apps de JavaScript puro a React, Next.js e APIs. Escolha um e explore.</p>
 <input id="q" type="search" placeholder="Buscar projeto…" aria-label="Buscar projeto"><div class="chips" id="chips"></div></header>
 <main id="grid"></main>
 <script>
@@ -73,7 +73,32 @@ Controle de Saúde|Métricas de saúde|saúde
 Gerador de Contratos|Documentos|negócios
 Avaliação de Produtos|Reviews|negócios
 Biblioteca Pessoal|Livros e leituras|conteúdo
-Plataforma de Ensino|Cursos online|negócios`;
+Plataforma de Ensino|Cursos online|negócios
+TaskFlow|Quadro de tarefas com prioridade, prazos e progresso|produtividade
+Painel de Cripto|Preços simulados em tempo real, gráfico de velas e carteira|finanças
+Habit Garden|Hábitos que viram plantas conforme a sequência|saúde
+Receitário|Receitas com busca, porções e lista de compras|conteúdo
+Quiz Dev|30 perguntas de programação com tempo e recordes|jogos
+Notas Markdown|Editor com preview ao vivo e várias notas|produtividade
+Kanban Pro|Quadro com arrastar e soltar e colunas editáveis|produtividade
+Foco Pomodoro|Ciclos de foco com tarefas e gráfico semanal|produtividade
+Clima React|Previsão simulada com 24 horas e 7 dias|dados
+Catálogo de Filmes|Busca, filtros, favoritos e detalhes|conteúdo
+Blog Next|Blog com posts em Markdown, busca e tags|conteúdo
+SaaS Landing e Preços|Página de preços com checkout em modo demonstração|negócios
+Link-in-bio|Página de links com temas e contador de cliques|pessoal
+Docs Site|Documentação com busca, sumário e copiar código|ferramentas
+Auth JWT|API de login com JWT e demo no navegador|back-end
+To-Do API|API de tarefas com validação e testes|back-end
+Encurtador de URLs|Links curtos com contagem de cliques|back-end
+Notas Full Stack|Notas por usuário com login e API|back-end
+Chat em Tempo Real|Salas de chat com WebSocket|back-end
+Blog Full Stack|Blog com banco de dados e painel de posts|back-end
+Launchpad SaaS|Cadastro, planos, painel e faturas (demonstração)|negócios
+Lista em Tempo Real|Lista sincronizada entre abas, no estilo Firebase|back-end
+TypeScript Playground|25 utilitários tipados com testes|ferramentas
+Assistente IA para Devs|Agentes e ferramentas com respostas simuladas|ferramentas
+Biblioteca de Componentes|Botões, modais, tabs e toasts com código para copiar|ferramentas`;
 const D=RAW.split('\n').map((l,i)=>{const[t,d,c]=l.split('|');return{id:String(i+1).padStart(3,'0'),t,d,c}});
 const g=document.getElementById('grid'),q=document.getElementById('q'),ch=document.getElementById('chips');let cat='todos';
 ['todos',...new Set(D.map(x=>x.c))].forEach(c=>{const b=document.createElement('button');b.className='chip'+(c==='todos'?' on':'');b.textContent=c;b.onclick=()=>{cat=c;[...ch.children].forEach(x=>x.classList.toggle('on',x===b));r()};ch.append(b)});
