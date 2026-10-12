@@ -6,6 +6,7 @@ class InvestmentSimulator {
     }
 
     init() {
+        this.calculate();
         document.getElementById('calculate-btn').addEventListener('click', () => this.calculate());
 
         // Permitir calcular com Enter
@@ -31,10 +32,14 @@ class InvestmentSimulator {
         const years = parseInt(document.getElementById('years').value) || 0;
 
         // Validação básica
-        if (initialInvestment < 0 || monthlyContribution < 0 || annualRate < 0 || years <= 0) {
-            alert('Por favor, preencha todos os campos com valores válidos');
+        const err = document.getElementById('form-error');
+        if (years <= 0 || (initialInvestment <= 0 && monthlyContribution <= 0)) {
+            err.textContent = 'Informe um valor inicial ou aporte, e um período de pelo menos 1 ano.';
+            err.hidden = false;
             return;
         }
+        err.hidden = true;
+        document.getElementById('results').classList.add('show');
 
         // Converter taxa anual para mensal
         const monthlyRate = (annualRate / 100) / 12;
@@ -44,7 +49,7 @@ class InvestmentSimulator {
         const futureValue = this.calculateFutureValue(initialInvestment, monthlyContribution, monthlyRate, months);
         const totalInvested = initialInvestment + (monthlyContribution * months);
         const totalReturn = futureValue - totalInvested;
-        const returnPercentage = (totalReturn / totalInvested) * 100;
+        const returnPercentage = totalInvested > 0 ? (totalReturn / totalInvested) * 100 : 0;
 
         // Exibir resumo
         this.displaySummary({
@@ -69,6 +74,7 @@ class InvestmentSimulator {
     calculateFutureValue(initial, monthly, monthlyRate, months) {
         // Fórmula de juros compostos com aportes mensais
         // FV = P*(1+r)^n + PMT*[((1+r)^n - 1)/r]
+        if (monthlyRate === 0) return initial + monthly * months;
         const futureValueInitial = initial * Math.pow(1 + monthlyRate, months);
         const futureValueContributions = monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
         return futureValueInitial + futureValueContributions;
@@ -102,6 +108,7 @@ class InvestmentSimulator {
             this.chart.destroy();
         }
 
+        if (Chart.defaults) { Chart.defaults.color = '#aeb8d3'; Chart.defaults.borderColor = 'rgba(255,255,255,.08)'; Chart.defaults.font.family = "'Sora', sans-serif"; }
         this.chart = new Chart(ctx, {
             type: 'line',
             data: {
@@ -109,9 +116,11 @@ class InvestmentSimulator {
                 datasets: [{
                     label: 'Valor Acumulado (R$)',
                     data: data,
-                    borderColor: '#3498db',
-                    backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                    borderWidth: 2,
+                    borderColor: '#f5c451',
+                    backgroundColor: 'rgba(245, 196, 81, 0.12)',
+                    fill: true,
+                    borderWidth: 3,
+                    pointRadius: 3,
                     tension: 0.3
                 }]
             },
@@ -145,60 +154,34 @@ class InvestmentSimulator {
     }
 
     renderYearlyTable(initial, monthly, monthlyRate, years) {
-        const container = document.getElementById('table-container');
-        container.innerHTML = `
-            <h3>Evolução Anual</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Ano</th>
-                        <th>Investido (R$)</th>
-                        <th>Valor Acumulado (R$)</th>
-                        <th>Lucro (R$)</th>
-                        <th>Retorno (%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-
+        const f = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        let rows = '';
         for (let year = 1; year <= years; year++) {
             const months = year * 12;
             const invested = initial + (monthly * months);
             const accumulated = this.calculateFutureValue(initial, monthly, monthlyRate, months);
             const profit = accumulated - invested;
-            const returnPercent = (profit / invested) * 100;
-
-            container.innerHTML += `
-                <tr>
-                    <td>${year}</td>
-                    <td>R$ ${invested.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                    <td>R$ ${accumulated.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                    <td>R$ ${profit.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-                    <td>${returnPercent.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</td>
-                </tr>
-            `;
+            const pct = invested > 0 ? (profit / invested) * 100 : 0;
+            rows += `<tr><td>${year}</td><td>R$ ${f(invested)}</td><td>R$ ${f(accumulated)}</td><td class="pos">R$ ${f(profit)}</td><td>${f(pct)}%</td></tr>`;
         }
-
-        container.innerHTML += `
-                </tbody>
-            </table>
-        `;
+        document.getElementById('table-container').innerHTML = `
+            <h3>Evolução anual</h3>
+            <div class="table-scroll"><table>
+                <thead><tr><th>Ano</th><th>Investido</th><th>Acumulado</th><th>Lucro</th><th>Retorno</th></tr></thead>
+                <tbody>${rows}</tbody>
+            </table></div>`;
     }
 
-    displaySummary(params) {
-        const summaryBox = document.getElementById('summary-box');
-        summaryBox.innerHTML = `
-            <h3>Resumo da Simulação</h3>
-            <p><strong>Investimento Inicial:</strong> R$ ${params.initialInvestment.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p><strong>Aporte Mensal:</strong> R$ ${params.monthlyContribution.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p><strong>Taxa Anual:</strong> ${params.annualRate}%</p>
-            <p><strong>Período:</strong> ${params.years} ano${params.years > 1 ? 's' : ''}</p>
-            <hr>
-            <p><strong>Total Investido:</strong> R$ ${params.totalInvested.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p><strong>Valor Futuro:</strong> R$ ${params.futureValue.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p><strong>Lucro Total:</strong> R$ ${params.totalReturn.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-            <p><strong>Retorno Total:</strong> ${params.returnPercentage.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</p>
-        `;
+    displaySummary(p) {
+        const f = (v) => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        const share = p.futureValue > 0 ? Math.round(p.totalInvested / p.futureValue * 100) : 100;
+        document.getElementById('summary-box').innerHTML = `
+            <div class="kpi main"><span>Valor futuro</span><strong>R$ ${f(p.futureValue)}</strong></div>
+            <div class="kpi"><span>Total investido</span><strong>R$ ${f(p.totalInvested)}</strong></div>
+            <div class="kpi gain"><span>Lucro com juros</span><strong>R$ ${f(p.totalReturn)}</strong></div>
+            <div class="kpi"><span>Retorno total</span><strong>${f(p.returnPercentage)}%</strong></div>
+            <div class="split" aria-label="Proporção investido x juros"><i style="width:${share}%"></i></div>
+            <p class="split-legend"><b>${share}%</b> do seu patrimônio vem de aportes, <b>${100 - share}%</b> dos juros em ${p.years} ano${p.years > 1 ? 's' : ''}.</p>`;
     }
 }
 

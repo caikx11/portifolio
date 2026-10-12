@@ -47,7 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             // Here you would typically send the form data to a server
             // For now, we'll just show a success message
-            alert('Obrigado pela sua mensagem! Em um projeto real, esta mensagem seria enviada para um servidor.');
+            let st = document.getElementById('form-status');
+            if (!st) { st = document.createElement('p'); st.id = 'form-status'; st.className = 'form-status'; st.setAttribute('role', 'status'); this.appendChild(st); }
+            st.textContent = 'Obrigado pela mensagem! (Demonstração: nada é enviado a um servidor.)';
             this.reset();
         });
     }
@@ -56,8 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const portfolioProjects = Array.from({length: 50}, (_, i) => {
         const projectNumber = (i + 1).toString().padStart(3, '0');
         const titles = {
-            1: 'Portfólio Pessoal', 2: 'Landing Page', 3: 'To-Do List', 4: 'Calculadora',
-            5: 'App de Clima', 6: 'Pomodoro Timer', 7: 'Habit Tracker', 8: 'Weather Dashboard',
+            1: 'Portfólio Pessoal', 2: 'Etch-a-Sketch', 3: 'To-Do List', 4: 'Calculadora',
+            5: 'Clima Atual', 6: 'Pomodoro Timer', 7: 'Habit Tracker', 8: 'Weather Dashboard',
             9: 'Gerador de Senhas', 10: 'Controle de Finanças', 11: 'Quiz Interativo', 12: 'Blog Pessoal',
             13: 'Gerenciador de Tarefas', 14: 'Agenda Digital', 15: 'Aplicativo de Notas', 16: 'Conversor de Moedas',
             17: 'Lista de Compras', 18: 'Controle de Gastos', 19: 'Sistema de Login', 20: 'Chat Simulado',
@@ -73,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const descriptions = {
             1: 'Site de portfólio pessoal com layout moderno e responsivo para apresentar habilidades e projetos',
-            2: 'Landing page profissional com navegação suave, seções interativas e formulário de contato',
+            2: 'Lousa mágica em grade com pincel, arco-íris, sombra e paleta de cores',
             3: 'Aplicativo de gerenciamento de tarefas com armazenamento em localStorage, filtros e estatísticas',
             4: 'Calculadora matemática com modos básico e científico, histórico de cálculos e design responsivo',
             5: 'Aplicativo de clima com previsão do tempo, busca por cidades e exibição de informações meteorológicas',
@@ -156,6 +158,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             `;
             projectsGrid.appendChild(projectCard);
+        });
+    }
+    const search = document.getElementById('project-search');
+    if (search) {
+        search.addEventListener('input', () => {
+            const q = search.value.trim().toLowerCase();
+            let shown = 0;
+            document.querySelectorAll('.project-card').forEach(card => {
+                const ok = card.textContent.toLowerCase().includes(q);
+                card.hidden = !ok;
+                if (ok) shown++;
+            });
+            document.getElementById('no-results').hidden = shown > 0;
         });
     }
     const fadeElements = document.querySelectorAll('.fade-in-up');

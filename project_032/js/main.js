@@ -28,7 +28,9 @@ class FinanceDashboard {
         // Filters
         this.assetFilter = document.getElementById('asset-filter');
         this.typeFilter = document.getElementById('type-filter');
-        this.benchmarkFilter = document.getElementById('benchmark-filter');
+        this.searchTerm = '';
+        this.sortKey = 'data';
+        this.sortDir = -1;
 
         // Modal elements
         this.modal = document.getElementById('transaction-modal');
@@ -54,14 +56,22 @@ class FinanceDashboard {
 
         // Search
         this.searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            this.filterAndRender(searchTerm);
+            this.searchTerm = e.target.value.toLowerCase();
+            this.filterAndRender();
         });
 
         // Filters
         this.assetFilter.addEventListener('change', () => this.filterAndRender());
         this.typeFilter.addEventListener('change', () => this.filterAndRender());
-        this.benchmarkFilter.addEventListener('change', () => this.filterAndRender());
+        document.querySelectorAll('th[data-sort]').forEach(th => th.addEventListener('click', () => {
+            const k = th.dataset.sort;
+            this.sortDir = this.sortKey === k ? -this.sortDir : 1;
+            this.sortKey = k;
+            this.filterAndRender();
+        }));
+        document.getElementById('cancel-btn').addEventListener('click', () => this.closeModal());
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.closeModal(); });
+        document.querySelectorAll('.chart-btn').forEach(b => b.addEventListener('click', () => this.render()));
 
         // Modal close
         const closeModal = () => this.closeModal();
@@ -79,35 +89,46 @@ class FinanceDashboard {
     }
 
     loadMockData() {
-        const saved = localStorage.getItem('finance_transactions');
+        const saved = localStorage.getItem('finance_transactions_v2');
         if (saved) {
             this.transactions = JSON.parse(saved);
         } else {
             this.transactions = [
-                { id: 1, descricao: 'Salário Mensal', categoria: 'salario', valor: 8500.00, tipo: 'receita', data: '2024-01-15' },
-                { id: 2, descricao: 'Freelance - Projeto Web', categoria: 'freelance', valor: 2500.00, tipo: 'receita', data: '2024-01-10' },
-                { id: 3, descricao: 'Compra de Mercado', categoria: 'comida', valor: 150.50, tipo: 'despesa', data: '2024-01-12' },
-                { id: 4, descricao: 'Uber - Id Airport', categoria: 'transporte', valor: 45.00, tipo: 'despesa', data: '2024-01-08' },
-                { id: 5, descricao: 'Academia', categoria: 'lazer', valor: 120.00, tipo: 'despesa', data: '2024-01-14' },
-                { id: 6, descricao: 'Investimento Tesouro', categoria: 'investimento', valor: 500.00, tipo: 'despesa', data: '2024-01-05' },
-                { id: 7, descricao: 'Farmácia', categoria: 'saude', valor: 89.90, tipo: 'despesa', data: '2024-01-16' },
-                { id: 8, descricao: 'Curso Online', categoria: 'educacao', valor: 350.00, tipo: 'despesa', data: '2024-01-18' },
-                { id: 9, descricao: 'Venda Item Usado', categoria: 'outros-r', valor: 150.00, tipo: 'receita', data: '2024-01-20' },
-                { id: 10, descricao: 'Jantar', categoria: 'comida', valor: 120.00, tipo: 'despesa', data: '2024-01-22' }
+                { id: 1, descricao: 'Salário Mensal', categoria: 'salario', valor: 8500.00, tipo: 'receita', data: this.seedDate(15) },
+                { id: 2, descricao: 'Freelance - Projeto Web', categoria: 'freelance', valor: 2500.00, tipo: 'receita', data: this.seedDate(10) },
+                { id: 3, descricao: 'Compra de Mercado', categoria: 'comida', valor: 150.50, tipo: 'despesa', data: this.seedDate(12) },
+                { id: 4, descricao: 'Uber - Id Airport', categoria: 'transporte', valor: 45.00, tipo: 'despesa', data: this.seedDate(8) },
+                { id: 5, descricao: 'Academia', categoria: 'lazer', valor: 120.00, tipo: 'despesa', data: this.seedDate(14) },
+                { id: 6, descricao: 'Investimento Tesouro', categoria: 'investimento', valor: 500.00, tipo: 'despesa', data: this.seedDate(5) },
+                { id: 7, descricao: 'Farmácia', categoria: 'saude', valor: 89.90, tipo: 'despesa', data: this.seedDate(16) },
+                { id: 8, descricao: 'Curso Online', categoria: 'educacao', valor: 350.00, tipo: 'despesa', data: this.seedDate(18) },
+                { id: 9, descricao: 'Venda Item Usado', categoria: 'outros-r', valor: 150.00, tipo: 'receita', data: this.seedDate(20) },
+                { id: 10, descricao: 'Jantar', categoria: 'comida', valor: 120.00, tipo: 'despesa', data: this.seedDate(22) }
             ];
             this.saveTransactions();
         }
     }
 
-    saveTransactions() {
-        localStorage.setItem('finance_transactions', JSON.stringify(this.transactions));
+    seedDate(day) {
+        const t = new Date();
+        const prev = day > 12;
+        const d = prev ? new Date(t.getFullYear(), t.getMonth() - 1, day) : new Date(t.getFullYear(), t.getMonth(), Math.min(day, t.getDate()));
+        return d.toISOString().slice(0, 10);
     }
 
-    filterAndRender(searchTerm = '') {
-        const filtered = this.filterTransactions().filter(tx => {
-            return tx.descricao.toLowerCase().includes(searchTerm) ||
-                   tx.categoria.toLowerCase().includes(searchTerm);
-        });
+    saveTransactions() {
+        localStorage.setItem('finance_transactions_v2', JSON.stringify(this.transactions));
+    }
+
+    filterAndRender() {
+        const term = this.searchTerm || '';
+        const type = this.typeFilter.value, cat = this.assetFilter.value;
+        const filtered = this.filterTransactions().filter(tx =>
+            (!type || tx.tipo === type) && (!cat || tx.categoria === cat) &&
+            (tx.descricao.toLowerCase().includes(term) || this.getCategoryLabel(tx.categoria).toLowerCase().includes(term)));
+        const k = this.sortKey, dir = this.sortDir;
+        filtered.sort((a, b) => (a[k] > b[k] ? 1 : a[k] < b[k] ? -1 : 0) * dir);
+        this.updateSummary(filtered);
         this.renderTransactions(filtered);
         this.renderCharts(filtered);
     }
@@ -140,11 +161,17 @@ class FinanceDashboard {
         }).sort((a, b) => new Date(b.data) - new Date(a.data));
     }
 
+    fillCategoryFilter() {
+        const cur = this.assetFilter.value;
+        const cats = [...new Set(this.transactions.map(t => t.categoria))];
+        this.assetFilter.innerHTML = '<option value="">Todas as categorias</option>' +
+            cats.map(c => `<option value="${c}">${this.getCategoryLabel(c)}</option>`).join('');
+        this.assetFilter.value = cats.includes(cur) ? cur : '';
+    }
+
     render() {
-        const filtered = this.filterTransactions();
-        this.updateSummary(filtered);
-        this.renderTransactions(filtered);
-        this.renderCharts(filtered);
+        this.fillCategoryFilter();
+        this.filterAndRender();
         this.updateCurrentDateDisplay();
     }
 
@@ -405,12 +432,8 @@ class FinanceDashboard {
 
     openModal() {
         this.modal.classList.add('active');
-        // Set current date
-        const today = new Date();
-        const dateStr = today.toISOString().split('T')[0];
-        document.getElementById('data').value = dateStr;
-        // Reset form
         this.transactionForm.reset();
+        document.getElementById('data').value = new Date().toISOString().split('T')[0];
         document.getElementById('descricao').focus();
     }
 
@@ -454,7 +477,7 @@ class FinanceDashboard {
 
         setTimeout(() => {
             toast.classList.add('fade-out');
-            setTimeout(() => document.body.removeChild(toast), 300);
+            setTimeout(() => toast.remove(), 300);
         }, 3000);
     }
 

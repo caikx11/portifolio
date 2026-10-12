@@ -26,8 +26,8 @@ class AnalyticsDashboard {
             datasets: [{
                 label: 'Visitantes Diários',
                 data: [650, 720, 780, 650, 820, 910, 750, 800, 950, 1020, 980, 1100, 1050, 1180, 1250, 1180, 1320, 1410, 1380, 1450, 1520, 1480, 1550, 1620, 1580, 1650, 1720, 1690, 1750, 1820],
-                borderColor: '#4a6fa5',
-                backgroundColor: 'rgba(74, 111, 165, 0.1)',
+                borderColor: '#4f46e5',
+                backgroundColor: 'rgba(79, 70, 229, 0.1)',
                 tension: 0.3,
                 fill: true
             }]
@@ -39,11 +39,11 @@ class AnalyticsDashboard {
             datasets: [{
                 data: [45, 25, 15, 10, 5],
                 backgroundColor: [
-                    '#4a6fa5',
-                    '#2ecc71',
-                    '#e74c3c',
-                    '#f39c12',
-                    '#9b59b6'
+                    '#4f46e5',
+                    '#0d9488',
+                    '#f43f5e',
+                    '#f59e0b',
+                    '#8b5cf6'
                 ],
                 borderWidth: 2
             }]
@@ -56,8 +56,8 @@ class AnalyticsDashboard {
                 label: 'Taxa de Conversão (%)',
                 data: [4.2, 2.8, 1.5],
                 backgroundColor: [
-                    '#3498db',
-                    '#2ecc71',
+                    '#4f46e5',
+                    '#0d9488',
                     '#e67e22'
                 ],
                 borderWidth: 2

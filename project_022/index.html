@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editor de Texto Rich</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
+    <a class="back-portfolio" href="../index.html">← Portfólio</a>
     <div class="editor-container">
         <header class="editor-header">
             <h1>Editor de Texto Rich</h1>
@@ -29,35 +32,15 @@
             </div>
 
             <div class="toolbar-group">
-                <button class="toolbar-btn" data-command="justifyLeft" title="Alinhar à Esquerda">
-                    ◢◣
-                </button>
-                <button class="toolbar-btn" data-command="justifyCenter" title="Centralizar">
-                    ◤◥
-                </button>
-                <button class="toolbar-btn" data-command="justifyRight" title="Alinhar à Direita">
-                    ◥◤
-                </button>
-                <button class="toolbar-btn" data-command="justifyFull" title="Justificado">
-                    ◢◤
-                </button>
+                <button class="toolbar-btn" data-command="justifyLeft" title="Alinhar à Esquerda">⇤</button>
+                <button class="toolbar-btn" data-command="justifyCenter" title="Centralizar">↔</button>
+                <button class="toolbar-btn" data-command="justifyRight" title="Alinhar à Direita">⇥</button>
+                <button class="toolbar-btn" data-command="justifyFull" title="Justificado">☰</button>
             </div>
 
             <div class="toolbar-group">
-                <button class="toolbar-btn" data-command="insertUnorderedList" title="Lista com Marcadores">
-                    <ul>
-                        <li>•</li>
-                        <li>•</li>
-                        <li>•</li>
-                    </ul>
-                </button>
-                <button class="toolbar-btn" data-command="insertOrderedList" title="Lista Numerada">
-                    <ol>
-                        <li>1.</li>
-                        <li>2.</li>
-                        <li>3.</li>
-                    </ol>
-                </button>
+                <button class="toolbar-btn" data-command="insertUnorderedList" title="Lista com Marcadores">•≡</button>
+                <button class="toolbar-btn" data-command="insertOrderedList" title="Lista Numerada">1.</button>
                 <button class="toolbar-btn" data-command="outdent" title="Diminuir Recuo">
                     ⇨
                 </button>

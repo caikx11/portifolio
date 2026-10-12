@@ -31,7 +31,8 @@ class ProductRatingApp {
         document.getElementById('clear-all').addEventListener('click', () => this.clearAllData());
 
         // Handle form submissions
-        document.getElementById('product-form').addEventListener('submit', (e) => {
+        document.addEventListener('submit', (e) => {
+            if (e.target.id !== 'product-form') return;
             e.preventDefault();
             if (this.validateProductForm(e.target)) {
                 this.saveProduct(e.target);
@@ -39,7 +40,8 @@ class ProductRatingApp {
             }
         });
 
-        document.getElementById('review-form').addEventListener('submit', (e) => {
+        document.addEventListener('submit', (e) => {
+            if (e.target.id !== 'review-form') return;
             e.preventDefault();
             if (this.validateReviewForm(e.target)) {
                 this.saveReview(e.target);
@@ -49,11 +51,11 @@ class ProductRatingApp {
         });
 
         // Handle first product button in welcome screen
-        document.getElementById('add-first-product')?.addEventListener('click', () => this.showAddProductForm());
+        document.addEventListener('click', (e) => { if (e.target.closest('#add-first-product')) this.showAddProductForm(); });
 
         // Close panels when clicking outside
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.properties-panel') &&
+            if (!e.target.closest('button, input, select, textarea, label, a, .properties-panel') &&
                 !e.target.closest('.review-panel') &&
                 !e.target.closest('.product-item') &&
                 !e.target.closest('#add-product') &&
@@ -241,6 +243,9 @@ class ProductRatingApp {
                 </div>
             </div>
         `;
+        document.getElementById('review-panel').classList.remove('active');
+        const detailBox = dynamicContent.querySelector('.product-detail');
+        if (detailBox) detailBox.insertAdjacentHTML('afterbegin', '<button type="button" class="btn-primary open-side" data-open="review-panel">Escrever avaliação</button>');
     }
 
     hidePropertiesPanel() {
@@ -574,4 +579,33 @@ class ProductRatingApp {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.app = new ProductRatingApp();
+});
+// ---- Painéis laterais: botão de fechar e ações padrão de formulário ----
+document.addEventListener('DOMContentLoaded', () => {
+    const labels = { 'quiz-form': 'Enviar respostas', 'review-form': 'Publicar avaliação', 'loan-form': 'Registrar empréstimo' };
+    const decorate = (panel) => {
+        if (!panel.classList.contains('active')) return;
+        if (!panel.querySelector('.panel-close')) {
+            const x = document.createElement('button');
+            x.type = 'button'; x.className = 'panel-close'; x.setAttribute('aria-label', 'Fechar painel'); x.textContent = '×';
+            x.addEventListener('click', () => panel.classList.remove('active'));
+            panel.insertBefore(x, panel.firstChild);
+        }
+        const form = panel.querySelector('form');
+        if (form && !form.querySelector('[type="submit"]')) {
+            const box = document.createElement('div');
+            box.className = 'form-actions';
+            box.innerHTML = '<button type="button" class="btn-cancel">Cancelar</button><button type="submit" class="btn-primary"></button>';
+            box.querySelector('.btn-primary').textContent = labels[form.id] || 'Salvar';
+            box.querySelector('.btn-cancel').addEventListener('click', () => panel.classList.remove('active'));
+            form.appendChild(box);
+        }
+    };
+    document.querySelectorAll('.properties-panel,.review-panel,.loan-panel,.lesson-panel,.quiz-panel,.certificate-panel').forEach(panel => {
+        new MutationObserver(() => decorate(panel)).observe(panel, { attributes: true, attributeFilter: ['class'], childList: true });
+    });
+    document.addEventListener('click', (e) => {
+        const o = e.target.closest('[data-open]');
+        if (o) document.getElementById(o.dataset.open).classList.add('active');
+    });
 });

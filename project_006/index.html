@@ -4,75 +4,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer - Projeto 006</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <meta name="description" content="Timer Pomodoro com gerenciamento de tarefas e estatísticas de produtividade">
+    <meta name="description" content="Timer Pomodoro com tarefas, anel de progresso e estatísticas do dia">
 </head>
-<body>
+<body data-mode="pomodoro">
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
-            <h1>Pomodoro Timer</h1>
-            <p class="subtitle">Foco e produtividade com a técnica Pomodoro</p>
+            <h1>Pomodoro</h1>
+            <p class="subtitle">25 minutos de foco, 5 de respiro</p>
         </header>
 
         <main>
-            <!-- Timer Display -->
-            <div class="timer-section">
-                <div class="timer-display" id="timer-display">25:00</div>
-                <div class="timer-modes">
-                    <button class="mode-btn active" data-mode="pomodoro">Pomodoro</button>
-                    <button class="mode-btn" data-mode="short-break">Pausa Curta</button>
-                    <button class="mode-btn" data-mode="long-break">Pausa Longa</button>
+            <section class="timer-section">
+                <div class="timer-modes" role="tablist">
+                    <button class="mode-btn active" data-mode="pomodoro">Foco</button>
+                    <button class="mode-btn" data-mode="short-break">Pausa curta</button>
+                    <button class="mode-btn" data-mode="long-break">Pausa longa</button>
+                </div>
+                <div class="ring">
+                    <svg viewBox="0 0 220 220" aria-hidden="true">
+                        <circle class="ring-bg" cx="110" cy="110" r="100"/>
+                        <circle class="ring-fg" id="ring-fg" cx="110" cy="110" r="100"/>
+                    </svg>
+                    <div class="ring-center">
+                        <div class="timer-display" id="timer-display" role="timer">25:00</div>
+                        <div class="timer-task" id="timer-task">Sem tarefa ativa</div>
+                    </div>
                 </div>
                 <div class="timer-controls">
-                    <button class="btn-control" id="start-btn">Iniciar</button>
-                    <button class="btn-control" id="pause-btn">Pausar</button>
+                    <button class="btn-control primary" id="start-btn">Iniciar</button>
+                    <button class="btn-control" id="pause-btn" disabled>Pausar</button>
                     <button class="btn-control" id="reset-btn">Resetar</button>
                 </div>
-            </div>
+            </section>
 
-            <!-- Task Section -->
-            <div class="task-section">
+            <section class="task-section">
                 <div class="section-header">
                     <h2>Tarefas</h2>
-                    <button class="add-task-btn" id="add-task-btn">+ Nova Tarefa</button>
+                    <button class="add-task-btn" id="add-task-btn" aria-expanded="false">+ Nova</button>
                 </div>
-                <div class="task-input-area" id="task-input-area" style="display: none;">
-                    <input type="text" id="task-input" placeholder="Nome da tarefa...">
-                    <input type="number" id="task-pomodoros" placeholder="Pomodoros estimados" min="1" max="10" value="1">
+                <div class="task-input-area" id="task-input-area" hidden>
+                    <input type="text" id="task-input" placeholder="Nome da tarefa..." aria-label="Nome da tarefa" maxlength="80">
+                    <input type="number" id="task-pomodoros" placeholder="Pomodoros" aria-label="Pomodoros estimados" min="1" max="10" value="1">
                     <button id="save-task-btn">Salvar</button>
                 </div>
                 <ul class="task-list" id="task-list"></ul>
-            </div>
+            </section>
 
-            <!-- Stats Section -->
-            <div class="stats-section">
-                <h2>Estatísticas de Hoje</h2>
+            <section class="stats-section">
+                <h2>Hoje</h2>
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-value" id="completed-pomodoros">0</span>
-                        <span class="stat-label">Pomodoros Completos</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-value" id="focus-time">0 min</span>
-                        <span class="stat-label">Tempo de Foco</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-value" id="completed-tasks">0</span>
-                        <span class="stat-label">Tarefas Concluídas</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-value" id="current-streak">0</span>
-                        <span class="stat-label">Dias Consecutivos</span>
-                    </div>
+                    <div class="stat-card"><span class="stat-value" id="completed-pomodoros">0</span><span class="stat-label">Pomodoros</span></div>
+                    <div class="stat-card"><span class="stat-value" id="focus-time">0 min</span><span class="stat-label">Foco</span></div>
+                    <div class="stat-card"><span class="stat-value" id="completed-tasks">0</span><span class="stat-label">Tarefas feitas</span></div>
+                    <div class="stat-card"><span class="stat-value" id="current-streak">0</span><span class="stat-label">Dias seguidos</span></div>
                 </div>
-            </div>
+            </section>
         </main>
 
-        <footer>
-            <p>&copy; 2026 Caio. Pomodoro Timer</p>
-        </footer>
+        <footer><p>&copy; 2026 Caio. Pomodoro Timer</p></footer>
     </div>
-
     <script src="js/main.js"></script>
 </body>
 </html>

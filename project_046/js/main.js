@@ -55,7 +55,7 @@ class HealthControlApp {
 
         // Close properties panel when clicking outside
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.properties-panel') && !e.target.closest('.module-btn')) {
+            if (!e.target.closest('.properties-panel, button, .metric-card, input, select, label')) {
                 this.hidePropertiesPanel();
             }
         });
@@ -295,7 +295,8 @@ class HealthControlApp {
         const propertiesPanel = document.getElementById('properties-panel');
         const form = document.getElementById('entry-form');
 
-        let formHTML = '<h2>Nova Entrada - ' + this.selectedMetric + '</h2>';
+        const titles = { 'blood-pressure': 'Pressão Arterial', glucose: 'Glicose', medication: 'Medicação', weight: 'Peso' };
+        let formHTML = '<h2>Nova Entrada - ' + (titles[this.selectedMetric] || this.selectedMetric) + '</h2>';
 
         switch(this.selectedMetric) {
             case 'blood-pressure':
@@ -422,7 +423,6 @@ class HealthControlApp {
 
     hidePropertiesPanel() {
         document.getElementById('properties-panel').classList.remove('active');
-        document.getElementById('dynamic-content').innerHTML = '';
 
         // Remove escape handler
         if (this.currentFormEscapeHandler) {
@@ -632,6 +632,15 @@ class HealthControlApp {
 
     renderCharts() {
         this.destroyCharts();
+        if (typeof Chart === 'undefined') {
+            document.querySelectorAll('canvas[id$="-chart"]').forEach(c => {
+                const note = document.createElement('p');
+                note.className = 'chart-offline';
+                note.textContent = 'Gráfico indisponível: biblioteca Chart.js não carregou (sem conexão).';
+                c.replaceWith(note);
+            });
+            return;
+        }
 
         // Blood Pressure Chart
         const bpCanvas = document.getElementById('bp-chart');
@@ -780,11 +789,6 @@ class HealthControlApp {
         if (changePercent > 5) return 'Em alta';
         if (changePercent < -5) return 'Em queda';
         return 'Estável';
-    }
-
-    hidePropertiesPanel() {
-        document.getElementById('properties-panel').classList.remove('active');
-        document.getElementById('dynamic-content').innerHTML = '';
     }
 
     showNotification(message, type = 'success') {

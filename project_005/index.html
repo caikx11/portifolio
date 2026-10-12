@@ -4,52 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clima Atual - Projeto 005</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <meta name="description" content="Aplicativo de Clima e Previsão do Tempo com interface moderna">
+    <meta name="description" content="Consulta de clima atual com dados simulados e céu que muda conforme a condição">
 </head>
-<body>
+<body data-cond="clear">
+    <a class="back-link" href="../index.html">← Portfólio</a>
+    <div class="sky" aria-hidden="true"><i class="sun"></i><i class="cloud c1"></i><i class="cloud c2"></i><i class="rain"></i></div>
     <div class="container">
         <header>
-            <h1>Consulta de Clima</h1>
-            <p class="subtitle">Consulte o clima atual de qualquer cidade do mundo</p>
+            <h1>Clima Atual</h1>
+            <p class="subtitle">Consulte o tempo em qualquer cidade <span class="demo">dados simulados</span></p>
         </header>
 
         <main>
-            <div class="search-box">
-                <input type="text" id="city-input" placeholder="Digite o nome da cidade...">
-                <button id="search-btn">Buscar</button>
-            </div>
+            <form class="search-box" id="search-form" autocomplete="off">
+                <input type="text" id="city-input" placeholder="Digite o nome da cidade..." aria-label="Cidade" list="city-list">
+                <datalist id="city-list"></datalist>
+                <button type="submit" id="search-btn">Buscar</button>
+            </form>
 
             <div class="weather-card" id="weather-card">
                 <div class="weather-header">
-                    <h2 id="city-name">--</h2>
-                    <span id="country">--</span>
+                    <div><h2 id="city-name">--</h2><span id="country">--</span></div>
+                    <button type="button" id="unit-toggle" aria-label="Alternar unidade">°C / °F</button>
                 </div>
                 <div class="weather-body">
-                    <div class="temperature">
-                        <span id="temp">--</span><span class="unit">°C</span>
-                    </div>
-                    <div class="weather-icon" id="weather-icon">⛅</div>
+                    <div class="temperature"><span id="temp">--</span><span class="unit">°C</span></div>
+                    <div class="weather-icon" id="weather-icon" aria-hidden="true">⛅</div>
                 </div>
                 <div class="weather-desc" id="weather-desc">Busque por uma cidade para ver o clima</div>
                 <div class="weather-details">
-                    <div class="detail-item">
-                        <span>Umidade</span>
-                        <strong id="humidity">--%</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>Vento</span>
-                        <strong id="wind">-- km/h</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>Sensação</span>
-                        <strong id="feels-like">--°C</strong>
-                    </div>
+                    <div class="detail-item"><span>Umidade</span><strong id="humidity">--%</strong></div>
+                    <div class="detail-item"><span>Vento</span><strong id="wind">-- km/h</strong></div>
+                    <div class="detail-item"><span>Sensação</span><strong id="feels-like">--°C</strong></div>
                 </div>
             </div>
 
             <div class="quick-cities">
-                <p>Cidades populares:</p>
+                <p>Cidades populares</p>
                 <div class="city-chips">
                     <button class="city-chip" data-city="São Paulo">São Paulo</button>
                     <button class="city-chip" data-city="Rio de Janeiro">Rio de Janeiro</button>
@@ -60,11 +56,8 @@
             </div>
         </main>
 
-        <footer>
-            <p>&copy; 2026 Caio. Aplicativo de Clima</p>
-        </footer>
+        <footer><p>&copy; 2026 Caio. Aplicativo de Clima</p></footer>
     </div>
-
     <script src="js/main.js"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 // Controle de Gastos com Gráficos
 class ExpenseTracker {
     constructor() {
-        this.transactions = JSON.parse(localStorage.getItem('transactions')) || this.getDefaultTransactions();
+        this.transactions = JSON.parse(localStorage.getItem('transactions_v2')) || this.getDefaultTransactions();
         this.categories = {
             income: ['Salário', 'Freelance', 'Investimentos', 'Outros'],
             expense: ['Alimentação', 'Transporte', 'Moradia', 'Saúde', 'Educação', 'Lazer', 'Outros']
@@ -12,18 +12,29 @@ class ExpenseTracker {
     }
 
     getDefaultTransactions() {
+        const d = (monthsAgo, day) => {
+            const t = new Date();
+            const x = new Date(t.getFullYear(), t.getMonth() - monthsAgo, day);
+            return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`;
+        };
         return [
-            { id: 1, type: 'income', category: 'Salário', description: 'Salário mensal', value: 5000, date: '2024-01-05' },
-            { id: 2, type: 'expense', category: 'Alimentação', description: 'Supermercado', value: 450, date: '2024-01-10' },
-            { id: 3, type: 'expense', category: 'Transporte', description: 'Combustível', value: 200, date: '2024-01-12' },
-            { id: 4, type: 'expense', category: 'Moradia', description: 'Aluguel', value: 1200, date: '2024-01-01' },
-            { id: 5, type: 'income', category: 'Freelance', description: 'Projeto web', value: 1500, date: '2024-01-20' },
-            { id: 6, type: 'expense', category: 'Saúde', description: 'Farmácia', value: 150, date: '2024-01-25' },
-            { id: 7, type: 'expense', category: 'Lazer', description: 'Cinema', value: 80, date: '2024-01-28' }
-        ];
+            { id: 1, type: 'income', category: 'Salário', description: 'Salário mensal', value: 5000, date: d(0, 5) },
+            { id: 2, type: 'expense', category: 'Alimentação', description: 'Supermercado', value: 450, date: d(0, 10) },
+            { id: 3, type: 'expense', category: 'Transporte', description: 'Combustível', value: 200, date: d(0, 12) },
+            { id: 4, type: 'expense', category: 'Moradia', description: 'Aluguel', value: 1200, date: d(0, 1) },
+            { id: 5, type: 'income', category: 'Freelance', description: 'Projeto web', value: 1500, date: d(1, 20) },
+            { id: 6, type: 'expense', category: 'Saúde', description: 'Farmácia', value: 150, date: d(1, 25) },
+            { id: 7, type: 'expense', category: 'Lazer', description: 'Cinema', value: 80, date: d(1, 18) },
+            { id: 8, type: 'income', category: 'Salário', description: 'Salário mensal', value: 5000, date: d(1, 5) },
+            { id: 9, type: 'expense', category: 'Moradia', description: 'Aluguel', value: 1200, date: d(1, 1) },
+            { id: 10, type: 'expense', category: 'Educação', description: 'Curso online', value: 320, date: d(2, 14) },
+            { id: 11, type: 'income', category: 'Salário', description: 'Salário mensal', value: 5000, date: d(2, 5) },
+            { id: 12, type: 'expense', category: 'Alimentação', description: 'Restaurante', value: 180, date: d(2, 22) }
+        ].sort((a, b) => b.date.localeCompare(a.date));
     }
 
     init() {
+        document.getElementById('month-label').textContent = new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
         this.bindEvents();
         this.updateCategoryOptions();
         this.setDefaultDate();
@@ -74,10 +85,13 @@ class ExpenseTracker {
         const date = document.getElementById('trans-date').value;
 
         if (!type || !category || !description || !value || !date) {
-            alert('Por favor, preencha todos os campos');
+            const err = document.getElementById('form-error');
+            err.textContent = 'Preencha tipo, categoria, descrição, valor e data.';
+            err.hidden = false;
             return;
         }
 
+        document.getElementById('form-error').hidden = true;
         const transaction = {
             id: Date.now(),
             type,
@@ -143,11 +157,7 @@ class ExpenseTracker {
 
         // Update balance card color based on value
         const balanceCard = document.querySelector('.summary-card.balance');
-        if (balance >= 0) {
-            balanceCard.style.background = 'linear-gradient(135deg, #27ae60, #2ecc71)';
-        } else {
-            balanceCard.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-        }
+        balanceCard.classList.toggle('negative', balance < 0);
     }
 
     renderFilterCategories() {
@@ -182,7 +192,7 @@ class ExpenseTracker {
                 <div class="transaction-info">
                     <div class="transaction-description">${this.escapeHtml(t.description)}</div>
                     <div class="transaction-meta">
-                        <span class="transaction-category">${t.category}</span>
+                        <span class="transaction-category">${this.escapeHtml(t.category)}</span>
                         <span>${this.formatDate(t.date)}</span>
                     </div>
                 </div>
@@ -190,7 +200,7 @@ class ExpenseTracker {
                     ${t.type === 'income' ? '+' : '-'} ${this.formatCurrency(t.value)}
                 </div>
                 <div class="transaction-actions">
-                    <button class="delete-btn" onclick="expenseTracker.deleteTransaction(${t.id})">&times;</button>
+                    <button class="delete-btn" aria-label="Excluir transação" onclick="expenseTracker.deleteTransaction(${t.id})">&times;</button>
                 </div>
             </div>
         `).join('');
@@ -226,15 +236,15 @@ class ExpenseTracker {
                 datasets: [{
                     data: data.length > 0 ? data : [1],
                     backgroundColor: [
-                        '#e74c3c', '#3498db', '#2ecc71', '#f39c12',
-                        '#9b59b6', '#1abc9c', '#e67e22', '#95a5a6'
+                        '#0f8b6d', '#ff6b57', '#f7b32b', '#3d5a80',
+                        '#8fd694', '#c05299', '#5bc0be', '#9aa5a0'
                     ],
                     borderWidth: 0
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -268,9 +278,9 @@ class ExpenseTracker {
         const expenseData = [];
 
         for (let i = 5; i >= 0; i--) {
-            const date = new Date();
-            date.setMonth(date.getMonth() - i);
-            const monthKey = date.toISOString().substring(0, 7); // YYYY-MM
+            const now = new Date();
+            const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
             const monthLabel = date.toLocaleDateString('pt-BR', { month: 'short', year: '2-digit' });
 
             months.push(monthLabel);
@@ -299,22 +309,22 @@ class ExpenseTracker {
                     {
                         label: 'Receitas',
                         data: incomeData,
-                        backgroundColor: 'rgba(39, 174, 96, 0.8)',
-                        borderColor: '#27ae60',
+                        backgroundColor: '#0f8b6d',
+                        borderColor: '#0f8b6d',
                         borderWidth: 1
                     },
                     {
                         label: 'Despesas',
                         data: expenseData,
-                        backgroundColor: 'rgba(231, 76, 60, 0.8)',
-                        borderColor: '#e74c3c',
+                        backgroundColor: '#ff6b57',
+                        borderColor: '#ff6b57',
                         borderWidth: 1
                     }
                 ]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -363,7 +373,7 @@ class ExpenseTracker {
     }
 
     saveTransactions() {
-        localStorage.setItem('transactions', JSON.stringify(this.transactions));
+        localStorage.setItem('transactions_v2', JSON.stringify(this.transactions));
     }
 }
 

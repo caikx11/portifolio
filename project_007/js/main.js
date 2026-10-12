@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function init() {
         loadFromStorage();
+        habits.forEach(refreshStreak);
         setupEventListeners();
         renderHabits();
         renderWeekCalendar();
@@ -47,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function setupEventListeners() {
         addHabitBtn.addEventListener('click', () => {
-            habitForm.style.display = 'block';
-            addHabitBtn.style.display = 'none';
+            habitForm.hidden = false;
+            addHabitBtn.hidden = true;
             habitNameInput.focus();
         });
 
@@ -57,9 +58,9 @@ document.addEventListener('DOMContentLoaded', function() {
         frequencyRadios.forEach(radio => {
             radio.addEventListener('change', (e) => {
                 if (e.target.value === 'custom') {
-                    customDaysContainer.style.display = 'block';
+                    customDaysContainer.hidden = false;
                 } else {
-                    customDaysContainer.style.display = 'none';
+                    customDaysContainer.hidden = true;
                     activeCustomDays = [];
                     dayButtons.forEach(btn => btn.classList.remove('active'));
                 }
@@ -92,8 +93,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function closeForm() {
-        habitForm.style.display = 'none';
-        addHabitBtn.style.display = 'flex';
+        habitForm.hidden = true;
+        addHabitBtn.hidden = false;
         resetFormInputs();
     }
 
@@ -101,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
         habitNameInput.value = '';
         habitCategorySelect.value = 'health';
         document.querySelector('input[name="frequency"][value="daily"]').checked = true;
-        customDaysContainer.style.display = 'none';
+        customDaysContainer.hidden = true;
         activeCustomDays = [];
         dayButtons.forEach(btn => btn.classList.remove('active'));
     }
@@ -149,22 +150,34 @@ document.addEventListener('DOMContentLoaded', function() {
         const habit = habits.find(h => h.id === id);
         if (!habit) return;
 
-        if (habit.history[todayStr]) {
-            delete habit.history[todayStr];
-            habit.streak = Math.max(0, habit.streak - 1);
-        } else {
-            habit.history[todayStr] = true;
-            habit.streak++;
-            if (habit.streak > habit.longestStreak) {
-                habit.longestStreak = habit.streak;
-            }
-        }
+        if (habit.history[todayStr]) delete habit.history[todayStr];
+        else habit.history[todayStr] = true;
+        refreshStreak(habit);
 
         saveToStorage();
         renderHabits();
         renderWeekCalendar();
         updateStats();
     }
+
+    function isScheduled(h, date) {
+        if (h.frequency === 'custom') return h.customDays.includes(date.getDay());
+        return true; // diário e semanal: qualquer dia vale
+    }
+    function refreshStreak(h) {
+        const d = new Date();
+        if (!h.history[formatDateString(d)]) d.setDate(d.getDate() - 1);
+        let n = 0;
+        for (let i = 0; i < 400; i++) {
+            const k = formatDateString(d);
+            if (h.history[k]) n++;
+            else if (isScheduled(h, d)) break;
+            d.setDate(d.getDate() - 1);
+        }
+        h.streak = n;
+        h.longestStreak = Math.max(h.longestStreak || 0, n);
+    }
+    function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
     // Delete Habit
     function deleteHabit(id) {
@@ -188,9 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentFilter === 'today') {
             const todayDay = new Date().getDay();
             filteredHabits = habits.filter(h => {
-                if (h.frequency === 'daily') return true;
-                if (h.frequency === 'custom' && h.customDays.includes(todayDay)) return true;
-                return false;
+                return h.frequency !== 'custom' || h.customDays.includes(todayDay);
             });
         } else if (currentFilter === 'pending') {
             filteredHabits = habits.filter(h => !h.history[todayStr]);
@@ -201,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (filteredHabits.length === 0) {
             habitsGrid.innerHTML = `
                 <div class="empty-state">
-                    <span class="empty-state-icon">📋</span>
+                    <span class="empty-state-icon">∅</span>
                     <p>Nenhum hábito encontrado neste filtro.</p>
                 </div>
             `;
@@ -215,16 +226,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const card = document.createElement('div');
             card.className = `habit-card ${isCompletedToday ? 'completed' : ''}`;
             card.innerHTML = `
-                <div class="habit-checkbox ${isCompletedToday ? 'checked' : ''}"></div>
+                <button type="button" class="habit-checkbox ${isCompletedToday ? 'checked' : ''}" role="checkbox" aria-checked="${isCompletedToday}" aria-label="Marcar hábito de hoje"></button>
                 <div class="habit-info">
-                    <span class="habit-name">${habit.name}</span>
+                    <span class="habit-name">${esc(habit.name)}</span>
                     <div class="habit-meta">
-                        <span class="habit-category">${catInfo.emoji} ${catInfo.label}</span>
-                        <span class="habit-streak">🔥 ${habit.streak} dias</span>
+                        <span class="habit-category">${catInfo.label}</span>
+                        <span class="habit-streak">${habit.streak} ${habit.streak === 1 ? "dia" : "dias"} seguidos</span>
                     </div>
                 </div>
                 <div class="habit-actions">
-                    <button class="delete" title="Excluir">🗑️</button>
+                    <button class="delete" title="Excluir" aria-label="Excluir hábito">Excluir</button>
                 </div>
             `;
 
@@ -274,15 +285,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const dayIndex = dayDate.getDay();
                 let isScheduled = false;
 
-                if (habit.frequency === 'daily') isScheduled = true;
-                else if (habit.frequency === 'custom' && habit.customDays.includes(dayIndex)) isScheduled = true;
+                isScheduled = habit.frequency !== 'custom' || habit.customDays.includes(dayIndex);
 
                 if (isScheduled) {
                     const isCompleted = !!habit.history[dayStr];
                     const dot = document.createElement('div');
                     dot.className = `day-habit ${isCompleted ? 'completed' : 'pending'}`;
                     dot.title = habit.name;
-                    dot.textContent = categories[habit.category]?.emoji || '🎯';
+                    dot.textContent = (habit.name.trim()[0] || '•').toUpperCase();
                     habitsDiv.appendChild(dot);
                 }
             });
@@ -302,7 +312,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         let maxStreak = 0;
         habits.forEach(h => {
-            if (h.streak > maxStreak) maxStreak = h.streak;
+            refreshStreak(h);
+            if (h.longestStreak > maxStreak) maxStreak = h.longestStreak;
         });
         longestStreakEl.textContent = maxStreak;
 
@@ -319,8 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             habits.forEach(h => {
                 let isScheduled = false;
-                if (h.frequency === 'daily') isScheduled = true;
-                else if (h.frequency === 'custom' && h.customDays.includes(checkDayIndex)) isScheduled = true;
+                isScheduled = h.frequency !== 'custom' || h.customDays.includes(checkDayIndex);
 
                 if (isScheduled) {
                     totalScheduled++;
@@ -349,11 +359,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Storage
     function saveToStorage() {
-        localStorage.setItem('habitsData', JSON.stringify(habits));
+        try { localStorage.setItem('habitsData', JSON.stringify(habits)); } catch (e) {}
     }
 
     function loadFromStorage() {
-        const savedHabits = localStorage.getItem('habitsData');
+        let savedHabits = null;
+        try { savedHabits = localStorage.getItem('habitsData'); } catch (e) {}
         if (savedHabits) {
             try {
                 habits = JSON.parse(savedHabits);
@@ -380,33 +391,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 
-    // Styles for notifications
-    const style = document.createElement('style');
-    style.textContent = `
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            color: white;
-            font-weight: 500;
-            z-index: 1000;
-            box-shadow: var(--shadow-lg);
-            transform: translateX(100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-        }
-
-        .notification-show { transform: translateX(0); opacity: 1; }
-        .notification-hide { transform: translateX(100px); opacity: 0; }
-
-        .notification-info { background: var(--primary-color); }
-        .notification-success { background: var(--secondary-color); }
-        .notification-error { background: var(--danger-color); }
-
-        .notification { animation: slideIn 0.3s ease forwards; }
-        @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-    `;
-    document.head.appendChild(style);
 });

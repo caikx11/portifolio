@@ -1,4 +1,12 @@
 // Application state
+// Local recipe art (self-contained, works offline)
+function recipeArt(recipe) {
+    const map = { 'Café da Manhã': ['🥞', '#ffd9a0'], 'Almoço': ['🍛', '#ffb199'], 'Jantar': ['🍝', '#f6c1a8'], 'Sobremesa': ['🍰', '#ffc6d9'], 'Lanche': ['🥪', '#e3e9a8'], 'Bebida': ['🍹', '#bfe5d6'] };
+    const [icon, bg] = map[recipe.category] || ['🍳', '#f3e1bf'];
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="260" viewBox="0 0 400 260"><rect width="400" height="260" fill="${bg}"/><g fill="#fff" opacity=".35"><rect width="40" height="260" x="40"/><rect width="40" height="260" x="120"/><rect width="40" height="260" x="200"/><rect width="40" height="260" x="280"/><rect width="40" height="260" x="360"/></g><text x="200" y="165" font-size="110" text-anchor="middle">${icon}</text></svg>`;
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
 let recipes = [];
 let favorites = [];
 let categories = [];
@@ -245,7 +253,7 @@ function openRecipeModal(recipeId) {
 
     recipeDetail.innerHTML = `
         <div class="recipe-detail-header">
-            <img src="${recipe.image || 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?auto=format&fit=crop&q=80&w=400'}" alt="${recipe.title}" class="recipe-detail-image" onerror="this.src='https://images.unsplash.com/photo-1495521821757-a1efb6729352?auto=format&fit=crop&q=80&w=400'">
+            <img src="${recipeArt(recipe)}" alt="${recipe.title}" class="recipe-detail-image">
             <div class="recipe-detail-info">
                 <h2>${recipe.title}</h2>
                 <div class="recipe-detail-meta">
@@ -297,7 +305,7 @@ function renderRecipesList() {
 
         return `
             <div class="recipe-card${listViewClass}" onclick="openRecipeModal('${recipe.id}')">
-                <img src="${recipe.image || 'https://images.unsplash.com/photo-1495521821757-a1efb6729352?auto=format&fit=crop&q=80&w=400'}" alt="${recipe.title}" class="recipe-image" onerror="this.src='https://images.unsplash.com/photo-1495521821757-a1efb6729352?auto=format&fit=crop&q=80&w=400'">
+                <img src="${recipeArt(recipe)}" alt="${recipe.title}" class="recipe-image">
                 <div class="recipe-content">
                     <h3 class="recipe-title">${recipe.title}</h3>
                     <div class="recipe-meta">

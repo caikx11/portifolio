@@ -103,6 +103,27 @@ class ProManager {
         this.updateStorage();
     }
 
+    setupEventListeners() {
+        const btn = document.getElementById('btn-new-item');
+        if (btn) btn.addEventListener('click', () => {
+            this.editingId = null;
+            const f = document.getElementById('record-form');
+            if (f) f.reset();
+            document.getElementById('modal-title').textContent = 'Novo Registro';
+            document.getElementById('modal-form').style.display = 'flex';
+        });
+        document.querySelectorAll('#modal-form .close-modal').forEach(b =>
+            b.addEventListener('click', () => { document.getElementById('modal-form').style.display = 'none'; }));
+        const sf = document.getElementById('status-filter');
+        if (sf) sf.addEventListener('change', e => {
+            const v = e.target.value;
+            this.filteredProcesses.forEach((p, i) => {
+                const row = document.querySelectorAll('#table-body tr')[i];
+                if (row) row.style.display = (v === 'all' || p.status === v) ? '' : 'none';
+            });
+        });
+    }
+
     setupSectors() {
         const sectorSelect = document.getElementById('sector-select');
         if (sectorSelect) {
@@ -343,7 +364,8 @@ class ProManager {
         document.getElementById('item-date').value = process.deadline;
         document.getElementById('item-status').value = process.status;
 
-        // Abrir modal
+        this.editingId = id;
+        document.getElementById('modal-title').textContent = 'Editar Registro';
         document.getElementById('modal-form').style.display = 'flex';
     }
 
@@ -387,7 +409,13 @@ class ProManager {
             type: this.getProcessType()
         };
 
-        this.processes.push(newProcess);
+        if (this.editingId) {
+            const i = this.processes.findIndex(p => p.id === this.editingId);
+            if (i >= 0) this.processes[i] = { ...this.processes[i], title, client, status, deadline: date, responsible: assignee };
+            this.editingId = null;
+        } else {
+            this.processes.push(newProcess);
+        }
         localStorage.setItem('promanager-data', JSON.stringify(this.processes));
         this.updateStorage();
         this.renderTable();

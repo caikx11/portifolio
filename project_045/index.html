@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Eletrônica Básica</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/theme.css">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
             <h1>Simulador de Eletrônica Básica</h1>
@@ -30,7 +34,7 @@
                     <button id="load-circuit">Carregar Circuito</button>
                     <button id="export-circuit">Exportar</button>
                 </div>
-                <div id="canvas" class="canvas"></div>
+                <canvas id="canvas" class="canvas" width="800" height="480" aria-label="Área de montagem do circuito"></canvas>
                 <div class="circuit-info" id="circuit-info">
                     <p>Monte seu circuito arrastando componentes da barra lateral</p>
                 </div>

@@ -32,7 +32,8 @@ class EducationPlatformApp {
         document.getElementById('clear-all').addEventListener('click', () => this.clearAllData());
 
         // Handle form submissions
-        document.getElementById('course-form').addEventListener('submit', (e) => {
+        document.addEventListener('submit', (e) => {
+            if (e.target.id !== 'course-form') return;
             e.preventDefault();
             if (this.validateCourseForm(e.target)) {
                 this.saveCourse(e.target);
@@ -40,7 +41,8 @@ class EducationPlatformApp {
             }
         });
 
-        document.getElementById('quiz-form').addEventListener('submit', (e) => {
+        document.addEventListener('submit', (e) => {
+            if (e.target.id !== 'quiz-form') return;
             e.preventDefault();
             if (this.validateQuizForm(e.target)) {
                 this.submitQuiz(e.target);
@@ -49,11 +51,11 @@ class EducationPlatformApp {
         });
 
         // Handle first course button in welcome screen
-        document.getElementById('add-first-course')?.addEventListener('click', () => this.showAddCourseForm());
+        document.addEventListener('click', (e) => { if (e.target.closest('#add-first-course')) this.showAddCourseForm(); });
 
         // Close panels when clicking outside
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.properties-panel') &&
+            if (!e.target.closest('button, input, select, textarea, label, a, .properties-panel') &&
                 !e.target.closest('.lesson-panel') &&
                 !e.target.closest('.quiz-panel') &&
                 !e.target.closest('.certificate-panel') &&
@@ -694,4 +696,33 @@ class EducationPlatformApp {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.app = new EducationPlatformApp();
+});
+// ---- Painéis laterais: botão de fechar e ações padrão de formulário ----
+document.addEventListener('DOMContentLoaded', () => {
+    const labels = { 'quiz-form': 'Enviar respostas', 'review-form': 'Publicar avaliação', 'loan-form': 'Registrar empréstimo' };
+    const decorate = (panel) => {
+        if (!panel.classList.contains('active')) return;
+        if (!panel.querySelector('.panel-close')) {
+            const x = document.createElement('button');
+            x.type = 'button'; x.className = 'panel-close'; x.setAttribute('aria-label', 'Fechar painel'); x.textContent = '×';
+            x.addEventListener('click', () => panel.classList.remove('active'));
+            panel.insertBefore(x, panel.firstChild);
+        }
+        const form = panel.querySelector('form');
+        if (form && !form.querySelector('[type="submit"]')) {
+            const box = document.createElement('div');
+            box.className = 'form-actions';
+            box.innerHTML = '<button type="button" class="btn-cancel">Cancelar</button><button type="submit" class="btn-primary"></button>';
+            box.querySelector('.btn-primary').textContent = labels[form.id] || 'Salvar';
+            box.querySelector('.btn-cancel').addEventListener('click', () => panel.classList.remove('active'));
+            form.appendChild(box);
+        }
+    };
+    document.querySelectorAll('.properties-panel,.review-panel,.loan-panel,.lesson-panel,.quiz-panel,.certificate-panel').forEach(panel => {
+        new MutationObserver(() => decorate(panel)).observe(panel, { attributes: true, attributeFilter: ['class'], childList: true });
+    });
+    document.addEventListener('click', (e) => {
+        const o = e.target.closest('[data-open]');
+        if (o) document.getElementById(o.dataset.open).classList.add('active');
+    });
 });

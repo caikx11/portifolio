@@ -31,7 +31,8 @@ class LibraryApp {
         document.getElementById('clear-all').addEventListener('click', () => this.clearAllData());
 
         // Handle form submissions
-        document.getElementById('book-form').addEventListener('submit', (e) => {
+        document.addEventListener('submit', (e) => {
+            if (e.target.id !== 'book-form') return;
             e.preventDefault();
             if (this.validateBookForm(e.target)) {
                 this.saveBook(e.target);
@@ -39,7 +40,8 @@ class LibraryApp {
             }
         });
 
-        document.getElementById('loan-form').addEventListener('submit', (e) => {
+        document.addEventListener('submit', (e) => {
+            if (e.target.id !== 'loan-form') return;
             e.preventDefault();
             if (this.validateLoanForm(e.target)) {
                 this.saveLoan(e.target);
@@ -49,11 +51,11 @@ class LibraryApp {
         });
 
         // Handle first book button in welcome screen
-        document.getElementById('add-first-book')?.addEventListener('click', () => this.showAddBookForm());
+        document.addEventListener('click', (e) => { if (e.target.closest('#add-first-book')) this.showAddBookForm(); });
 
         // Close panels when clicking outside
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.properties-panel') &&
+            if (!e.target.closest('button, input, select, textarea, label, a, .properties-panel') &&
                 !e.target.closest('.loan-panel') &&
                 !e.target.closest('.book-item') &&
                 !e.target.closest('#add-book') &&
@@ -232,6 +234,9 @@ class LibraryApp {
                 </div>
             </div>
         `;
+        document.getElementById('loan-panel').classList.remove('active');
+        const detailBox = dynamicContent.querySelector('.book-detail');
+        if (detailBox) detailBox.insertAdjacentHTML('afterbegin', '<button type="button" class="btn-primary open-side" data-open="loan-panel">Registrar empréstimo</button>');
     }
 
     hidePropertiesPanel() {
@@ -530,4 +535,33 @@ class LibraryApp {
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.app = new LibraryApp();
+});
+// ---- Painéis laterais: botão de fechar e ações padrão de formulário ----
+document.addEventListener('DOMContentLoaded', () => {
+    const labels = { 'quiz-form': 'Enviar respostas', 'review-form': 'Publicar avaliação', 'loan-form': 'Registrar empréstimo' };
+    const decorate = (panel) => {
+        if (!panel.classList.contains('active')) return;
+        if (!panel.querySelector('.panel-close')) {
+            const x = document.createElement('button');
+            x.type = 'button'; x.className = 'panel-close'; x.setAttribute('aria-label', 'Fechar painel'); x.textContent = '×';
+            x.addEventListener('click', () => panel.classList.remove('active'));
+            panel.insertBefore(x, panel.firstChild);
+        }
+        const form = panel.querySelector('form');
+        if (form && !form.querySelector('[type="submit"]')) {
+            const box = document.createElement('div');
+            box.className = 'form-actions';
+            box.innerHTML = '<button type="button" class="btn-cancel">Cancelar</button><button type="submit" class="btn-primary"></button>';
+            box.querySelector('.btn-primary').textContent = labels[form.id] || 'Salvar';
+            box.querySelector('.btn-cancel').addEventListener('click', () => panel.classList.remove('active'));
+            form.appendChild(box);
+        }
+    };
+    document.querySelectorAll('.properties-panel,.review-panel,.loan-panel,.lesson-panel,.quiz-panel,.certificate-panel').forEach(panel => {
+        new MutationObserver(() => decorate(panel)).observe(panel, { attributes: true, attributeFilter: ['class'], childList: true });
+    });
+    document.addEventListener('click', (e) => {
+        const o = e.target.closest('[data-open]');
+        if (o) document.getElementById(o.dataset.open).classList.add('active');
+    });
 });

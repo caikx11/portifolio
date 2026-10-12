@@ -1,72 +1,73 @@
-// Aplicativo de Clima
-document.addEventListener('DOMContentLoaded', function() {
-    const cityInput = document.getElementById('city-input');
-    const searchBtn = document.getElementById('search-btn');
-    const cityChips = document.querySelectorAll('.city-chip');
+// Clima Atual (dados simulados, determinísticos por cidade)
+document.addEventListener('DOMContentLoaded', () => {
+    const $ = id => document.getElementById(id);
+    const cityInput = $('city-input');
+    const CITIES = {
+        'são paulo': ['São Paulo', 'BR', 23, 'clear', 68, 11],
+        'rio de janeiro': ['Rio de Janeiro', 'BR', 29, 'clouds', 74, 15],
+        'new york': ['Nova York', 'US', 12, 'rain', 81, 19],
+        'nova york': ['Nova York', 'US', 12, 'rain', 81, 19],
+        'london': ['Londres', 'GB', 9, 'rain', 85, 22],
+        'londres': ['Londres', 'GB', 9, 'rain', 85, 22],
+        'tokyo': ['Tóquio', 'JP', 18, 'clouds', 60, 9],
+        'tóquio': ['Tóquio', 'JP', 18, 'clouds', 60, 9],
+        'lisboa': ['Lisboa', 'PT', 21, 'clear', 55, 14],
+        'paris': ['Paris', 'FR', 11, 'clouds', 72, 12],
+        'brasília': ['Brasília', 'BR', 27, 'clear', 38, 8],
+        'curitiba': ['Curitiba', 'BR', 16, 'rain', 83, 13],
+        'salvador': ['Salvador', 'BR', 30, 'clear', 70, 17],
+        'dubai': ['Dubai', 'AE', 38, 'clear', 30, 16],
+        'moscou': ['Moscou', 'RU', -4, 'snow', 88, 10]
+    };
+    const COND = {
+        clear: ['Céu limpo', '☀️'], clouds: ['Parcialmente nublado', '⛅'],
+        rain: ['Chuva leve', '🌧️'], snow: ['Neve', '❄️'], storm: ['Tempestade', '⛈️']
+    };
+    const conds = Object.keys(COND);
+    let fahrenheit = false, current = null;
+    try { fahrenheit = localStorage.getItem('climaF') === '1'; } catch (e) {}
 
-    // Elementos do card de clima
-    const cityNameEl = document.getElementById('city-name');
-    const countryEl = document.getElementById('country');
-    const tempEl = document.getElementById('temp');
-    const iconEl = document.getElementById('weather-icon');
-    const descEl = document.getElementById('weather-desc');
-    const humidityEl = document.getElementById('humidity');
-    const windEl = document.getElementById('wind');
-    const feelsLikeEl = document.getElementById('feels-like');
+    const list = $('city-list');
+    [...new Set(Object.values(CITIES).map(c => c[0]))].forEach(n => { const o = document.createElement('option'); o.value = n; list.appendChild(o); });
 
-    // Chave de API (demo, sem funcionalidade real sem a chave)
-    const API_KEY = 'YOUR_API_KEY'; // Para projeto real, usar variável de ambiente
+    function hash(s) { let h = 7; for (const ch of s.toLowerCase()) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; }
+    function lookup(name) {
+        const known = CITIES[name.toLowerCase()];
+        if (known) return { name: known[0], country: known[1], temp: known[2], cond: known[3], hum: known[4], wind: known[5] };
+        const h = hash(name);
+        return { name: name.replace(/\s+/g, ' ').replace(/(^|\s)\S/g, m => m.toUpperCase()), country: '??', temp: (h % 38) - 4, cond: conds[(h >> 3) % conds.length], hum: 35 + (h >> 5) % 60, wind: 4 + (h >> 7) % 28 };
+    }
+    const conv = c => fahrenheit ? Math.round(c * 9 / 5 + 32) : Math.round(c);
 
-    searchBtn.addEventListener('click', () => {
-        const city = cityInput.value.trim();
-        if (city) {
-            getWeather(city);
-        }
-    });
-
-    cityInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            const city = cityInput.value.trim();
-            if (city) {
-                getWeather(city);
-            }
-        }
-    });
-
-    cityChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            getWeather(chip.dataset.city);
-        });
-    });
-
-    // Função simulada (já que não temos chave de API)
+    function render() {
+        if (!current) return;
+        const d = current;
+        $('city-name').textContent = d.name;
+        $('country').textContent = d.country;
+        $('temp').textContent = conv(d.temp);
+        document.querySelector('.unit').textContent = fahrenheit ? '°F' : '°C';
+        $('weather-desc').textContent = COND[d.cond][0];
+        $('weather-icon').textContent = COND[d.cond][1];
+        $('humidity').textContent = d.hum + '%';
+        $('wind').textContent = d.wind + ' km/h';
+        $('feels-like').textContent = conv(d.temp - d.wind / 12) + (fahrenheit ? '°F' : '°C');
+        document.body.dataset.cond = d.cond;
+    }
     function getWeather(city) {
-        // Em um app real, aqui viria o fetch para a API (OpenWeatherMap por exemplo)
-        // const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=pt_br`);
-
-        // Simulando a resposta para exibição da interface
-        console.log(`Buscando clima para: ${city}`);
-
-        // Simulação de dados
-        const simulatedData = {
-            name: city,
-            sys: { country: 'BR' },
-            main: { temp: (Math.random() * 20 + 15).toFixed(1), humidity: Math.floor(Math.random() * 50 + 40), feels_like: (Math.random() * 20 + 15).toFixed(1) },
-            wind: { speed: (Math.random() * 20).toFixed(1) },
-            weather: [{ description: 'Céu limpo', icon: '☀️' }]
-        };
-
-        updateUI(simulatedData);
+        current = lookup(city);
+        const card = $('weather-card');
+        card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash');
+        render();
     }
-
-    function updateUI(data) {
-        cityNameEl.textContent = data.name;
-        countryEl.textContent = data.sys.country;
-        tempEl.textContent = data.main.temp;
-        descEl.textContent = data.weather[0].description;
-        humidityEl.textContent = `${data.main.humidity}%`;
-        windEl.textContent = `${data.wind.speed} km/h`;
-        feelsLikeEl.textContent = `${data.main.feels_like}°C`;
-        iconEl.textContent = data.weather[0].icon;
-    }
+    $('search-form').addEventListener('submit', e => {
+        e.preventDefault();
+        const c = cityInput.value.trim();
+        if (c) { getWeather(c); cityInput.blur(); }
+    });
+    document.querySelectorAll('.city-chip').forEach(ch => ch.addEventListener('click', () => { cityInput.value = ''; getWeather(ch.dataset.city); }));
+    $('unit-toggle').addEventListener('click', () => {
+        fahrenheit = !fahrenheit; try { localStorage.setItem('climaF', fahrenheit ? '1' : '0'); } catch (e) {}
+        render();
+    });
+    getWeather('São Paulo');
 });

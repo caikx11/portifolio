@@ -120,6 +120,17 @@ class FlowchartGenerator {
         this.canvas.addEventListener('mousemove', (e) => this.handleMouseMove(e));
         this.canvas.addEventListener('mouseup', (e) => this.handleMouseUp(e));
 
+        // Toque/clique: coloca a forma selecionada no painel (útil em telas sem arrastar e soltar)
+        this.canvas.addEventListener('click', (e) => {
+            const active = document.querySelector('.shape-btn.active');
+            if (!active || e.target !== this.canvas) return;
+            const rect = this.canvas.getBoundingClientRect();
+            const x = Math.round((e.clientX - rect.left - 50) / this.gridSize) * this.gridSize;
+            const y = Math.round((e.clientY - rect.top - 30) / this.gridSize) * this.gridSize;
+            this.addShape(active.dataset.shapeType, Math.max(0, x), Math.max(0, y));
+            active.classList.remove('active');
+        });
+
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => this.handleKeyDown(e));
     }
@@ -136,10 +147,10 @@ class FlowchartGenerator {
             shapeBtn.title = shapeDef.name;
 
             const svgContainer = document.createElement('div');
-            svgContainer.innerHTML = shapeDef.svg;
+            svgContainer.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60">' + shapeDef.svg + '</svg>';
             const svgEl = svgContainer.firstElementChild;
             if (svgEl) {
-                svgEl.setAttribute('style', 'fill: var(--primary-color); width: 28px; height: 28px;');
+                svgEl.setAttribute('style', 'fill: var(--primary-color); width: 40px; height: 26px;');
             }
             shapeBtn.appendChild(svgEl);
 

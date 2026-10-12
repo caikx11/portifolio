@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão de Projetos Kanban</title>
-    <link href="https://cdn.syncfusion.com/ej2/23.2.4/ej2-base/styles/material.css" rel="stylesheet">
-    <link href="https://cdn.syncfusion.com/ej2/23.2.4/ej2-inputs/styles/material.css" rel="stylesheet">
-    <link href="https://cdn.syncfusion.com/ej2/23.2.4/ej2-popups/styles/material.css" rel="stylesheet">
-    <link href="https://cdn.syncfusion.com/ej2/23.2.4/ej2-buttons/styles/material.css" rel="stylesheet">
-    <link href="https://cdn.syncfusion.com/ej2/23.2.4/ej2-layouts/styles/material.css" rel="stylesheet">
-    <link href="https://cdn.syncfusion.com/ej2/23.2.4/ej2-navigations/styles/material.css" rel="stylesheet">
-    <link href="https://cdn.syncfusion.com/ej2/23.2.4/ej2-kanban/styles/material.css" rel="stylesheet">
+    <title>ProManager Kanban</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
-            <h1>ProManager - Sistema de Gestão de Projetos</h1>
-            <p>Kanban Board para fluxo de trabalho profissional</p>
+            <div>
+                <h1>ProManager</h1>
+                <p>Quadro Kanban para o fluxo de trabalho da equipe</p>
+            </div>
+            <form id="card-form" class="card-form" autocomplete="off">
+                <input id="card-title" type="text" placeholder="Nova tarefa..." required maxlength="90" aria-label="Título da tarefa">
+                <select id="card-priority" aria-label="Prioridade">
+                    <option>Alta</option><option selected>Média</option><option>Baixa</option>
+                </select>
+                <button type="submit">Adicionar</button>
+            </form>
         </header>
-
-        <div id="Kanban"></div>
-
-        <footer>
-            <p>Desenvolvido com Syncfusion Kanban Board</p>
-        </footer>
+        <div class="summary" id="summary"></div>
+        <div id="Kanban" class="board" role="list"></div>
+        <footer><p>Arraste os cartões entre colunas ou use o seletor “Mover para”. Os dados ficam salvos no navegador.</p></footer>
     </div>
-
-    <script src="https://cdn.syncfusion.com/ej2/23.2.4/dist/ej2.min.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

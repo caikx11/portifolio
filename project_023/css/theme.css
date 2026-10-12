@@ -1,0 +1,16 @@
+/* Tema visual: Quiz Pop (Fredoka + Nunito) */
+:root{--primary-color:#7c3aed;--primary-dark:#5b21b6;--primary-light:#a78bfa;--secondary-color:#f59e0b;--secondary-dark:#d97706;--secondary-light:#fcd34d;--accent-color:#ec4899;--accent-dark:#be185d;--accent-light:#f9a8d4;--font-display:'Fredoka',system-ui,sans-serif;--font-sans:'Nunito',system-ui,sans-serif;--font-mono:'JetBrains Mono','Courier New',monospace;}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:radial-gradient(circle at 15% 10%,#fde68a 0,transparent 35%),radial-gradient(circle at 90% 20%,#fbcfe8 0,transparent 35%),#f3e8ff;background-attachment:fixed;overflow-x:hidden}
+h1,h2,h3,h4{font-family:var(--font-display)}
+img,canvas,svg,table{max-width:100%}
+button,.btn,select,input,textarea{font-family:inherit}
+button,[role=button],a{transition:transform .2s ease,box-shadow .2s ease,background-color .2s ease,color .2s ease,border-color .2s ease}
+button:not(:disabled):hover{transform:translateY(-1px)}
+button:not(:disabled):active{transform:translateY(0)}
+:focus-visible{outline:3px solid var(--secondary-light);outline-offset:2px}
+.back-portfolio{position:fixed;left:10px;bottom:10px;z-index:9999;padding:.4rem .75rem;border-radius:999px;font:600 .78rem/1 var(--font-sans);text-decoration:none;color:#fff;background:rgba(15,23,42,.78);backdrop-filter:blur(6px);box-shadow:0 2px 10px rgba(0,0,0,.25);opacity:.8}
+.back-portfolio:hover{opacity:1;transform:translateY(-2px)}
+button{font-family:var(--font-display)}
+@media(max-width:600px){.back-portfolio{font-size:.72rem;padding:.35rem .6rem}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}

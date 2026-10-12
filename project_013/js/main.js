@@ -132,15 +132,11 @@ class ReservationApp {
         });
 
         // Calendar navigation
-        document.getElementById('prev-month').addEventListener('click', () => {
-            this.navigateMonth(-1);
+        document.getElementById('calendar').addEventListener('click', (e) => {
+            if (e.target.closest('#prev-month')) this.navigateMonth(-1);
+            else if (e.target.closest('#next-month')) this.navigateMonth(1);
         });
 
-        document.getElementById('next-month').addEventListener('click', () => {
-            this.navigateMonth(1);
-        });
-
-        // Confirmation button
         document.getElementById('confirm-btn').addEventListener('click', () => {
             this.confirmReservation();
         });

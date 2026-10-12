@@ -1,0 +1,43 @@
+/* 044 Fluxogramas - quadro branco com marcadores coloridos */
+:root,:root:root{
+  --primary-color:#118ab2;--primary-dark:#0b6a8a;--primary-light:#4fb3d4;--primary-accent:#9bd6ea;
+  --connection-color:#ef476f;--connection-dark:#c2284f;
+  --bg-main:#f1efe8;--bg-card:#fffffc;--bg-card-hover:#faf8ef;--bg-input:#fbfaf3;--bg-muted:#f1efe8;--bg-canvas:#fffffc;
+  --text-primary:#2b2d42;--text-secondary:#5a5d78;--text-muted:#8a8da6;
+  --border-color:#dcd8c8;--border-focus:#118ab2;--border-grid:#e8e4d4;
+  --font-sans:'Nunito',system-ui,sans-serif;--font-display:'Patrick Hand','Nunito',cursive;
+  --bk-bg:#2b2d42;--bk-fg:#ffd166;
+}
+html{background:#f1efe8}
+body{font-family:'Nunito',system-ui,sans-serif;color:#2b2d42;overflow-x:hidden;background:radial-gradient(circle at 1px 1px,#d5d0bb 1px,transparent 0) 0 0/20px 20px,#f1efe8}
+body::before,body::after{display:none}
+.container{width:100%;max-width:1500px;margin:0 auto;padding:3rem 12px 12px}
+h1{font-family:'Patrick Hand',cursive;font-weight:400;font-size:clamp(2rem,6vw,3rem);color:#2b2d42}
+h1::after{background:linear-gradient(90deg,#ef476f,#ffd166,#06d6a0,#118ab2)!important;width:120px!important;height:5px!important;box-shadow:none!important}
+h2{font-family:'Patrick Hand',cursive;font-weight:400;font-size:1.4rem}
+.sidebar,.canvas-wrapper,.properties-panel{border:2px solid #2b2d42;border-radius:14px;box-shadow:4px 4px 0 #2b2d42}
+.shape-panel{grid-template-columns:repeat(auto-fill,minmax(80px,1fr))!important}
+.shape-btn{width:auto!important;height:auto!important;min-height:72px;cursor:grab;border:2px dashed #b9b49a;border-radius:12px;transition:transform .15s,border-color .15s,background .15s}
+.shape-btn:hover{transform:translateY(-3px) rotate(-1deg);border-color:#118ab2}
+.shape-btn.active{border-style:solid;border-color:#ef476f;background:#fff0f3}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px}
+.toolbar button,.properties-panel button{font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer;border-radius:10px;transition:transform .15s}
+.toolbar button:hover{transform:translateY(-2px)}
+:focus-visible{outline:3px solid #ef476f;outline-offset:2px}
+.canvas{min-height:420px}
+.hint-tap{font-size:.85rem;color:#5a5d78;margin:.5rem 0 0}
+@media (max-width:900px){
+  main{flex-direction:column!important}
+  .sidebar,.properties-panel{width:100%!important;max-height:none!important}
+  .canvas-wrapper{width:100%;min-width:0}
+  .canvas{min-height:360px}
+}
+@media (max-width:480px){.container{padding:3rem 8px 8px}.canvas-wrapper{padding:.75rem!important}}
+.back-link{position:fixed;top:10px;left:10px;z-index:9999;padding:5px 11px;font:600 12px/1.2 system-ui,sans-serif;text-decoration:none;color:var(--bk-fg,#fff);background:var(--bk-bg,rgba(20,20,30,.72));border:1px solid var(--bk-bd,rgba(255,255,255,.25));border-radius:999px;backdrop-filter:blur(6px);opacity:.8;transition:opacity .2s,transform .2s}
+.back-link:hover,.back-link:focus-visible{opacity:1;transform:translateX(-2px);outline:2px solid currentColor;outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+:root,:root:root{--accent-error:#ef476f;--accent-success:#06a77d;--accent-data:#7b5cd6;--accent-warning:#e9a100;--accent-info:#118ab2}
+.shape-btn svg{width:40px;height:26px;filter:none}
+header h1{font-family:'Patrick Hand',cursive;-webkit-text-fill-color:#2b2d42;background:none;color:#2b2d42}
+header h1{left:auto;transform:none;display:block;text-align:center}
+header{background:#fffffc!important;border:2px solid #2b2d42;border-radius:14px;box-shadow:4px 4px 0 #2b2d42}

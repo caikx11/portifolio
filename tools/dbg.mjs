@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+const b=await chromium.launch({executablePath:process.env.CHROME});
+const p=await (await b.newContext({viewport:{width:390,height:844}})).newPage();
+p.on('pageerror',e=>console.log('ERR',e.message));
+await p.goto('http://localhost:8080/project_045/index.html');
+await p.evaluate(()=>localStorage.clear());await p.reload();
+await p.click('.component-item >> nth=2');
+console.log(await p.evaluate(()=>simulator.selectedComponentId));
+const box=await p.locator('#canvas').boundingBox();console.log(box, await p.evaluate(()=>[canvas.width,canvas.height]));
+await p.mouse.click(box.x+80,box.y+100);
+console.log(await p.evaluate(()=>simulator.components.length));
+await b.close();

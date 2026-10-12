@@ -3,64 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicativo de Controle de Hábitos Avançado</title>
+    <title>Hábito Solar</title>
+    <meta name="description" content="Acompanhe hábitos diários, metas, sequências e recompensas.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Controle de Hábitos Avançado</h1>
-        <div class="habit-form">
-            <h2>Adicionar Novo Hábito</h2>
-            <div class="form-group">
-                <label for="habit-name">Nome do Hábito:</label>
-                <input type="text" id="habit-name" placeholder="Ex: Ler 20 páginas, Fazer exercícios">
-            </div>
-            <div class="form-group">
-                <label for="habit-category">Categoria:</label>
-                <select id="habit-category">
-                    <option value="saude">Saúde</option>
-                    <option value="produtividade">Produtividade</option>
-                    <option value="aprendizado">Aprendizado</option>
-                    <option value="bem-estar">Bem-estar</option>
-                    <option value="financas">Finanças</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="habit-goal">Meta Diária:</label>
-                <input type="number" id="habit-goal" min="1" placeholder="Ex: 1 vez, 30 minutos">
-            </div>
-            <div class="form-group">
-                <label for="habit-reward">Recompensa:</label>
-                <input type="text" id="habit-reward" placeholder="Ex: Assistir episódio, Doce especial">
-            </div>
-            <button id="add-habit-btn">Adicionar Hábito</button>
-        </div>
+    <a class="back-link" href="../index.html">← Portfólio</a>
+    <main class="container">
+        <header class="hero">
+            <p class="kicker" id="today-label"></p>
+            <h1>Hábito Solar</h1>
+            <p class="lede">Pequenos gestos, todos os dias. Cada hábito vira um sol que nasce quando a meta é cumprida.</p>
+        </header>
 
-        <div class="habits-list">
-            <h2>Meus Hábitos</h2>
-            <div id="habits-container">
-                <!-- Hábitos serão adicionados aqui dinamicamente -->
-            </div>
-        </div>
-
-        <div class="stats">
-            <h2>Estatísticas</h2>
+        <section class="stats" aria-label="Resumo">
             <div id="stats-container">
-                <div class="stat-box">
-                    <h3>Sequência Atual</h3>
-                    <p id="current-streak">0 dias</p>
+                <div class="stat-box"><h3>Sequência atual</h3><p id="current-streak">0 dias</p></div>
+                <div class="stat-box"><h3>Melhor sequência</h3><p id="best-streak">0 dias</p></div>
+                <div class="stat-box"><h3>Concluídos hoje</h3><p id="completed-today">0/0</p></div>
+            </div>
+        </section>
+
+        <section class="habit-form">
+            <h2>Novo hábito</h2>
+            <div class="form-grid">
+                <div class="form-group wide">
+                    <label for="habit-name">Nome</label>
+                    <input type="text" id="habit-name" maxlength="60" placeholder="Ex: Ler 20 páginas">
                 </div>
-                <div class="stat-box">
-                    <h3>Melhor Sequência</h3>
-                    <p id="best-streak">0 dias</p>
+                <div class="form-group">
+                    <label for="habit-category">Categoria</label>
+                    <select id="habit-category">
+                        <option value="saude">Saúde</option>
+                        <option value="produtividade">Produtividade</option>
+                        <option value="aprendizado">Aprendizado</option>
+                        <option value="bem-estar">Bem-estar</option>
+                        <option value="financas">Finanças</option>
+                    </select>
                 </div>
-                <div class="stat-box">
-                    <h3>Hábitos Concluídos Hoje</h3>
-                    <p id="completed-today">0</p>
+                <div class="form-group">
+                    <label for="habit-goal">Meta diária (vezes)</label>
+                    <input type="number" id="habit-goal" min="1" max="20" placeholder="1">
+                </div>
+                <div class="form-group wide">
+                    <label for="habit-reward">Recompensa</label>
+                    <input type="text" id="habit-reward" maxlength="60" placeholder="Ex: um episódio da série">
                 </div>
             </div>
-        </div>
-    </div>
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+            <button id="add-habit-btn" type="button">Plantar hábito</button>
+        </section>
+
+        <section class="habits-list">
+            <h2>Meus hábitos</h2>
+            <div id="habits-container"></div>
+        </section>
+    </main>
     <script src="js/main.js"></script>
 </body>
 </html>

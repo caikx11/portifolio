@@ -3,39 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicativo de Receitas com Modo Offline</title>
+    <title>Caderno de Receitas</title>
+    <meta name="description" content="Receitas com busca, favoritas e modo offline via service worker.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
-        <h1>Receitas com Modo Offline</h1>
+        <header class="hero">
+            <h1>Caderno de Receitas</h1>
+            <p class="lede">Sabores de casa, mesmo sem internet. Salve suas favoritas para cozinhar offline.</p>
+            <div class="status-indicator" role="status">
+                <span id="status-dot" class="online"></span>
+                <span id="status-text">Online</span>
+            </div>
+        </header>
+
         <div class="app-header">
             <div class="search-box">
-                <input type="text" id="search-input" placeholder="Buscar receitas...">
-                <button id="search-btn">Buscar</button>
-            </div>
-            <div class="status-indicator">
-                <span id="status-text">Online</span>
-                <span id="status-dot" class="online"></span>
+                <input type="search" id="search-input" placeholder="Buscar por nome ou ingrediente..." aria-label="Buscar receitas">
+                <button id="search-btn" type="button">Buscar</button>
             </div>
         </div>
 
-        <div class="tabs">
+        <div class="tabs" role="tablist">
             <button class="tab-btn active" data-tab="all">Todas</button>
             <button class="tab-btn" data-tab="favorites">Favoritas</button>
             <button class="tab-btn" data-tab="offline">Offline</button>
         </div>
 
         <div class="recipes-container" id="recipes-container">
-            <!-- Receitas serão carregadas aqui -->
             <div class="loading">Carregando receitas...</div>
         </div>
+    </div>
 
-        <div class="recipe-detail" id="recipe-detail" style="display: none;">
-            <button id="close-detail-btn">&times;</button>
-            <div class="recipe-content">
-                <!-- Detalhes da receita serão exibidos aqui -->
-            </div>
+    <div class="recipe-detail" id="recipe-detail" style="display: none;" role="dialog" aria-modal="true" aria-label="Detalhes da receita">
+        <div class="sheet">
+            <button id="close-detail-btn" aria-label="Fechar">&times;</button>
+            <div class="recipe-content"></div>
             <div class="recipe-actions">
                 <button id="toggle-favorite-btn">Adicionar aos Favoritos</button>
                 <button id="save-offline-btn">Salvar para Offline</button>

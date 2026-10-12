@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do List - Caio</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <meta name="description" content="Aplicativo de Gerenciamento de Tarefas com localStorage">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
             <h1>Gerenciador de Tarefas</h1>
@@ -16,7 +21,7 @@
 
         <main>
             <div class="input-section">
-                <input type="text" id="task-input" placeholder="Adicione uma nova tarefa...">
+                <input type="text" id="task-input" placeholder="Adicione uma nova tarefa..." aria-label="Nova tarefa" maxlength="120" autocomplete="off">
                 <button id="add-task-btn">Adicionar</button>
             </div>
 

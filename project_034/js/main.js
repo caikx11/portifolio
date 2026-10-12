@@ -1,263 +1,183 @@
-// Controle de Hábitos Avançado
+// Hábito Solar - controle de hábitos com metas diárias, sequências e recompensas
+const CATEGORIES = { saude: 'Saúde', produtividade: 'Produtividade', aprendizado: 'Aprendizado', 'bem-estar': 'Bem-estar', financas: 'Finanças' };
+
+function dayKey(d = new Date()) {
+    const x = new Date(d);
+    return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}-${String(x.getDate()).padStart(2, '0')}`;
+}
+function shiftDay(key, delta) {
+    const [y, m, d] = key.split('-').map(Number);
+    return dayKey(new Date(y, m - 1, d + delta));
+}
+function esc(t) {
+    const d = document.createElement('div');
+    d.textContent = t;
+    return d.innerHTML;
+}
+function load(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch (e) { return fallback; }
+}
+
 class HabitTracker {
     constructor() {
-        this.habits = JSON.parse(localStorage.getItem('habits')) || [];
-        this.completions = JSON.parse(localStorage.getItem('completions')) || {};
+        this.habits = load('habits', []);
+        this.counts = load('habit_counts_v2', null);
+        if (!this.counts) this.counts = this.migrate(load('completions', {}));
         this.init();
     }
 
+    migrate(old) {
+        const out = {};
+        Object.keys(old).forEach(id => {
+            const h = this.habits.find(x => String(x.id) === id);
+            out[id] = {};
+            (Array.isArray(old[id]) ? old[id] : []).forEach(dk => { out[id][dk] = h ? h.goal : 1; });
+        });
+        return out;
+    }
+
     init() {
-        this.renderHabits();
-        this.updateStats();
-        this.bindEvents();
-    }
-
-    bindEvents() {
+        document.getElementById('today-label').textContent = new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
         document.getElementById('add-habit-btn').addEventListener('click', () => this.addHabit());
-
-        // Permitir adicionar hábito com Enter
-        document.getElementById('habit-name').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.addHabit();
+        ['habit-name', 'habit-goal', 'habit-reward'].forEach(id =>
+            document.getElementById(id).addEventListener('keydown', e => { if (e.key === 'Enter') this.addHabit(); }));
+        document.getElementById('habits-container').addEventListener('click', e => {
+            const b = e.target.closest('button[data-act]');
+            if (!b) return;
+            const id = Number(b.dataset.id);
+            if (b.dataset.act === 'inc') this.bump(id, 1);
+            if (b.dataset.act === 'dec') this.bump(id, -1);
+            if (b.dataset.act === 'del') this.deleteHabit(id);
+            if (b.dataset.act === 'edit') this.editHabit(id);
         });
-        document.getElementById('habit-goal').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.addHabit();
-        });
-        document.getElementById('habit-reward').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.addHabit();
-        });
+        this.render();
     }
+
+    save() {
+        localStorage.setItem('habits', JSON.stringify(this.habits));
+        localStorage.setItem('habit_counts_v2', JSON.stringify(this.counts));
+    }
+
+    count(id, key = dayKey()) { return (this.counts[id] && this.counts[id][key]) || 0; }
+    done(h, key = dayKey()) { return this.count(h.id, key) >= h.goal; }
 
     addHabit() {
         const name = document.getElementById('habit-name').value.trim();
-        const category = document.getElementById('habit-category').value;
-        const goal = parseInt(document.getElementById('habit-goal').value) || 1;
-        const reward = document.getElementById('habit-reward').value.trim();
-
+        const err = document.getElementById('form-error');
         if (!name) {
-            alert('Por favor, digite o nome do hábito');
+            err.textContent = 'Dê um nome ao hábito para plantá-lo.';
+            err.hidden = false;
+            document.getElementById('habit-name').focus();
             return;
         }
-
-        const habit = {
-            id: Date.now(),
-            name,
-            category,
-            goal,
-            reward,
+        err.hidden = true;
+        this.habits.push({
+            id: Date.now(), name,
+            category: document.getElementById('habit-category').value,
+            goal: Math.min(20, Math.max(1, parseInt(document.getElementById('habit-goal').value, 10) || 1)),
+            reward: document.getElementById('habit-reward').value.trim(),
             createdAt: new Date().toISOString()
-        };
-
-        this.habits.push(habit);
-        this.saveHabits();
-        this.renderHabits();
-
-        // Limpar formulário
-        document.getElementById('habit-name').value = '';
-        document.getElementById('habit-goal').value = '';
-        document.getElementById('habit-reward').value = '';
-        document.getElementById('habit-category').selectedIndex = 0;
+        });
+        this.save();
+        ['habit-name', 'habit-goal', 'habit-reward'].forEach(id => { document.getElementById(id).value = ''; });
+        this.render();
     }
 
-    toggleHabitCompletion(habitId, date) {
-        const dateKey = date || new Date().toISOString().split('T')[0];
-        if (!this.completions[habitId]) {
-            this.completions[habitId] = [];
-        }
+    bump(id, delta) {
+        const h = this.habits.find(x => x.id === id);
+        if (!h) return;
+        const key = dayKey();
+        this.counts[id] = this.counts[id] || {};
+        const n = Math.max(0, Math.min(h.goal, this.count(id) + delta));
+        if (n === 0) delete this.counts[id][key]; else this.counts[id][key] = n;
+        this.save();
+        this.render();
+    }
 
-        const index = this.completions[habitId].indexOf(dateKey);
-        if (index === -1) {
-            this.completions[habitId].push(dateKey);
+    editHabit(id) {
+        const h = this.habits.find(x => x.id === id);
+        const name = h && prompt('Novo nome do hábito:', h.name);
+        if (name && name.trim()) { h.name = name.trim().slice(0, 60); this.save(); this.render(); }
+    }
+
+    deleteHabit(id) {
+        if (!confirm('Excluir este hábito?')) return;
+        this.habits = this.habits.filter(h => h.id !== id);
+        delete this.counts[id];
+        this.save();
+        this.render();
+    }
+
+    streak(h) {
+        let key = dayKey();
+        if (!this.done(h, key)) key = shiftDay(key, -1);
+        let n = 0;
+        while (this.done(h, key)) { n++; key = shiftDay(key, -1); }
+        return n;
+    }
+
+    bestStreak(h) {
+        const days = Object.keys(this.counts[h.id] || {}).filter(k => this.done(h, k)).sort();
+        let best = 0, cur = 0, prev = null;
+        days.forEach(k => {
+            cur = prev && shiftDay(prev, 1) === k ? cur + 1 : 1;
+            best = Math.max(best, cur);
+            prev = k;
+        });
+        return best;
+    }
+
+    weekDots(h) {
+        const today = dayKey();
+        let html = '';
+        for (let i = 6; i >= 0; i--) {
+            const k = shiftDay(today, -i);
+            const [y, m, d] = k.split('-').map(Number);
+            const lbl = new Date(y, m - 1, d).toLocaleDateString('pt-BR', { weekday: 'narrow' });
+            html += `<span class="dot ${this.done(h, k) ? 'on' : this.count(h.id, k) ? 'half' : ''} ${i === 0 ? 'today' : ''}" title="${k}">${lbl}</span>`;
+        }
+        return html;
+    }
+
+    render() {
+        const box = document.getElementById('habits-container');
+        if (!this.habits.length) {
+            box.innerHTML = '<p class="empty-state">Nenhum hábito ainda. Plante o primeiro acima e veja o sol nascer.</p>';
         } else {
-            this.completions[habitId].splice(index, 1);
+            box.innerHTML = this.habits.map(h => {
+                const c = this.count(h.id), ok = c >= h.goal, pct = Math.round(c / h.goal * 100);
+                return `
+                <article class="habit-item ${ok ? 'completed' : ''}">
+                    <div class="sun" aria-hidden="true" style="--p:${pct}"></div>
+                    <div class="habit-info">
+                        <div class="habit-name">${esc(h.name)}</div>
+                        <div class="habit-details"><span class="chip cat-${h.category}">${CATEGORIES[h.category] || esc(h.category)}</span><span>Meta ${h.goal}x/dia</span></div>
+                        <div class="habit-progress">
+                            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+                            <div class="progress-text">${c}/${h.goal}</div>
+                        </div>
+                        <div class="week" aria-label="Últimos 7 dias">${this.weekDots(h)}</div>
+                        <div class="habit-stats"><small>Sequência ${this.streak(h)} d · Melhor ${this.bestStreak(h)} d</small></div>
+                        ${ok && h.reward ? `<div class="reward">Recompensa liberada: ${esc(h.reward)}</div>` : ''}
+                    </div>
+                    <div class="habit-actions">
+                        <button class="btn-small btn-complete" data-act="inc" data-id="${h.id}" ${ok ? 'disabled' : ''}>${h.goal > 1 ? '+1' : 'Concluir'}</button>
+                        <button class="btn-small" data-act="dec" data-id="${h.id}" ${c ? '' : 'disabled'} aria-label="Desfazer um">Desfazer</button>
+                        <button class="btn-small" data-act="edit" data-id="${h.id}">Editar</button>
+                        <button class="btn-small btn-delete" data-act="del" data-id="${h.id}">Excluir</button>
+                    </div>
+                </article>`;
+            }).join('');
         }
-
-        this.saveCompletions();
-        this.renderHabits();
         this.updateStats();
     }
 
-    deleteHabit(habitId) {
-        if (confirm('Tem certeza que deseja excluir este hábito?')) {
-            this.habits = this.habits.filter(h => h.id !== habitId);
-            delete this.completions[habitId];
-            this.saveHabits();
-            this.saveCompletions();
-            this.renderHabits();
-            this.updateStats();
-        }
-    }
-
-    getCompletionCount(habitId, date) {
-        const dateKey = date || new Date().toISOString().split('T')[0];
-        return this.completions[habitId] && this.completions[habitId].includes(dateKey) ? 1 : 0;
-    }
-
-    getStreak(habitId) {
-        const completions = this.completions[habitId] || [];
-        if (completions.length === 0) return 0;
-
-        // Ordenar datas
-        const sortedDates = [...completions].sort((a, b) => new Date(b) - new Date(a));
-
-        let streak = 0;
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        for (let i = 0; i < sortedDates.length; i++) {
-            const checkDate = new Date(sortedDates[i]);
-            checkDate.setHours(0, 0, 0, 0);
-
-            const diffTime = today - checkDate;
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-            if (diffDays === i) {
-                streak++;
-            } else {
-                break;
-            }
-        }
-
-        return streak;
-    }
-
-    getBestStreak(habitId) {
-        const completions = this.completions[habitId] || [];
-        if (completions.length === 0) return 0;
-
-        // Ordenar datas
-        const sortedDates = [...completions].sort((a, b) => new Date(a) - new Date(b));
-
-        let maxStreak = 0;
-        let currentStreak = 0;
-        let prevDate = null;
-
-        for (const dateStr of sortedDates) {
-            const currentDate = new Date(dateStr);
-
-            if (prevDate === null) {
-                currentStreak = 1;
-            } else {
-                const diffTime = currentDate - prevDate;
-                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-
-                if (diffDays === 1) {
-                    currentStreak++;
-                } else {
-                    maxStreak = Math.max(maxStreak, currentStreak);
-                    currentStreak = 1;
-                }
-            }
-
-            prevDate = currentDate;
-        }
-
-        return Math.max(maxStreak, currentStreak);
-    }
-
-    getTodayCompletionCount() {
-        const today = new Date().toISOString().split('T')[0];
-        let count = 0;
-
-        for (const habitId in this.completions) {
-            if (this.completions[habitId] && this.completions[habitId].includes(today)) {
-                count++;
-            }
-        }
-
-        return count;
-    }
-
-    saveHabits() {
-        localStorage.setItem('habits', JSON.stringify(this.habits));
-    }
-
-    saveCompletions() {
-        localStorage.setItem('completions', JSON.stringify(this.completions));
-    }
-
-    renderHabits() {
-        const container = document.getElementById('habits-container');
-
-        if (this.habits.length === 0) {
-            container.innerHTML = '<p class="empty-state">Nenhum hábito adicionado. Comece adicionando seu primeiro hábito acima!</p>';
-            return;
-        }
-
-        container.innerHTML = this.habits.map(habit => {
-            const completedToday = this.getCompletionCount(habit.id);
-            const streak = this.getStreak(habit.id);
-            const bestStreak = this.getBestStreak(habit.id);
-
-            return `
-                <div class="habit-item ${completedToday ? 'completed' : ''}" data-habit-id="${habit.id}">
-                    <div class="habit-info">
-                        <div class="habit-name">${habit.name}</div>
-                        <div class="habit-details">
-                            <span>${this.getCategoryLabel(habit.category)}</span>
-                            <span>Meta: ${habit.goal}x/dia</span>
-                        </div>
-                        <div class="habit-progress">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: ${completedToday >= habit.goal ? '100%' : '0%'}"></div>
-                            </div>
-                            <div class="progress-text">${completedToday}/${habit.goal}</div>
-                        </div>
-                    </div>
-                    <div class="habit-actions">
-                        <button class="btn-small btn-complete" onclick="habitTracker.toggleHabitCompletion(${habit.id})">
-                            ${completedToday ? 'Desfez' : 'Concluir'}
-                        </button>
-                        <button class="btn-small btn-edit" onclick="alert('Em desenvolvimento')">Editar</button>
-                        <button class="btn-small btn-delete" onclick="habitTracker.deleteHabit(${habit.id})">Excluir</button>
-                    </div>
-                    <div class="habit-stats">
-                        <small>Sequência: ${streak} dias | Melhor: ${bestStreak} dias</small>
-                    </div>
-                </div>
-            `;
-        }).join('');
-    }
-
     updateStats() {
-        const todayCompleted = this.getTodayCompletionCount();
-        const totalHabits = this.habits.length;
-
-        // Calcular melhor sequência geral
-        let bestOverallStreak = 0;
-        for (const habit of this.habits) {
-            const streak = this.getBestStreak(habit.id);
-            if (streak > bestOverallStreak) {
-                bestOverallStreak = streak;
-            }
-        }
-
-        document.getElementById('completed-today').textContent = `${todayCompleted}/${totalHabits}`;
-        document.getElementById('best-streak').textContent = `${bestOverallStreak} dias`;
-
-        // Sequência atual (média ou hábito com maior sequência atual)
-        let currentStreak = 0;
-        for (const habit of this.habits) {
-            const streak = this.getStreak(habit.id);
-            if (streak > currentStreak) {
-                currentStreak = streak;
-            }
-        }
-        document.getElementById('current-streak').textContent = `${currentStreak} dias`;
-    }
-
-    getCategoryLabel(category) {
-        const categories = {
-            saude: 'Saúde',
-            produtividade: 'Produtividade',
-            aprendizado: 'Aprendizado',
-            'bem-estar': 'Bem-estar',
-            financas: 'Finanças'
-        };
-        return categories[category] || category;
+        const done = this.habits.filter(h => this.done(h)).length;
+        document.getElementById('completed-today').textContent = `${done}/${this.habits.length}`;
+        document.getElementById('best-streak').textContent = `${Math.max(0, ...this.habits.map(h => this.bestStreak(h)))} dias`;
+        document.getElementById('current-streak').textContent = `${Math.max(0, ...this.habits.map(h => this.streak(h)))} dias`;
     }
 }
 
-// Inicializar o aplicativo quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', () => {
-    window.habitTracker = new HabitTracker();
-});
+document.addEventListener('DOMContentLoaded', () => { window.habitTracker = new HabitTracker(); });

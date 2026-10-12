@@ -3,61 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo de Palavras Cruzadas</title>
+    <title>Cruzadinha do Dia</title>
+    <meta name="description" content="Palavras cruzadas com três níveis, dicas, cronômetro e pontuação.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:wght@400;600&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
-            <h1>Jogo de Palavras Cruzadas</h1>
-            <p>Teste seu vocabulário e raciocínio lógico</p>
+            <p class="dateline" id="dateline"></p>
+            <h1>Cruzadinha do Dia</h1>
+            <p class="lede">Teste seu vocabulário. Clique numa casa para escrever; clique de novo para trocar entre horizontal e vertical.</p>
         </header>
 
         <div class="game-controls">
             <div class="difficulty-selector">
-                <label for="difficulty">Dificuldade:</label>
+                <label for="difficulty">Nível</label>
                 <select id="difficulty">
                     <option value="fácil">Fácil</option>
                     <option value="médio" selected>Médio</option>
                     <option value="difícil">Difícil</option>
                 </select>
             </div>
-            <button id="new-game-btn">Novo Jogo</button>
-            <button id="check-btn" disabled>Verificar Resposta</button>
-            <button id="reveal-btn" disabled>Mostrar Solução</button>
-            <button id="hint-btn" disabled>Dica</button>
+            <button id="new-game-btn" type="button">Novo jogo</button>
+            <button id="hint-btn" type="button" disabled>Dica (-5)</button>
+            <button id="check-btn" type="button" disabled>Verificar</button>
+            <button id="reveal-btn" type="button" disabled>Solução</button>
         </div>
 
-        <div class="game-info">
+        <div class="game-info" aria-live="polite">
             <div id="timer">Tempo: 00:00</div>
             <div id="score">Pontuação: 0</div>
-            <div id="words-found">Palavras encontradas: 0/0</div>
+            <div id="words-found">Palavras: 0/0</div>
         </div>
 
-        <div class="crossword-container">
-            <div id="crossword-grid"></div>
-        </div>
-
-        <div class="clue-panel">
-            <div class="clues-section">
-                <h3>Clues na Horizontal</h3>
-                <ul id="across-clues"></ul>
+        <div class="layout">
+            <div class="crossword-container">
+                <div id="crossword-grid" role="grid" aria-label="Grade de palavras cruzadas"></div>
             </div>
-            <div class="clues-section">
-                <h3>Clues na Vertical</h3>
-                <ul id="down-clues"></ul>
+            <div class="clue-panel">
+                <div class="active-clue" id="active-clue" aria-live="polite">Selecione uma casa</div>
+                <div class="clues-section">
+                    <h3>Horizontais</h3>
+                    <ul id="across-clues"></ul>
+                </div>
+                <div class="clues-section">
+                    <h3>Verticais</h3>
+                    <ul id="down-clues"></ul>
+                </div>
             </div>
         </div>
 
-        <div id="game-overlay" class="hidden">
+        <div id="game-overlay" class="hidden" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
             <div id="game-over-message">
-                <h2>Parabéns!</h2>
+                <h2 id="overlay-title">Parabéns!</h2>
                 <p id="final-message"></p>
-                <button id="play-again-btn">Jogar Novamente</button>
+                <button id="play-again-btn" type="button">Jogar novamente</button>
             </div>
         </div>
     </div>
 
+    <script src="js/puzzles.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

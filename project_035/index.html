@@ -3,48 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Investimentos</title>
+    <title>Cofre Futuro</title>
+    <meta name="description" content="Simulador de juros compostos com aportes mensais, gráfico e tabela anual.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Simulador de Investimentos</h1>
-        <div class="input-section">
-            <h2>Parâmetros do Investimento</h2>
-            <div class="form-group">
-                <label for="initial-investment">Investimento Inicial (R$):</label>
-                <input type="number" id="initial-investment" min="0" placeholder="Ex: 10000">
-            </div>
-            <div class="form-group">
-                <label for="monthly-contribution">Aporte Mensal (R$):</label>
-                <input type="number" id="monthly-contribution" min="0" placeholder="Ex: 500">
-            </div>
-            <div class="form-group">
-                <label for="annual-rate">Taxa de Retorno Anual (%):</label>
-                <input type="number" id="annual-rate" min="0" step="0.1" placeholder="Ex: 10.5">
-            </div>
-            <div class="form-group">
-                <label for="years">Período (anos):</label>
-                <input type="number" id="years" min="1" placeholder="Ex: 10">
-            </div>
-            <button id="calculate-btn">Calcular Simulação</button>
-        </div>
+    <a class="back-link" href="../index.html">← Portfólio</a>
+    <main class="container">
+        <header class="hero">
+            <p class="eyebrow">Simulador de investimentos</p>
+            <h1>Cofre <span>Futuro</span></h1>
+            <p class="lede">Veja o tempo transformar aportes pequenos em patrimônio com juros compostos.</p>
+        </header>
 
-        <div class="results-section">
-            <h2>Resultados da Simulação</h2>
-            <div id="summary-box" class="summary-box">
-                <!-- Resumo será exibido aqui -->
+        <section class="input-section">
+            <h2>Parâmetros</h2>
+            <div class="grid">
+                <div class="form-group">
+                    <label for="initial-investment">Investimento inicial (R$)</label>
+                    <input type="number" id="initial-investment" min="0" inputmode="decimal" value="10000" placeholder="Ex: 10000">
+                </div>
+                <div class="form-group">
+                    <label for="monthly-contribution">Aporte mensal (R$)</label>
+                    <input type="number" id="monthly-contribution" min="0" inputmode="decimal" value="500" placeholder="Ex: 500">
+                </div>
+                <div class="form-group">
+                    <label for="annual-rate">Retorno anual (%)</label>
+                    <input type="number" id="annual-rate" min="0" step="0.1" inputmode="decimal" value="10.5" placeholder="Ex: 10.5">
+                </div>
+                <div class="form-group">
+                    <label for="years">Período (anos)</label>
+                    <input type="number" id="years" min="1" max="60" inputmode="numeric" value="10" placeholder="Ex: 10">
+                </div>
             </div>
-            <div id="chart-container">
-                <!-- Gráfico será exibido aqui -->
-                <canvas id="investmentChart" width="400" height="200"></canvas>
-            </div>
-            <div id="table-container">
-                <!-- Tabela será exibida aqui -->
-            </div>
-        </div>
-    </div>
+            <p class="form-error" id="form-error" role="alert" hidden></p>
+            <button id="calculate-btn" type="button">Calcular simulação</button>
+        </section>
+
+        <section class="results-section" id="results">
+            <h2>Resultados</h2>
+            <div id="summary-box" class="summary-box"></div>
+            <div id="chart-container"><canvas id="investmentChart" aria-label="Evolução do patrimônio ao longo dos anos"></canvas></div>
+            <div id="table-container"></div>
+        </section>
+    </main>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="js/chart-shim.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

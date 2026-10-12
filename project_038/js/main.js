@@ -3,6 +3,7 @@ class QACommunity {
     constructor() {
         this.questions = JSON.parse(localStorage.getItem('qa_questions')) || this.getDefaultQuestions();
         this.currentQuestionId = null;
+        try { this.myVotes = JSON.parse(localStorage.getItem('qa_my_votes')) || {}; } catch (e) { this.myVotes = {}; }
         this.sortBy = 'newest';
         this.init();
     }
@@ -97,6 +98,20 @@ class QACommunity {
             }
         });
 
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') ['question-modal', 'detail-modal'].forEach(id => { document.getElementById(id).style.display = 'none'; });
+        });
+        document.getElementById('questions-list').addEventListener('click', (e) => {
+            const v = e.target.closest('.vote-btn');
+            if (v) { e.stopPropagation(); this.vote(v.dataset.target, parseInt(v.dataset.id, 10), v.dataset.vote === 'up' ? 1 : -1); return; }
+            const card = e.target.closest('.question-card');
+            if (card) this.showQuestionDetail(parseInt(card.dataset.questionId, 10));
+        });
+        document.getElementById('answers-list').addEventListener('click', (e) => {
+            const v = e.target.closest('.vote-btn');
+            if (v) this.vote('a', parseInt(v.dataset.id, 10), v.dataset.vote === 'up' ? 1 : -1);
+        });
+
         // Question form submit
         document.getElementById('question-form').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -115,17 +130,32 @@ class QACommunity {
         });
     }
 
+    vote(kind, id, dir) {
+        const q = kind === 'q' ? this.questions.find(x => x.id === id)
+            : this.questions.find(x => x.id === this.currentQuestionId).answers.find(a => a.id === id);
+        if (!q) return;
+        const key = kind + id;
+        const prev = this.myVotes[key] || 0;
+        const next = prev === dir ? 0 : dir;
+        q.votes += next - prev;
+        if (next) this.myVotes[key] = next; else delete this.myVotes[key];
+        localStorage.setItem('qa_my_votes', JSON.stringify(this.myVotes));
+        this.saveQuestions();
+        this.renderQuestions();
+        if (kind === 'a') this.showQuestionDetail(this.currentQuestionId, true);
+    }
+
     submitQuestion() {
         const title = document.getElementById('question-title').value.trim();
         const body = document.getElementById('question-body').value.trim();
         const tagsInput = document.getElementById('question-tags').value.trim();
 
         if (!title || !body) {
-            alert('Título e descrição são obrigatórios');
+            document.getElementById('question-title').reportValidity();
             return;
         }
 
-        const tags = tagsInput ? tagsInput.split(',').map(t => t.trim().toLowerCase()) : [];
+        const tags = tagsInput ? tagsInput.split(',').map(t => t.trim().toLowerCase()).filter(Boolean).slice(0, 6) : [];
 
         const newQuestion = {
             id: Date.now(),
@@ -151,12 +181,12 @@ class QACommunity {
         const container = document.getElementById('questions-list');
 
         // Sort questions
-        const sortedQuestions = [...this.questions].sort((a, b) => {
+        const sortedQuestions = [...this.questions].filter(q => this.sortBy !== 'unanswered' || q.answers.length === 0).sort((a, b) => {
             switch (this.sortBy) {
                 case 'votes':
                     return b.votes - a.votes;
                 case 'unanswered':
-                    return a.answers.length - b.answers.length;
+                    return new Date(b.createdAt) - new Date(a.createdAt);
                 case 'newest':
                 default:
                     return new Date(b.createdAt) - new Date(a.createdAt);
@@ -170,14 +200,7 @@ class QACommunity {
 
         container.innerHTML = sortedQuestions.map(question => this.createQuestionCard(question)).join('');
 
-        // Add click events to view answers
-        document.querySelectorAll('.view-answers-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const questionId = parseInt(btn.dataset.questionId);
-                this.showQuestionDetail(questionId);
-            });
-        });
+
     }
 
     createQuestionCard(question) {
@@ -190,9 +213,9 @@ class QACommunity {
                 <div class="question-header">
                     <h3 class="question-title">${this.escapeHtml(question.title)}</h3>
                     <div class="question-meta">
-                        <span>👤 ${question.author}</span>
-                        <span>📅 ${createdDate} às ${createdTime}</span>
-                        <span>💬 ${question.answers.length} respostas</span>
+                        <span>@${this.escapeHtml(question.author)}</span>
+                        <span>${createdDate} às ${createdTime}</span>
+                        <span>${question.answers.length} resposta${question.answers.length === 1 ? '' : 's'}</span>
                     </div>
                 </div>
                 <div class="question-tags">
@@ -202,9 +225,9 @@ class QACommunity {
                 <p class="question-body">${this.escapeHtml(question.body.substring(0, 150))}${question.body.length > 150 ? '...' : ''}</p>
                 <div class="question-footer">
                     <div class="vote-section">
-                        <button class="vote-btn" data-question-id="${question.id}" data-vote="up">▲</button>
+                        <button class="vote-btn ${this.myVotes['q' + question.id] === 1 ? 'voted' : ''}" data-target="q" data-id="${question.id}" data-vote="up" aria-label="Voto positivo">▲</button>
                         <span class="vote-count">${question.votes}</span>
-                        <button class="vote-btn" data-question-id="${question.id}" data-vote="down">▼</button>
+                        <button class="vote-btn ${this.myVotes['q' + question.id] === -1 ? 'voted' : ''}" data-target="q" data-id="${question.id}" data-vote="down" aria-label="Voto negativo">▼</button>
                     </div>
                     <button class="view-answers-btn" data-question-id="${question.id}">
                         Ver Respostas
@@ -214,7 +237,7 @@ class QACommunity {
         `;
     }
 
-    showQuestionDetail(questionId) {
+    showQuestionDetail(questionId, keepScroll) {
         const question = this.questions.find(q => q.id === questionId);
         if (!question) return;
 
@@ -232,9 +255,9 @@ class QACommunity {
             <div class="question-detail-card">
                 <h3 class="question-detail-title">${this.escapeHtml(question.title)}</h3>
                 <div class="question-detail-meta">
-                    <span>👤 ${question.author}</span>
-                    <span>📅 ${createdDate} às ${createdTime}</span>
-                    <span>💬 ${question.answers.length} respostas</span>
+                    <span>@${this.escapeHtml(question.author)}</span>
+                    <span>${createdDate} às ${createdTime}</span>
+                    <span>${question.answers.length} resposta${question.answers.length === 1 ? '' : 's'}</span>
                 </div>
                 <div class="question-detail-tags">
                     ${question.tags.map(tag => `<span class="tag">${this.escapeHtml(tag)}</span>`).join('')}
@@ -253,14 +276,10 @@ class QACommunity {
             answersContainer.innerHTML = sortedAnswers.map(answer => this.createAnswerCard(answer)).join('');
         }
 
-        // Reset answer textarea
-        answerTextarea.value = '';
+        if (!keepScroll) answerTextarea.value = '';
 
         // Show modal
         document.getElementById('detail-modal').style.display = 'flex';
-
-        // Update submit answer button
-        document.getElementById('submit-answer-btn').onclick = () => this.submitAnswer();
     }
 
     createAnswerCard(answer) {
@@ -271,16 +290,16 @@ class QACommunity {
             <div class="answer-card">
                 <div class="answer-header">
                     <div class="answer-meta">
-                        <span>👤 ${answer.author}</span>
-                        <span>📅 ${createdDate} às ${createdTime}</span>
+                        <span>@${this.escapeHtml(answer.author)}</span>
+                        <span>${createdDate} às ${createdTime}</span>
                     </div>
                 </div>
                 <div class="answer-body">${this.escapeHtml(answer.body)}</div>
                 <div class="answer-footer">
                     <div class="vote-section">
-                        <button class="vote-btn">▲</button>
+                        <button class="vote-btn ${this.myVotes['a' + answer.id] === 1 ? 'voted' : ''}" data-id="${answer.id}" data-vote="up" aria-label="Voto positivo">▲</button>
                         <span class="vote-count">${answer.votes}</span>
-                        <button class="vote-btn">▼</button>
+                        <button class="vote-btn ${this.myVotes['a' + answer.id] === -1 ? 'voted' : ''}" data-id="${answer.id}" data-vote="down" aria-label="Voto negativo">▼</button>
                     </div>
                 </div>
             </div>
@@ -292,7 +311,7 @@ class QACommunity {
 
         const body = document.getElementById('answer-body').value.trim();
         if (!body) {
-            alert('Por favor, escreva sua resposta');
+            document.getElementById('answer-body').focus();
             return;
         }
 
@@ -309,6 +328,7 @@ class QACommunity {
 
         question.answers.push(newAnswer);
         this.saveQuestions();
+        this.renderQuestions();
 
         // Re-render answers
         this.showQuestionDetail(this.currentQuestionId);

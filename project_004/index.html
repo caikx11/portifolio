@@ -4,83 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora - Calculadora Matemática</title>
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    <meta name="description" content="Calculadora matemática completa com operações básicas, cálculo científico e histórico de cálculos">
+    <meta name="description" content="Calculadora matemática com modo básico e científico, histórico e teclado">
 </head>
 <body>
+    <a class="back-link" href="../index.html">← Portfólio</a>
     <div class="container">
         <header>
-            <h1>Calculadora Matemática</h1>
-            <p class="subtitle">Calcule com precisão e potência</p>
+            <h1>Calculadora</h1>
+            <p class="subtitle">Básica e científica, com histórico</p>
         </header>
 
         <main>
-            <div class="display">
-                <div class="input-display" id="input-display">0</div>
-                <div class="result-display" id="result-display">0</div>
-            </div>
+            <div class="device">
+                <div class="display" aria-live="polite">
+                    <div class="result-display" id="result-display"></div>
+                    <div class="input-display" id="input-display">0</div>
+                </div>
 
-            <div class="buttons-grid">
-                <button class="btn btn-clear" data-action="clear">C</button>
-                <button class="btn btn-clear-all" data-action="clear-all">CE</button>
-                <button class="btn btn-operator" data-action="operator" data-value="%">%</button>
-                <button class="btn btn-operator" data-action="operator" data-value="÷">÷</button>
+                <div class="controls">
+                    <div class="mode-selector" role="group" aria-label="Modo">
+                        <button type="button" class="btn-mode active" data-mode="basic">Básica</button>
+                        <button type="button" class="btn-mode" data-mode="scientific">Científica</button>
+                    </div>
+                    <button type="button" class="btn-history-toggle" id="history-toggle" aria-expanded="false">Histórico</button>
+                </div>
 
-                <button class="btn btn-number" data-value="7">7</button>
-                <button class="btn btn-number" data-value="8">8</button>
-                <button class="btn btn-number" data-value="9">9</button>
-                <button class="btn btn-operator" data-action="operator" data-value="*">×</button>
-
-                <button class="btn btn-number" data-value="4">4</button>
-                <button class="btn btn-number" data-value="5">5</button>
-                <button class="btn btn-number" data-value="6">6</button>
-                <button class="btn btn-operator" data-action="operator" data-value="-">-</button>
-
-                <button class="btn btn-number" data-value="1">1</button>
-                <button class="btn btn-number" data-value="2">2</button>
-                <button class="btn btn-number" data-value="3">3</button>
-                <button class="btn btn-operator" data-action="operator" data-value="+">+</button>
-
-                <button class="btn btn-number" data-value="0">0</button>
-                <button class="btn btn-number" data-value=".">.</button>
-                <button class="btn btn-action special" data-action="action" data-value="backspace">⌫</button>
-                <button class="btn btn-operator" data-action="operator" data-value="=">=</button>
-
-                <button class="btn btn-number" data-value="(">(</button>
-                <button class="btn btn-number" data-value=")">)</button>
-                <button class="btn btn-operator" data-action="operator" data-value="^">^</button>
-                <button class="btn btn-action special" data-action="action" data-value="sin">sin</button>
-
-                <button class="btn btn-operator" data-action="operator" data-value="(">
-                <button class="btn btn-operator" data-action="operator" data-value="tan">tan</button>
-                <button class="btn btn-operator" data-action="operator" data-value=",">,
-                <button class="btn btn-action special" data-action="action" data-value="deg">deg</button>
-                <button class="btn btn-action special" data-action="action" data-value="fact">n!</button>
-
-                <button class="btn btn-history" data-action="history">📜</button>
-            </div>
-
-            <div class="controls">
-                <button class="btn btn-history-toggle" id="history-toggle">Histórico</button>
-                <div class="mode-selector">
-                    <button class="btn btn-mode active" data-mode="basic">Básica</button>
-                    <button class="btn btn-mode" data-mode="scientific">Científica</button>
+                <div class="keys">
+                    <div class="sci-grid" id="sci-grid">
+                <button type="button" class="key key-sci" data-key="sin(">sin</button>
+                <button type="button" class="key key-sci" data-key="cos(">cos</button>
+                <button type="button" class="key key-sci" data-key="tan(">tan</button>
+                <button type="button" class="key key-sci key-deg" data-key="deg">deg</button>
+                <button type="button" class="key key-sci" data-key="ln(">ln</button>
+                <button type="button" class="key key-sci" data-key="log(">log</button>
+                <button type="button" class="key key-sci" data-key="sqrt(">√</button>
+                <button type="button" class="key key-sci" data-key="^2">x²</button>
+                <button type="button" class="key key-sci" data-key="^">xʸ</button>
+                <button type="button" class="key key-sci" data-key="!">n!</button>
+                <button type="button" class="key key-sci" data-key="pi">π</button>
+                <button type="button" class="key key-sci" data-key="%">%</button>
+                    </div>
+                    <div class="buttons-grid" id="buttons-grid">
+                <button type="button" class="key key-fn" data-key="clear">C</button>
+                <button type="button" class="key key-op" data-key="(">(</button>
+                <button type="button" class="key key-op" data-key=")">)</button>
+                <button type="button" class="key key-op" data-key="/">÷</button>
+                <button type="button" class="key key-num" data-key="7">7</button>
+                <button type="button" class="key key-num" data-key="8">8</button>
+                <button type="button" class="key key-num" data-key="9">9</button>
+                <button type="button" class="key key-op" data-key="*">×</button>
+                <button type="button" class="key key-num" data-key="4">4</button>
+                <button type="button" class="key key-num" data-key="5">5</button>
+                <button type="button" class="key key-num" data-key="6">6</button>
+                <button type="button" class="key key-op" data-key="-">−</button>
+                <button type="button" class="key key-num" data-key="1">1</button>
+                <button type="button" class="key key-num" data-key="2">2</button>
+                <button type="button" class="key key-num" data-key="3">3</button>
+                <button type="button" class="key key-op" data-key="+">+</button>
+                <button type="button" class="key key-num" data-key="0">0</button>
+                <button type="button" class="key key-num" data-key=".">.</button>
+                <button type="button" class="key key-fn" data-key="back">⌫</button>
+                <button type="button" class="key key-eq" data-key="=">=</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="history-panel" id="history-panel">
+            <div class="history-panel" id="history-panel" hidden>
                 <div class="history-header">
-                    <h3>Histórico de Cálculos</h3>
-                    <button class="btn btn-clear-history" id="clear-history">Limpar</button>
+                    <h2>Histórico</h2>
+                    <button type="button" id="clear-history">Limpar</button>
                 </div>
-                <div class="history-content" id="history-content">
-                    <div class="history-item">Digite um cálculo para começar...</div>
-                </div>
+                <div class="history-content" id="history-content"></div>
             </div>
         </main>
 
         <footer>
-            <p>&copy; 2026 Caio. Calculadora Matemática</p>
+            <p>&copy; 2026 Caio. Teclado: números, + - * / ^ ( ) Enter Backspace Esc</p>
         </footer>
     </div>
 

@@ -1,0 +1,43 @@
+/* Reservas: spa / wellness */
+:root{--sage:#e9efe7;--deep:#1f4d47;--clay:#c97b5a;--cream:#fbf8f2;--ink:#243330;--line:#cfdccf}
+html,body{overflow-x:hidden}
+body{background:linear-gradient(180deg,var(--sage),#f6f2ea)!important;color:var(--ink);font-family:'DM Sans',sans-serif;min-height:100vh}
+.reservation-container{max-width:1180px;margin:0 auto;padding:54px 16px 32px;background:none!important;box-shadow:none!important}
+.reservation-header{text-align:center;background:none!important;color:var(--deep)!important;margin-bottom:24px}
+.reservation-header h1{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(2.2rem,9vw,3.8rem);color:var(--deep)!important;-webkit-text-fill-color:var(--deep)!important;background:none!important;letter-spacing:.01em}
+.reservation-header p{color:var(--clay)!important;letter-spacing:.14em;text-transform:uppercase;font-size:.8rem}
+.reservation-main{display:grid;grid-template-columns:320px minmax(0,1fr);gap:24px;align-items:start}
+.reservation-sidebar,.reservation-content,.sidebar-section{min-width:0}
+.sidebar-section,.calendar-section,.time-section,.confirmation-section{background:var(--cream)!important;border:1px solid var(--line)!important;border-radius:22px!important;box-shadow:0 10px 30px -18px rgba(31,77,71,.5)!important;padding:22px!important;margin-bottom:20px}
+.sidebar-section h2,.calendar-section h2,.time-section h2,.confirmation-section h2{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--deep)!important}
+.service-item{background:#fff!important;border:1.5px solid var(--line)!important;border-radius:16px!important;padding:14px!important;margin-bottom:10px;cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.service-item:hover{transform:translateY(-2px);border-color:var(--clay)!important}
+.service-item.selected{background:var(--deep)!important;color:#fff!important;border-color:var(--deep)!important}
+.service-item.selected *{color:#fff!important}
+.service-name{font-weight:700}.service-price{color:var(--clay);font-weight:700}.service-description{font-size:.88rem;opacity:.8}
+.calendar{background:none!important;padding:0!important;gap:6px!important}
+.calendar-header{grid-column:1/-1;background:none!important;color:var(--deep)!important;border-radius:0!important;padding:4px 0!important;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em}
+.calendar-header:first-child{display:flex;justify-content:space-between;align-items:center;font-family:'Cormorant Garamond',serif;font-size:1.4rem;text-transform:none;letter-spacing:0}
+.calendar-header button{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--deep);background:#fff;color:var(--deep);cursor:pointer;transition:background .2s,color .2s}
+.calendar-header button:hover{background:var(--deep);color:#fff}
+.calendar-day{background:#fff!important;border:1px solid var(--line);border-radius:12px!important;min-height:0!important;aspect-ratio:1;padding:4px!important;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;transform:none}
+.calendar-day:hover:not(.disabled){background:var(--sage)!important;transform:none}
+.calendar-day.selected{background:var(--deep)!important;color:#fff!important}
+.calendar-day.disabled{background:transparent!important;border-color:transparent;color:#aab8b3!important}
+.calendar-day.today{border:2px solid var(--clay)!important}
+.day-number{font-size:1rem!important}.day-events,.day-date{font-size:.65rem}
+.time-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.time-slot{background:#fff!important;border:1.5px solid var(--line)!important;border-radius:14px!important;padding:10px!important;text-align:center;cursor:pointer;transition:all .2s}
+.time-slot:hover{border-color:var(--clay)!important}.time-slot.selected{background:var(--clay)!important;color:#fff!important;border-color:var(--clay)!important}
+.time-slot.booked{opacity:.45;cursor:not-allowed;text-decoration:line-through}
+.detail-item{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}.detail-label{opacity:.7}.detail-value{font-weight:700;text-align:right}
+.confirm-btn{width:100%;margin-top:14px;padding:14px;background:var(--deep)!important;color:#fff!important;border:0;border-radius:99px!important;font:700 1rem 'DM Sans',sans-serif;cursor:pointer;transition:background .2s,transform .2s}
+.confirm-btn:hover{background:var(--clay)!important;transform:translateY(-2px)}
+.reservation-item{background:#fff!important;border-left:4px solid var(--clay)!important;border-radius:12px!important;padding:12px!important;margin-bottom:8px}
+:focus-visible{outline:3px solid var(--clay);outline-offset:2px}
+.back-link{position:fixed;top:10px;left:10px;z-index:99;padding:6px 14px;border-radius:99px;background:var(--cream);border:1px solid var(--line);color:var(--deep);font:500 .8rem 'DM Sans',sans-serif;text-decoration:none}
+.back-link:hover{background:var(--deep);color:#fff}
+@media(max-width:860px){.reservation-main{grid-template-columns:minmax(0,1fr)}.sidebar-section,.calendar-section,.time-section,.confirmation-section{padding:16px!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+html{background:var(--sage)}main,.reservation-main,.reservation-content,.reservation-sidebar{background:none!important;box-shadow:none!important;padding-left:0;padding-right:0}
+.day-date{display:none}

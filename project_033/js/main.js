@@ -92,84 +92,88 @@ function validarCNPJ(cnpj) {
     return true;
 }
 
-// Event listeners
-document.getElementById('cpf').addEventListener('input', function(e) {
-    const cpfInput = e.target;
-    const valorLimpo = limparValor(cpfInput.value);
-    const valorFormatado = formatarCPF(valorLimpo);
-    cpfInput.value = valorFormatado;
-
-    // Validação em tempo real
-    if (valorLimpo.length >= 11) {
-        const ehValido = validarCPF(valorLimpo);
-        const feedback = document.getElementById('cpf-feedback');
-        if (ehValido) {
-            feedback.textContent = 'CPF válido';
-            feedback.className = 'feedback success';
-        } else {
-            feedback.textContent = 'CPF inválido';
-            feedback.className = 'feedback error';
-        }
-
-        // Atualiza resultado
-        const resultadoDiv = document.getElementById('cpf-result');
-        if (ehValido) {
-            resultadoDiv.innerHTML = `<strong>CPF válido:</strong> ${valorFormatado}`;
-            resultadoDiv.className = 'result-box valid';
-        } else {
-            resultadoDiv.innerHTML = '<strong>CPF inválido</strong>';
-            resultadoDiv.className = 'result-box invalid';
-        }
-    } else {
-        document.getElementById('cpf-feedback').textContent = '';
-        document.getElementById('cpf-result').innerHTML = '';
-        document.getElementById('cpf-result').className = 'result-box';
+// Geração de números válidos (para testes)
+function gerarCPF() {
+    const n = Array.from({length: 9}, () => Math.floor(Math.random() * 10));
+    for (let t = 0; t < 2; t++) {
+        const soma = n.reduce((a, d, i) => a + d * (n.length + 1 - i), 0);
+        const r = (soma * 10) % 11;
+        n.push(r === 10 ? 0 : r);
     }
-});
+    const c = n.join('');
+    return /^(\d)\1{10}$/.test(c) ? gerarCPF() : c;
+}
 
-document.getElementById('cnpj').addEventListener('input', function(e) {
-    const cnpjInput = e.target;
-    const valorLimpo = limparValor(cnpjInput.value);
-    const valorFormatado = formatarCNPJ(valorLimpo);
-    cnpjInput.value = valorFormatado;
-
-    // Validação em tempo real
-    if (valorLimpo.length >= 14) {
-        const ehValido = validarCNPJ(valorLimpo);
-        const feedback = document.getElementById('cnpj-feedback');
-        if (ehValido) {
-            feedback.textContent = 'CNPJ válido';
-            feedback.className = 'feedback success';
-        } else {
-            feedback.textContent = 'CNPJ inválido';
-            feedback.className = 'feedback error';
-        }
-
-        // Atualiza resultado
-        const resultadoDiv = document.getElementById('cnpj-result');
-        if (ehValido) {
-            resultadoDiv.innerHTML = `<strong>CNPJ válido:</strong> ${valorFormatado}`;
-            resultadoDiv.className = 'result-box valid';
-        } else {
-            resultadoDiv.innerHTML = '<strong>CNPJ inválido</strong>';
-            resultadoDiv.className = 'result-box invalid';
-        }
-    } else {
-        document.getElementById('cnpj-feedback').textContent = '';
-        document.getElementById('cnpj-result').innerHTML = '';
-        document.getElementById('cnpj-result').className = 'result-box';
+function gerarCNPJ() {
+    const n = Array.from({length: 12}, () => Math.floor(Math.random() * 10));
+    n[8] = n[9] = n[10] = 0; n[11] = 1;
+    for (let t = 0; t < 2; t++) {
+        const pesos = t === 0 ? [5,4,3,2,9,8,7,6,5,4,3,2] : [6,5,4,3,2,9,8,7,6,5,4,3,2];
+        const soma = n.reduce((a, d, i) => a + d * pesos[i], 0);
+        const r = soma % 11;
+        n.push(r < 2 ? 0 : 11 - r);
     }
+    return n.join('');
+}
+
+const TIPOS = {
+    cpf: { tam: 11, nome: 'CPF', fmt: formatarCPF, val: validarCPF, gen: gerarCPF },
+    cnpj: { tam: 14, nome: 'CNPJ', fmt: formatarCNPJ, val: validarCNPJ, gen: gerarCNPJ }
+};
+
+function atualizar(tipo) {
+    const t = TIPOS[tipo];
+    const input = document.getElementById(tipo);
+    const feedback = document.getElementById(tipo + '-feedback');
+    const box = document.getElementById(tipo + '-result');
+    const limpo = limparValor(input.value);
+    input.value = t.fmt(limpo);
+    input.classList.remove('is-valid', 'is-invalid');
+    feedback.className = 'feedback';
+    if (limpo.length === 0) {
+        feedback.textContent = '';
+        box.className = 'result-box';
+        box.textContent = '';
+        return;
+    }
+    if (limpo.length < t.tam) {
+        feedback.textContent = `${limpo.length} de ${t.tam} dígitos`;
+        box.className = 'result-box';
+        box.textContent = '';
+        return;
+    }
+    const ok = t.val(limpo);
+    feedback.textContent = '';
+    input.classList.add(ok ? 'is-valid' : 'is-invalid');
+    box.className = 'result-box ' + (ok ? 'valid' : 'invalid');
+    box.innerHTML = ok
+        ? `<span class="stamp">Válido</span><span class="num">${t.fmt(limpo)}</span>`
+        : `<span class="stamp">Inválido</span><span class="num">${t.fmt(limpo)}</span><em>Dígitos verificadores não conferem.</em>`;
+}
+
+Object.keys(TIPOS).forEach(tipo => {
+    document.getElementById(tipo).addEventListener('input', () => atualizar(tipo));
 });
 
-// Limpar resultados ao focar nos campos
-document.getElementById('cpf').addEventListener('focus', function() {
-    document.getElementById('cpf-feedback').textContent = '';
-    document.getElementById('cpf-result').innerHTML = '';
-    document.getElementById('cpf-result').className = 'result-box';
-});
+document.querySelectorAll('[data-gen]').forEach(b => b.addEventListener('click', () => {
+    const tipo = b.dataset.gen;
+    document.getElementById(tipo).value = TIPOS[tipo].gen();
+    atualizar(tipo);
+}));
 
-document.getElementById('cnpj').addEventListener('focus', function() {
-    document.getElementById('cnpj-feedback').textContent = '';
-    document.getElementById('cnpj-result').innerHTML = '';
-    document.getElementById('cnpj-result').className = 'result-box';
-});
+document.querySelectorAll('[data-clear]').forEach(b => b.addEventListener('click', () => {
+    const tipo = b.dataset.clear;
+    const el = document.getElementById(tipo);
+    el.value = '';
+    atualizar(tipo);
+    el.focus();
+}));
+
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+    const v = document.getElementById(b.dataset.copy).value;
+    if (!v) return;
+    const old = b.textContent;
+    try { await navigator.clipboard.writeText(v); b.textContent = 'Copiado!'; }
+    catch (e) { b.textContent = 'Selecione e copie'; }
+    setTimeout(() => { b.textContent = old; }, 1400);
+}));

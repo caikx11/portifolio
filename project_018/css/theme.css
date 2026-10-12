@@ -1,0 +1,37 @@
+/* Memes: chaotic pop on charcoal */
+:root{--bg:#121212;--panel:#1d1d20;--lime:#c6ff00;--pink:#ff2e93;--ink:#f5f5f5;--line:#34343a}
+html,body{overflow-x:hidden}
+html{background:var(--bg)}
+body{background:var(--bg)!important;background-image:radial-gradient(var(--line) 1.2px,transparent 1.2px)!important;background-size:22px 22px!important;color:var(--ink);font-family:'Archivo',sans-serif;min-height:100vh;padding:0!important;display:block!important}
+body::before,body::after{display:none!important}
+header{background:none!important;box-shadow:none!important;text-align:center;padding:56px 16px 10px!important;margin:0 auto!important}
+header h1{font-family:'Anton',Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:clamp(2.6rem,13vw,5rem);line-height:1;letter-spacing:.02em;color:var(--lime)!important;-webkit-text-fill-color:var(--lime)!important;background:none!important;text-shadow:4px 4px 0 var(--pink);transform:rotate(-1.5deg);margin:0}
+header p{color:#c9c9d1!important;font-weight:600}
+main{background:none!important;box-shadow:none!important;max-width:1100px;margin:0 auto;padding:16px!important}
+.meme-generator{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:22px;align-items:start;background:none!important;box-shadow:none!important;padding:0!important}
+.meme-preview,.controls{min-width:0;background:var(--panel)!important;border:2px solid var(--line)!important;border-radius:18px!important;padding:16px!important;box-shadow:6px 6px 0 var(--pink)!important}
+.meme-image-container{position:relative;width:100%;border-radius:10px;overflow:hidden;background:#000}.meme-image-container img{display:block;width:100%;height:auto;max-height:70vh;object-fit:contain}
+.meme-text{font-family:'Anton',Impact,sans-serif;text-transform:uppercase;overflow-wrap:anywhere}
+.placeholder{display:grid;place-items:center;min-height:200px;border:3px dashed var(--lime);border-radius:12px;color:var(--lime);font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.05em;text-align:center;padding:16px}
+.control-section{border:0!important;border-bottom:1px dashed var(--line)!important;padding:0 0 14px!important;margin:0 0 14px!important;background:none!important}
+.control-section h3{font-family:'Anton',sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.06em;color:var(--lime)!important;font-size:1.2rem}
+.templates{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.template-btn{padding:0!important;border:3px solid transparent!important;border-radius:10px!important;overflow:hidden;background:#000!important;cursor:pointer;aspect-ratio:1;transition:transform .15s,border-color .15s}
+.template-btn img{width:100%;height:100%;object-fit:cover;display:block}
+.template-btn:hover{transform:rotate(-3deg) scale(1.06);border-color:var(--pink)!important}.template-btn.active{border-color:var(--lime)!important}
+.form-group{margin-bottom:12px;background:none!important}
+.form-group label{display:block;font-weight:800;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#d4d4dc!important;margin-bottom:4px}
+.form-group input[type=text]{width:100%;box-sizing:border-box;background:#0d0d0f!important;color:#fff!important;border:2px solid var(--line)!important;border-radius:10px!important;padding:11px 12px;font:600 1rem 'Archivo',sans-serif}
+.form-group input[type=text]:focus{outline:none;border-color:var(--lime)!important}
+.form-group input[type=range]{width:100%;accent-color:var(--pink)}.form-group input[type=color]{width:56px;height:36px;border:2px solid var(--line);border-radius:8px;background:none;padding:2px}
+.form-group span{color:var(--lime)!important;font-weight:800}
+.btn-primary,.btn-secondary{display:inline-block;border:3px solid #000!important;border-radius:10px!important;padding:11px 18px;font:800 .95rem 'Archivo',sans-serif;text-transform:uppercase;cursor:pointer;transition:transform .12s,box-shadow .12s;box-shadow:0 4px 0 #000;text-align:center}
+.btn-primary{background:var(--lime)!important;color:#000!important}.btn-secondary{background:var(--pink)!important;color:#fff!important}
+.btn-primary:hover,.btn-secondary:hover{transform:translateY(-2px);box-shadow:0 6px 0 #000}.btn-primary:active,.btn-secondary:active{transform:translateY(3px);box-shadow:0 1px 0 #000}
+.actions{display:flex;gap:10px;flex-wrap:wrap}.actions button{flex:1 1 140px}
+footer{text-align:center;color:#8a8a94!important;background:none!important;padding:18px;font-size:.8rem}
+:focus-visible{outline:3px solid var(--lime);outline-offset:2px}
+.back-link{position:fixed;top:10px;left:10px;z-index:99;padding:5px 12px;background:var(--lime);border:2px solid #000;color:#000;font:800 .75rem 'Archivo',sans-serif;text-decoration:none;border-radius:6px;box-shadow:3px 3px 0 var(--pink)}
+.back-link:hover{background:var(--pink);color:#fff}
+@media(max-width:860px){.meme-generator{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}header h1{transform:none}}
