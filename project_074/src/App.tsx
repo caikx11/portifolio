@@ -48,9 +48,9 @@ export function App() {
       if (stop.current) break;
       const bad = !!steps[i].fail; failed = failed || bad;
       patch(aid, rid, (m) => ({ ...m, steps: m.steps!.map((x, k) => (k === i ? { ...x, status: bad ? "err" : "ok" } : x)) }));
-      if (bad) break;
+      if (bad) { patch(aid, rid, (m) => ({ ...m, steps: m.steps!.slice(0, i + 1) })); break; }
     }
-    if (stop.current) { patch(aid, rid, (m) => ({ ...m, text: "_Execução interrompida por você._", done: true })); setBusy(false); return; }
+    if (stop.current) { patch(aid, rid, (m) => ({ ...m, steps: m.steps!.map((x) => (x.status === "run" ? { ...x, status: "err" as const, result: "Cancelado" } : x)), text: "_Execução interrompida por você._", done: true })); setBusy(false); return; }
     if (failed) { patch(aid, rid, (m) => ({ ...m, text: "Uma ferramenta falhou, então não consegui concluir. Tente novamente ou desative a ferramenta com falha.", done: true })); setBusy(false); return; }
     const full = answer(a, steps, t); const words = full.split(/(\s+)/);
     for (let i = 0; i < words.length; i += 3) {

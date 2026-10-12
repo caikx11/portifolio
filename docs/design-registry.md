@@ -67,3 +67,8 @@
 - 053 Habit Garden: musgo #0f2a1d / creme #fbf5e6 / rosa #ff8fa3 + dourado #ffd166; Young Serif + Hanken Grotesk
 - 054 Receitário: vinho #3b1f2b / açafrão #e8a317 / papel #fffaf2; Gloock + Albert Sans
 - 055 Quiz Dev: neobrutalista papel #f4f1ea / cobalto #2640ff / vermelho #ff4d2e / lima #c8f169; Bricolage Grotesque + Red Hat Mono
+- 071 Launchpad (SaaS Starter): creme #fbfaf7, tinta #16181d, violeta #5b3df5, lima #c8f169 (faixa de modo demonstração); Instrument Sans + Instrument Serif
+- 072 Brasa (lista ao vivo): carvão quente #14110f, âmbar #ffca28, chama #ff7a45, teal de sincronia #3dd6c6; Figtree + Martian Mono
+- 073 Planta TS (playground de utilitários): azul de planta #0a2140 com grade, ciano #8ecae6, amarelo-sinal #ffd166; Schibsted Grotesk + Sometype Mono
+- 074 Oficina (assistente IA, demonstração): grafite #0f1216, rosa #ff5d8f, azul-céu #7cc4ff, areia #efe6d8; Hanken Grotesk + Fragment Mono
+- 075 Tinta UI (biblioteca Tailwind): creme #f8f4ec, tinta #1b1a2e, cobalto #2f5bff, tangerina #ff6a3d; Red Hat Display + Red Hat Mono
